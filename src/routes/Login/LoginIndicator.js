@@ -8,10 +8,7 @@ function LoginIndicator() {
   const [searchParams] = useSearchParams();
   const authorizationCode = searchParams.get("code");
 
-  if (
-    platform === undefined ||
-    !availablePlatformList.every(platform => platform)
-  ) {
+  if (platform === undefined || !availablePlatformList.includes(platform)) {
     throw new Error(`Unknown platform: ${platform}`);
   }
 

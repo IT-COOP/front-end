@@ -9,7 +9,7 @@ const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 function LoginButtons() {
   const navigate = useNavigate();
   const curriedAssignHandler = url => () => window.location.assign(url);
-  console.log(GOOGLE_CLIENT_ID);
+
   return (
     <>
       <button onClick={curriedAssignHandler(GITHUB_URL)}>GITHUB</button>
