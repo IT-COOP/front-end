@@ -1,6 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
+
 import GoogleLogin from "react-google-login";
 
 const GITHUB_URL = process.env.REACT_APP_AUTH_GITHUB_URL;
