@@ -4,7 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import App from "./App";
 import LoginButtons from "./routes/Login/LoginButtons";
-import LoginIndicator from "./routes/Login/LoginIndicator";
+
+import Test from "./routes/Login/Test";
 
 import "./index.css";
 
@@ -13,7 +14,7 @@ ReactDOM.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/auth" element={<LoginButtons />}>
-        <Route path=":platform" element={<LoginIndicator />} />
+        <Route path="test" element={<Test />} />
       </Route>
     </Routes>
   </BrowserRouter>,
