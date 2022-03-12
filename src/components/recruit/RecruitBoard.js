@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+RecruitBoard.propTypes = {
+  title : PropTypes.string,
+  recruitContent : PropTypes.string,
+  recruitLocation : PropTypes.string,
+  recruitKeepItCount : PropTypes.number,
+  recruitCommentCount : PropTypes.number,
+  imgUrls : PropTypes.array
+}
 
-
-const RecruitBoard = ({ title, nickname, recruitContent, recruitLocation, recruitKeepItCount, imgUrls  } ) => {
+function RecruitBoard ({ title, nickname, recruitContent, recruitLocation, recruitKeepItCount, imgUrls  } ) {
   
   return (
     <li className='flex flex-col justify-center p-4 m-auto border-2'>
@@ -17,13 +24,6 @@ const RecruitBoard = ({ title, nickname, recruitContent, recruitLocation, recrui
   );
 };
 
-RecruitBoard.propTypes = {
-  title : PropTypes.string,
-  recruitContent : PropTypes.string,
-  recruitLocation : PropTypes.string,
-  recruitKeepItCount : PropTypes.number,
-  recruitCommentCount : PropTypes.number,
-  imgUrls : PropTypes.array
-}
+
 
 export default RecruitBoard;

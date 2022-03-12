@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RecruitNav = () => {
+function RecruitNav () {
   return (
     <nav className={'sticky'}>
       <ul className={'overflow-hidden'}>

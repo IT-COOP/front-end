@@ -2,7 +2,7 @@ import React from 'react';
 
 import RecruitBoard from './RecruitBoard';
 
-const RecruitBoardList = () => {
+function RecruitBoardList() {
   const data = [
     {
       title: '제목입니다',
