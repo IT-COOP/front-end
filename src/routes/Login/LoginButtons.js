@@ -1,8 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
-
-import GoogleLogin from "react-google-login";
-import axios from "axios";
 
 const GITHUB_URL = process.env.REACT_APP_AUTH_GITHUB_URL;
 const GOOGLE_URL = process.env.REACT_APP_AUTH_GOOGLE_URL;
@@ -19,11 +16,6 @@ function LoginButtons() {
       <button className="mr-4" onClick={curriedAssignHandler(KAKAO_URL)}>
         KAKAO
       </button>
-      {/**
-       * TODO
-       * - detect What kind of device user uses.
-       * - If it is PC - use popup otherwise use redirect
-       */}
       <button className="mr-4" onClick={curriedAssignHandler(GOOGLE_URL)}>
         GOOGLE
       </button>
