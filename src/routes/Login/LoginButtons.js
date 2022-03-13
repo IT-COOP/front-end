@@ -6,7 +6,7 @@ const GOOGLE_URL = process.env.REACT_APP_AUTH_GOOGLE_URL;
 const KAKAO_URL = process.env.REACT_APP_AUTH_KAKAO_URL;
 
 function LoginButtons() {
-  const moveToSocialLoginPage = url => () => window.location.replace(url);
+  const moveToSocialLoginPage = url => () => window.open(url,'_blank');
 
   return (
     <>
