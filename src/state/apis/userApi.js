@@ -1,8 +1,5 @@
-import axios from 'axios';
+import { instance } from './axiosInstance';
 
-const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-});
 
 export const userApis ={
   // 토큰 확인해서 회원가입한 사람이면 유저 정보 가져오고 아니면 빈 스트링 받음
