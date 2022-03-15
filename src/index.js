@@ -8,6 +8,7 @@ import LoginButtons from "./routes/Login/LoginButtons";
 import { store } from './state/configureStore';
 
 import Test from "./routes/Login/Test";
+import Join from "./routes/Login/Join"
 
 import "./index.css";
 
@@ -19,6 +20,7 @@ ReactDOM.render(
         <Route path="/auth" element={<LoginButtons />}>
           <Route path="test" element={<Test />} />
         </Route>
+        <Route path='/test' element={<Join/>}/>
       </Routes>
     </BrowserRouter>
   </Provider>

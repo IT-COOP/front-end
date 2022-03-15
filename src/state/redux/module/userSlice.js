@@ -13,10 +13,10 @@ const initialState = {
 export const socialLogin = createAsyncThunk("user/sociallogin",
   async (token, thunkAPI) =>{
     try{
-      console.log(token)
       const result = await userApis.getUser(token);
       console.log(result)
-      return true
+      localStorage.setItem('token',result.data.data.authorization)
+      return result.data.data.userInfo
     }catch{
 
     }
@@ -26,7 +26,9 @@ export const socialLogin = createAsyncThunk("user/sociallogin",
 export const userProfileSet = createAsyncThunk("user/set/profile",
   async (data, thunkAPI) =>{
     try{
-
+      const result = await userApis.createUser(data)
+      console.log(result)
+      return result
     }catch{
 
     }
@@ -53,9 +55,18 @@ const userSlice = createSlice({
       state.status = 'lodding'
     },
     [socialLogin.fulfilled.type] : (state,action) =>{
-
+      
     },
     [socialLogin.rejected.type] : (state) =>{
+
+    },
+    [userProfileSet.pending.type] : (state)=>{
+
+    },
+    [userProfileSet.fulfilled.type] : (state,action)=>{
+      console.log(action)
+    },
+    [userProfileSet.rejected.type] : (state)=>{
 
     }
   }

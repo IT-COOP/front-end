@@ -10,8 +10,11 @@ function Test() {
   const [accessToken, setAccessToken] = useState(
     searchParams.get("accessToken") ?? "",
   );
+  const [isProfileSet,setIsProfileSet] = useState(
+    searchParams.get("isProfileSet") ?? "",
+  )
   const dispatch = useDispatch()
-  
+  const [token,setToken] = useState()
   const isFirst = useSelector(state=>state.user.isFirst);
   console.log(isFirst)
 
@@ -26,14 +29,15 @@ function Test() {
   }
   useEffect(() => {
     console.log(accessToken)
-    dispatch(socialLogin(accessToken))
-    setSearchParams({});
+    console.log(isProfileSet)
+    localStorage.setItem('token',accessToken)
+    //dispatch(socialLogin(accessToken))
+    //setSearchParams({});
   }, [setSearchParams]);
 
   return(
       <>
-        {isFirst&& <Join/>}
-        <h1>accessToken: {accessToken}</h1>;
+        <Join/>
       </>
       )  
 }
