@@ -11,7 +11,6 @@ RecruitBoard.propTypes = {
 }
 
 function RecruitBoard ({ title, nickname, recruitContent, recruitLocation, recruitKeepItCount, imgUrls  } ) {
-  
   return (
     <li className='flex flex-col justify-center p-4 m-auto border-2'>
       <img src={imgUrls[0]}></img>
