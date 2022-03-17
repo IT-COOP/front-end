@@ -3,23 +3,23 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { userApis } from "../../apis/userApi";
 
 const initialState = {
-  userInfo: {},
-  isLogin: false,
+  userInfo: null,
   isFirst: false,
 };
 
-export const socialLogin = createAsyncThunk(
-  "user/sociallogin",
+export const checkUserInfo = createAsyncThunk(
+  "user/checkUserInfo",
   async (token, thunkAPI) => {
     try {
-      const response = await userApis.getUser(token);
+      const response = await userApis.checkUser(token);
+      console.log(response);
       return response.data.data.userInfo;
     } catch {}
   },
 );
 
 export const setUserProfile = createAsyncThunk(
-  "user/set/profile",
+  "user/setProfile",
   async (data, thunkAPI) => {
     try {
       const response = await userApis.createUser(data);
@@ -30,7 +30,7 @@ export const setUserProfile = createAsyncThunk(
 );
 
 export const editUserProfile = createAsyncThunk(
-  "user/edit/profile",
+  "user/editProfile",
   async (data, thunkAPI) => {
     try {
     } catch {}
@@ -40,17 +40,18 @@ export const editUserProfile = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
-  extraReducers: {
-    [socialLogin.pending.type]: state => {
-      state.status = "lodding";
-    },
-    [socialLogin.fulfilled.type]: (state, action) => {},
-    [socialLogin.rejected.type]: state => {},
-    [setUserProfile.pending.type]: state => {},
-    [setUserProfile.fulfilled.type]: (state, action) => {
-      console.log(action);
-    },
-    [setUserProfile.rejected.type]: state => {},
+  reducers: {},
+  extraReducers: builder => {
+    builder
+      .addCase(checkUserInfo.pending, (state, action) => {
+        console.log(action);
+      })
+      .addCase(checkUserInfo.fulfilled, (state, action) => {
+        console.log(action);
+      })
+      .addCase(checkUserInfo.rejected, (state, action) => {
+        console.log(action);
+      });
   },
 });
 

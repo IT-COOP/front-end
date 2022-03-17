@@ -17,10 +17,6 @@ ReactDOM.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/auth" element={<LoginButtons />}>
-          <Route path="test" element={<Test />} />
-        </Route>
-        <Route path="/test" element={<Join />} />
       </Routes>
     </BrowserRouter>
   </Provider>,

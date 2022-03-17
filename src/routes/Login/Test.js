@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Join from "./Join";
-import { socialLogin } from "../../state/redux/module/userSlice";
+import { checkUserInfo } from "../../state/redux/module/userSlice";
 
 function Test() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,7 +31,7 @@ function Test() {
     console.log(accessToken);
     console.log(isProfileSet);
     localStorage.setItem("token", accessToken);
-    //dispatch(socialLogin(accessToken))
+    dispatch(checkUserInfo(accessToken));
     //setSearchParams({});
   }, [setSearchParams]);
 
