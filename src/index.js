@@ -4,11 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import App from "./App";
-import LoginButtons from "./routes/Login/LoginButtons";
 import { store } from "./state/configureStore";
-
-import Test from "./routes/Login/Test";
-import Join from "./routes/Login/Join";
 
 import "./index.css";
 
