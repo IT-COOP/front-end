@@ -1,40 +1,84 @@
-import React from 'react';
+import React from "react";
 
-import RecruitBoard from './RecruitBoard';
+import RecruitBoard from "./RecruitBoard";
 
 function RecruitBoardList() {
   const data = [
     {
-      title: '제목입니다',
-      recruitContent:'내용입니다',
-      recruitLocation:'서울/수도권',
-      imgUrls : ['https://mblogthumb-phinf.pstatic.net/20141204_276/firstgjp_14176838057819gNtv_JPEG/___.jpg?type=w2','https://www.google.com/imgres?imgurl=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Fblog%2F1676324D4DE12D7415&imgrefurl=https%3A%2F%2Fblog.daum.net%2Fmygirl25%2F10756297&tbnid=GMlmiGUUAVUbAM&vet=10CBMQxiAoAmoXChMIwJ700sS_9gIVAAAAAB0AAAAAEAY..i&docid=uKTC4zvpDLJMHM&w=764&h=573&itg=1&q=%EA%B3%A0%EC%96%91%EC%9D%B4%EC%82%AC%EC%A7%84&ved=0CBMQxiAoAmoXChMIwJ700sS_9gIVAAAAAB0AAAAAEAY','https://www.google.com/imgres?imgurl=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F25580B3C54C7569A34&imgrefurl=https%3A%2F%2Fprofgod.tistory.com%2F18&tbnid=rKI2Q1ihGmXZJM&vet=10CA8QxiAoCGoXChMIwJ700sS_9gIVAAAAAB0AAAAAEAY..i&docid=XmSWOY_6EbFXFM&w=319&h=425&itg=1&q=%EA%B3%A0%EC%96%91%EC%9D%B4%EC%82%AC%EC%A7%84&ved=0CA8QxiAoCGoXChMIwJ700sS_9gIVAAAAAB0AAAAAEAY'],
-      userId : '작성자의 id',
-      nickname : '더미닉네임',
-      recruitKeepItCount: 10,
-      recruitCommentCount : 5,
-      createDate :'ISOString',
-      recruit:""
-  }
-]
-  console.log(data[0].imgUrls)
+      recruitPostId: 8,
+      title: "좋은 테스트 코드 짜는 방법",
+      user: {
+        userId: "cgh",
+        nickname: "으아아아앙아아아아",
+      },
+      recruitContent: "IT COOP 화이팅!",
+      viewCount: 0,
+      recruitLocation: 1,
+      recruitKeepCount: 0,
+      recruitCommentCount: 0,
+      recruitDurationDays: 49,
+      endAt: "2022-03-15T00:08:48.000Z",
+      createdAt: "2022-03-15T00:08:48.000Z",
+      updatedAt: "2022-03-15T00:08:48.000Z",
+      recruitKeeps: [],
+      recruitTasks: [
+        {
+          recruitTaskId: 1,
+          recruitTask: 3,
+          numberOfPeopleRequired: 3,
+          numberOfPeopleSet: 0,
+        },
+      ],
+      recruitStacks: [
+        {
+          recruitStackId: 1,
+          recruitStack: 3,
+          numberOfPeopleRequired: 3,
+          numberOfPeopleSet: 0,
+        },
+      ],
+      recruitPostImages: [
+        {
+          recruitPostImageId: 4,
+          imgUrl: "이미지 url1",
+        },
+      ],
+      recruitDurationWeeks: 7,
+    },
+  ];
+  console.log(data);
   return (
-    <ul className={'flex'}>
-      {data.map(board=>
+    <ul className="flex overflow-hidden gap-[20px] flex-wrap w-full px-4 xl:px-[0] lg:px-[20px] lg:gap-[2%] lg:gap-y-[20px]  md:gap-[2%] md:gap-y-[20px] sm:px-4 sm:rounded-[8px]">
+      {/* {Array(10)
+        .fill(null)
+        .map((_, i) => (
+          <li
+            key={i}
+            className="flex flex-col justify-center h-[356px] overflow-hidden w-[100%] xl:w-[23%] lg:w-[31%] lg:h-[396px] md:w-[48%] rounded-[11px] bg-[#EBEBEB] "
+          >
+            {i}
+          </li>
+        ))} */}
+      {data.map(board => (
         <RecruitBoard
-          key = { board.userId }
-          title = { board.title }
-          nickname ={ board.nickname }
-          recruitContent ={ board.recruitContent }
-          recruitCommentCount={ board.recruitCommentCount }
-          recruitKeepItCount = { board.recruitKeepItCount }
-          recruitLocation ={ board.recruitLocation }
-          imgUrls = { board.imgUrls }
-        />)}
-        {data.map(board=>console.log(board.imgUrls))}
+          key={board.recruitPostId}
+          recruitPostId={board.recruitPostId}
+          title={board.title}
+          nickname={board.user.nickname}
+          recruitContent={board.recruitContent}
+          recruitKeepCount={board.recruitKeepCount}
+          recruitCommentCount={board.recruitCommentCount}
+          recruitLocation={board.recruitLocation}
+          imgUrls={board.recruitPostImages} //이미지 정보 array
+          createdAt={board.createdAt}
+          recruitKeeps={board.recruitKeeps} //누가 추가했는지 user의 id값이 담긴 array
+          recruitStacks={board.recruitStacks} //직군에 대한 array
+          recruitDurationWeeks={board.recruitDurationWeeks}
+          recruitTasks={board.recruitTasks}
+        />
+      ))}
     </ul>
   );
-};
-
+}
 
 export default RecruitBoardList;
