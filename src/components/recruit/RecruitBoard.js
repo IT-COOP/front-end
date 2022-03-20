@@ -13,7 +13,7 @@ function RecruitBoard({
   recruitKeepCount,
 }) {
   return (
-    <li className="flex flex-col h-[356px] overflow-hidden w-[100%] xl:w-[23%] lg:w-[31%] lg:h-[396px] md:w-[48%] rounded-[11px] bg-[#EBEBEB]">
+    <li>
       <img
         src="https://t1.daumcdn.net/cfile/tistory/216C553953FC27C335"
         alt="게시글 사진"

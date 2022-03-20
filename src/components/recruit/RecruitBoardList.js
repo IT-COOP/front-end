@@ -49,33 +49,25 @@ function RecruitBoardList() {
   console.log(data);
   return (
     <ul className="flex overflow-hidden gap-[20px] flex-wrap w-full px-4 xl:px-[0] lg:px-[20px] lg:gap-[2%] lg:gap-y-[20px]  md:gap-[2%] md:gap-y-[20px] sm:px-4 sm:rounded-[8px]">
-      {/* {Array(10)
-        .fill(null)
-        .map((_, i) => (
-          <li
-            key={i}
-            className="flex flex-col justify-center h-[356px] overflow-hidden w-[100%] xl:w-[23%] lg:w-[31%] lg:h-[396px] md:w-[48%] rounded-[11px] bg-[#EBEBEB] "
-          >
-            {i}
-          </li>
-        ))} */}
       {data.map(board => (
-        <RecruitBoard
-          key={board.recruitPostId}
-          recruitPostId={board.recruitPostId}
-          title={board.title}
-          nickname={board.user.nickname}
-          recruitContent={board.recruitContent}
-          recruitKeepCount={board.recruitKeepCount}
-          recruitCommentCount={board.recruitCommentCount}
-          recruitLocation={board.recruitLocation}
-          imgUrls={board.recruitPostImages} //이미지 정보 array
-          createdAt={board.createdAt}
-          recruitKeeps={board.recruitKeeps} //누가 추가했는지 user의 id값이 담긴 array
-          recruitStacks={board.recruitStacks} //직군에 대한 array
-          recruitDurationWeeks={board.recruitDurationWeeks}
-          recruitTasks={board.recruitTasks}
-        />
+        <li className="flex flex-col h-[356px] overflow-hidden w-[100%] xl:w-[23%] lg:w-[31%] lg:h-[396px] md:w-[48%] rounded-[11px] bg-[#EBEBEB]">
+          <RecruitBoard
+            key={board.recruitPostId}
+            recruitPostId={board.recruitPostId}
+            title={board.title}
+            nickname={board.user.nickname}
+            recruitContent={board.recruitContent}
+            recruitKeepCount={board.recruitKeepCount}
+            recruitCommentCount={board.recruitCommentCount}
+            recruitLocation={board.recruitLocation}
+            imgUrls={board.recruitPostImages} //이미지 정보 array
+            createdAt={board.createdAt}
+            recruitKeeps={board.recruitKeeps} //누가 추가했는지 user의 id값이 담긴 array
+            recruitStacks={board.recruitStacks} //직군에 대한 array
+            recruitDurationWeeks={board.recruitDurationWeeks}
+            recruitTasks={board.recruitTasks}
+          />
+        </li>
       ))}
     </ul>
   );
