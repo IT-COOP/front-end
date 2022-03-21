@@ -7,12 +7,18 @@ import RecruitBoardDetail from "./components/recruit/RecruitBoardDetail";
 import RecruitWrite from "./components/recruit/RecruitWrite";
 import Recruit from "./routes/recruit/Recuit";
 import Header from "./components/header/Header";
+import { Provider } from "react-redux";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import App from "./App";
+import { store } from "./state/configureStore";
 
 import "./index.css";
 import MyPage from "./routes/MyPage";
 
 ReactDOM.render(
   <BrowserRouter>
+  <Provider store={store}>
     <main className="max-w-[1224px] mx-[auto] pt-[100px]">
       <Header />
       <Routes>
@@ -23,6 +29,7 @@ ReactDOM.render(
         <Route path="/recruit/:id" element={<RecruitBoardDetail />} />
       </Routes>
     </main>
+  </Provider>
   </BrowserRouter>,
   document.getElementById("root"),
 );
