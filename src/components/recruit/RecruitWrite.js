@@ -1,6 +1,4 @@
 import React from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 
 function RecruitWrite() {
   const modules = {
@@ -66,16 +64,6 @@ function RecruitWrite() {
         <hr className="lg:my-[30px] border-[#C4C4C4]"></hr>
         <li className="flex lg:pb-[60px]">
           <p className="lg:w-[208px] lg:text-[22px]"> 내용 </p>
-          <ReactQuill
-            className="flex-1"
-            style={{ height: "400px" }}
-            theme="snow"
-            readOnly={false}
-            modules={modules}
-            Default={true}
-            //onChange={(content, delta, source, editor) => onChange(editor.getHTML())}
-            onChange={handleContent}
-          />
         </li>
         <li className="flex lg:mt-[70px] lg:mb-[50px]">
           <p className="lg:w-[208px] lg:text-[22px]">모집공고 이미지</p>
