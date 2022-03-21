@@ -6,7 +6,8 @@ import App from "./App";
 import Recuit from "./routes/Recuit/Recuit";
 
 import "./index.css";
-import MyPage from "./routes/MyPage";
+import User from "./routes/User";
+import UserEdit from "./routes/User/edit";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -14,7 +15,8 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/recruit" element={<Recuit />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/user" element={<User />} />
+        <Route path="/user/edit" element={<UserEdit />} />
       </Routes>
     </main>
   </BrowserRouter>,

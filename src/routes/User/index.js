@@ -1,9 +1,8 @@
 import React from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 
-function MyPage() {
+function UserPage() {
   const isFullWeb = useMediaQuery("(min-width: 960px)");
-  console.log(isFullWeb);
 
   return (
     <>
@@ -220,4 +219,4 @@ function MyPage() {
   );
 }
 
-export default MyPage;
+export default UserPage;
