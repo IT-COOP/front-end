@@ -5,8 +5,10 @@ export default function useMediaQuery(queryString) {
 
   useEffect(() => {
     const mediaQueryList = window.matchMedia(queryString);
-    function onChange(event) {
-      console.log(event);
+    if (mediaQueryList.matches) {
+      setIsMatched(true);
+    }
+    function onViewportChanged(event) {
       const { matches } = event;
       if (matches) {
         setIsMatched(true);
@@ -14,9 +16,9 @@ export default function useMediaQuery(queryString) {
         setIsMatched(false);
       }
     }
-    mediaQueryList.addEventListener("change", onChange);
+    mediaQueryList.addEventListener("change", onViewportChanged);
     return () => {
-      mediaQueryList.removeEventListener("change", onChange);
+      mediaQueryList.removeEventListener("change", onViewportChanged);
     };
   }, [queryString]);
 

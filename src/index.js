@@ -3,13 +3,14 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import App from "./App";
-import RecruitBoardDetail from "./components/recruit/RecruitBoardDetail";
-import RecruitWrite from "./components/recruit/RecruitWrite";
-import Recruit from "./routes/recruit/Recuit";
-import Header from "./components/header/Header";
 import { Provider } from "react-redux";
 import { store } from "./state/configureStore";
-import MyPage from "./routes/MyPage";
+import RecruitBoardDetail from "./components/recruit/RecruitBoardDetail";
+import RecruitWrite from "./components/recruit/RecruitWrite";
+import Recruit from "./routes/Recruit/Recuit";
+import Header from "./components/header/Header";
+import User from "./routes/User";
+import UserEdit from "./routes/User/edit";
 
 import "./index.css";
 
@@ -20,7 +21,8 @@ ReactDOM.render(
         <Header />
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage" element={<User />} />
+          <Route path="/mypage/edit" element={<UserEdit />} />
           <Route path="/recruit" element={<Recruit />} />
           <Route path="/recruit/write/:id" element={<RecruitWrite />} />
           <Route path="/recruit/:id" element={<RecruitBoardDetail />} />
