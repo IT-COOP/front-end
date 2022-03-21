@@ -31,7 +31,7 @@ function Header() {
   }, [openNav]);
 
   return (
-    <header className="fixed z-[999] flex items-center justify-between w-full p-[20px] bg-white">
+    <header className="fixed top-0 z-[999] flex items-center justify-between w-full p-[20px] bg-white">
       <div>LOGO</div>
       <button
         onClick={handleOpenNav}

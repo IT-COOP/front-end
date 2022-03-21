@@ -53,3 +53,16 @@
   font-family: "It Coop", "Sans-serif";
   line-height: 1.25;
 }
+
+/* select {
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none; 
+  appearance: none;
+}
+select::-ms-expand {
+  display: none; 
+}
+
+select > option {
+} */
