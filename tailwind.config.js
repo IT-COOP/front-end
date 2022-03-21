@@ -8,6 +8,7 @@ module.exports = {
         lg: { min: "960px" },
         xl: { min: "1366px" },
       },
+      color: {},
     },
   },
   plugins: [require("@tailwindcss/line-clamp")],

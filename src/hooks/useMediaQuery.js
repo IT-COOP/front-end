@@ -5,14 +5,19 @@ export default function useMediaQuery(queryString) {
 
   useEffect(() => {
     const mediaQueryList = window.matchMedia(queryString);
-    mediaQueryList.addEventListener("change", function (event) {
+    function onChange(event) {
+      console.log(event);
       const { matches } = event;
       if (matches) {
         setIsMatched(true);
       } else {
         setIsMatched(false);
       }
-    });
+    }
+    mediaQueryList.addEventListener("change", onChange);
+    return () => {
+      mediaQueryList.removeEventListener("change", onChange);
+    };
   }, [queryString]);
 
   return isMatched;
