@@ -3,6 +3,7 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 
 function UserPage() {
   const isFullWeb = useMediaQuery("(min-width: 960px)");
+  console.log(isFullWeb);
 
   return (
     <>
@@ -11,7 +12,7 @@ function UserPage() {
         {isFullWeb ? <button>프로필 수정하기 </button> : null}
       </section>
       <div className="block lg:flex lg:gap-x-[24px]">
-        <div className="lg:h-[546px] lg:w-[289px] lg:shrink-0 lg:bg-red-50 lg:sticky lg:top-0">
+        <div className="lg:h-[546px] lg:w-[289px] lg:shrink-0 lg:bg-red-50">
           <div className="border-b border-b-solid border-b-slate-200">
             <section>
               <div className="px-[20px] flex lg:flex-col lg:justify-center lg:items-center">
