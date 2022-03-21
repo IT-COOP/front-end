@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
+import Select from "react-select";
 
 import {
   setUserProfile,
@@ -18,6 +19,13 @@ function Join() {
     dispatch(setUserProfile(userInfo));
   }, []);
 
+  const options = [
+    { value: "apple", label: "Apple" },
+    { value: "banana", label: "Banana" },
+    { value: "orange", label: "Orange" },
+    { value: "berry", label: "Berry" },
+  ];
+
   const handleUserData = e => {
     const inputName = e.target.name;
     const inputValue = e.target.value;
@@ -31,14 +39,23 @@ function Join() {
     const currentLi = e.currentTarget.parentNode;
     const nextLi = currentLi.nextElementSibling;
     currentLi.classList.remove("z-10");
+    currentLi.style.opacity = 0;
     nextLi.classList.add("z-10");
+    nextLi.style.opacity = 1;
   };
 
   const handlePrevChapter = e => {
     const currentLi = e.currentTarget.parentNode;
     const prevLi = currentLi.previousElementSibling;
     currentLi.classList.remove("z-10");
+    currentLi.style.opacity = 0;
     prevLi.classList.add("z-10");
+    prevLi.style.opacity = 1;
+  };
+
+  const handleSelectStack = e => {
+    return false;
+    console.log(e);
   };
 
   const handleJoinSubmit = e => {
@@ -46,18 +63,18 @@ function Join() {
     dispatch(setUserProfile(userInfo));
   };
 
-  const formLi = `flex flex-col absolute w-[800px] h-[500px] duration-700 rounded-[16px] bg-[#F9F9F9] sm:w-[100%] sm:h-[392px] sm:px-[20px]`;
-  const formTitle = `text-center font-bold text-[30px] mt-[74px] mb-[32px] sm:mt-[55px] sm:mb-[36px] sm:text-[20px]  `;
+  const formLi = `flex flex-col absolute w-[800px] h-[500px] duration-700 rounded-[16px] bg-[#F9F9F9] sm:w-[100%] sm:h-[392px] sm:px-[20px] opacity-0 `;
+  const formTitle = `text-center font-bold text-[30px] mt-[74px] mb-[32px] sm:mt-[55px] sm:mb-[36px] sm:text-[20px]`;
   const formDesc = `text-center text-[20px] text-[#797979] mb-[40px] sm:mb-[60px] sm:text-[12px]`;
   const nextBtn = `mx-auto absolute bottom-[95px] left-[50%] font-bold text-[24px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px] sm:w-[calc(100%-40px)] sm:h-[45px] sm:text-[14px] sm:bottom-[38px] sm:left-[50%] translate-x-[-50%]`;
 
   return (
     <section className="fixed w-screen h-screen z-50 flex items-center justify-center sm:px-[20px] transition-opacity">
-      <ul className="relative w-[800px] h-[500px] flex sm:h-[392px]">
+      <ul className="relative w-[800px] h-[500px] flex sm:h-[392px] bg-[#F9F9F9]">
         <button className="absolute top-[14px] right-[14px] z-50">
           <Close />
         </button>
-        <li className={`${formLi} z-10`}>
+        <li className={`${formLi} z-10 opacity-100`}>
           <h1 className={formTitle}>
             <span className="sm:block">사용하실 닉네임을</span> 설정해주세요.
           </h1>
@@ -112,13 +129,7 @@ function Join() {
           </div>
           <div className="flex mx-[auto] sm:flex-col">
             <p className="text-left sm:mb-[2px] font-bold">스택</p>
-            <select className="rounded-[5px] border-2 sm:w-[100%] sm:h-[45px] sm:px-[5px] sm:mb-[38px]">
-              <option>ㅁㄴㅇㄹ</option>
-              <option>ㅁㄴㅇㄹ</option>
-              <option>ㅁㄴㅇㄹ</option>
-              <option>ㅁㄴㅇㄹ</option>
-              <option>ㅁㄴㅇㄹ</option>
-            </select>
+            <Select isMulti options={options} onChange={handleSelectStack} />
           </div>
           <button className={`${nextBtn}`} onClick={handleNextChapter}>
             다음으로
@@ -149,7 +160,7 @@ function Join() {
             />
           </div>
           <button className={`${nextBtn}`} onClick={handleNextChapter}>
-            다음으로
+            제출하기
           </button>
         </li>
       </ul>
