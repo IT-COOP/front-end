@@ -3,18 +3,13 @@ import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { checkUserInfo } from "./state/redux/module/userSlice";
-import { setCookie, getCookie, deleteCookie } from "./utils/cookie";
 import LoginButtons from "./routes/Login/LoginButtons";
 import Join from "./routes/Login/Join";
 
 function App() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [accessToken, setAccessToken] = useState(
-    searchParams.get("accessToken") ?? "",
-  );
-  const [isProfileSet, setIsProfileSet] = useState(
-    searchParams.get("isProfileSet") ?? "",
-  );
+  const [accessToken] = useState(searchParams.get("accessToken") ?? "");
+  const [isProfileSet] = useState(searchParams.get("isProfileSet") ?? "");
   const [socialModal, setSoialModal] = useState(false);
   const isLogin = useSelector(state => state.user.userInfo);
   let isFirst = true;

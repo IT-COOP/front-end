@@ -1,15 +1,15 @@
 import React from "react";
 
 function RecruitBoard({
-  title,
-  createdAt,
-  imgUrls,
+  // title,
+  // createdAt,
+  // imgUrls,
   nickname,
   recruitCommentCount,
-  recruitKeeps,
-  recruitLocation,
-  recruitTasks,
-  recruitStacks,
+  // recruitKeeps,
+  // recruitLocation,
+  // recruitTasks,
+  // recruitStacks,
   recruitKeepCount,
   recruitDurationWeeks,
 }) {

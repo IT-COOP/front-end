@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { getCookie } from "../../utils/cookie";
+//import { getCookie } from "../../utils/cookie";
 import { getToken } from "../../utils/until";
 
 export const instance = axios.create({

@@ -1,19 +1,16 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useParams, useSearchParams } from "react-router-dom";
+
 import Select from "react-select";
 
-import {
-  setUserProfile,
-  checkUserInfo,
-} from "../../state/redux/module/userSlice";
+import { setUserProfile } from "../../state/redux/module/userSlice";
 import { Close, Prev } from "../../assets/icons";
 
 function Join() {
   const [userInfo, setUserInfo] = useState({});
   const dispatch = useDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const token = searchParams.get("accessToken");
+  //const [searchParams, setSearchParams] = useSearchParams();
+  //const token = searchParams.get("accessToken");
 
   useEffect(() => {
     dispatch(setUserProfile(userInfo));
@@ -55,13 +52,12 @@ function Join() {
 
   const handleSelectStack = e => {
     return false;
-    console.log(e);
   };
 
-  const handleJoinSubmit = e => {
-    e.preventDefault();
-    dispatch(setUserProfile(userInfo));
-  };
+  // const handleJoinSubmit = e => {
+  //   e.preventDefault();
+  //   dispatch(setUserProfile(userInfo));
+  // };
 
   const formLi = `flex flex-col absolute w-[800px] h-[500px] duration-700 rounded-[16px] bg-[#F9F9F9] sm:w-[100%] sm:h-[392px] sm:px-[20px] opacity-0 `;
   const formTitle = `text-center font-bold text-[30px] mt-[74px] mb-[32px] sm:mt-[55px] sm:mb-[36px] sm:text-[20px]`;

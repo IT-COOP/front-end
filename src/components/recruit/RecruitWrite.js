@@ -1,19 +1,6 @@
 import React from "react";
 
 function RecruitWrite() {
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ align: [] }], // dropdown with defaults from theme
-      ["clean"],
-    ],
-  };
-
-  const handleContent = e => {
-    console.log(e);
-  };
-
   return (
     <>
       <h1 className="text-[24px] lg:mb-[60px]">모집글 작성하기</h1>
