@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { store } from "./state/configureStore";
 import RecruitBoardDetail from "./components/recruit/RecruitBoardDetail";
 import RecruitWrite from "./components/recruit/RecruitWrite";
-import Recruit from "./routes/Recruit/Recuit";
+import Recruit from "./routes/Recruit/Recruit";
 import Header from "./components/header/Header";
 import User from "./routes/User";
 import UserEdit from "./routes/User/edit";
