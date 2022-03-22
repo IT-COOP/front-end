@@ -36,27 +36,27 @@ function RecruitBoard({
             <span className="mx-[6px]">|</span>
             {recruitDurationWeeks}주 예상
           </li>
-          <ul className="flex text-[12px] gap-[6px]">
-            <li className="bg-[#c0c0c0] py-[2px] px-[10px] rounded-[11px] ">
-              <span className="relative ">프론트엔드</span>
+          <ul className="flex text-[12px] gap-[3%]">
+            <li className="bg-[#c0c0c0] w-[24.25%] line-clamp-1 py-[2px] px-[10px] rounded-[11px] ">
+              <span className="relative ">Ruby On Rails</span>
             </li>
-            <li className="bg-[#c0c0c0] py-[2px] px-[11px] rounded-[11px] ">
-              <span className="relative ">백엔드</span>
+            <li className="bg-[#c0c0c0] w-[24.25%] line-clamp-1 py-[2px] px-[11px] rounded-[11px] ">
+              <span className="relative ">React</span>
             </li>
-            <li className="bg-[#c0c0c0] py-[2px] px-[11px] rounded-[11px] ">
+            <li className="bg-[#c0c0c0] w-[24.25%] line-clamp-1 py-[2px] px-[11px] rounded-[11px] ">
               <span className="relative ">디자이너</span>
             </li>
-            <li className="bg-[#c0c0c0] py-[2px] px-[11px] rounded-[11px] ">
+            <li className="bg-[#c0c0c0] w-[24.25%] line-clamp-1 py-[2px] px-[11px] rounded-[11px] ">
               <span className="relative ">기획자</span>
             </li>
           </ul>
         </ul>
 
-        <ul className="flex justify-between px-[20px] text-[14px]">
-          <li className="flex w-[60%] whitespace-nowrap">
+        <ul className="flex  justify-between px-[20px] text-[14px]">
+          <li className="flex w-[60%] line-clamp-1">
             2022-03-20
             <span className="mx-[8px] text-[#797979]">|</span>
-            <span className="line-clamp-1">{author}</span>
+            {author}
           </li>
           <li className="flex">
             <p className="mr-[10px]">ㅁ 1{recruitCommentCount}</p>

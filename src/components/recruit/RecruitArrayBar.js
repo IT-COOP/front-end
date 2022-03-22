@@ -9,6 +9,7 @@ function RecruitArrayBar() {
         key.classList.remove("text-black");
         key.classList.add("text-gray3");
       }
+      target.classList.remove("text-gray3");
       target.classList.remove("after:w-0");
       target.classList.add("after:w-full");
       target.classList.add("text-black");

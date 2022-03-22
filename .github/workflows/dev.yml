@@ -26,10 +26,15 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
       - name: Install Dependencies
-        run: npm install
+        run: yarn install
 
       - name: Build
-        run: npm run build
+        env:
+          REACT_APP_AUTH_GITHUB_URL: ${{secrets.AUTH_GITHUB_URL}}
+          REACT_APP_AUTH_GOOGLE_URL: ${{secrets.AUTH_GOOGLE_URL}}
+          REACT_APP_AUTH_KAKAO_URL: ${{secrets.AUTH_KAKAO_URL}}
+          REACT_APP_API_URL: ${{secrets.API_URL}}
+        run: yarn run build
 
       - name: Deploy
         env:

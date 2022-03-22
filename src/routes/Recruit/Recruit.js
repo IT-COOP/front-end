@@ -8,7 +8,9 @@ function Recruit() {
   return (
     <section className="w-[1224px] mx-[auto]">
       <RecruitFilterBar />
-      <div className="w-full h-[272px] bg-pink"></div>
+      <div className="w-full h-[272px] bg-pink relative">
+        <div className="absolute top-0 -left-[50%] w-screen h-full bg-slate-400"></div>
+      </div>
       <RecruitArrayBar />
       <RecruitBoardList />
     </section>
