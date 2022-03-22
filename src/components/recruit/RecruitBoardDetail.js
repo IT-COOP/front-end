@@ -3,7 +3,7 @@ import React from "react";
 function RecruitBoardDetail() {
   return (
     <>
-      <ul>
+      <ul className="w-[1224px] mx-auto">
         <li className="flex">
           <img
             className="w-[392px] h-[269px] mr-[24px]"

@@ -3,20 +3,20 @@ import { Logo, Bell, DownArrow } from "../../assets/icons";
 
 function Header() {
   return (
-    <header className="w-full top-0 left-0 right-0 mx-[auto] py-[12px] z-[999] fixed  bg-white">
-      <div className="w-[1224px] mx-[auto] flex items-start justify-between">
+    <header className="w-full top-0 left-0 right-0 mx-[auto] py-[12px] z-[999] fixed  bg-white shadow-[0_4px_4px_-4px_rgba(0,0,0,0.3)]">
+      <div className="w-[1224px] mx-[auto] flex items-center justify-between">
         <div>
           <Logo />
         </div>
         <nav>
-          <ul className="flex gap-[44px] items-center text-[22px] leading-[27.54px]">
+          <ul className="flex gap-[44px] items-center text-[17px]">
             <li className="cursor-pointer">About</li>
             <li className="cursor-pointer">협업 페이지</li>
             <li className="cursor-pointer">
               <Bell />
             </li>
             <li className="cursor-pointer">로그인</li>
-            <li className="relative cursor-pointer">
+            <li className="relative hidden cursor-pointer">
               <div className="flex items-center ">
                 <img
                   className="w-[44px] h-[44px] rounded-[50%] mr-[10px]"

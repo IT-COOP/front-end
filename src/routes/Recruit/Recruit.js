@@ -6,11 +6,12 @@ import RecruitArrayBar from "../../components/recruit/RecruitArrayBar";
 
 function Recruit() {
   return (
-    <section className="w-[1224px] mx-[auto]">
-      <RecruitFilterBar />
-      <div className="w-full h-[272px] bg-pink relative">
-        <div className="absolute top-0 -left-[50%] w-screen h-full bg-slate-400"></div>
+    <section className="w-full">
+      <div className="w-full mx-auto text-center border-b-[1px]">
+        <img src="images/banner.png" alt="banner" className="mx-auto" />
       </div>
+      {/* 배너 컴포넌트로 */}
+      <RecruitFilterBar />
       <RecruitArrayBar />
       <RecruitBoardList />
     </section>

@@ -1,18 +1,22 @@
 import React from "react";
-
+import { Location, Language, TechnologyStack } from "../../constants/enums";
 function RecruitBoard({
   title,
-  // createdAt,
+  createdAt,
   thumbImgUrl,
   author,
   recruitCommentCount,
-  // recruitKeeps,
-  // recruitLocation,
-  // recruitTasks,
-  // recruitStacks,
+  recruitKeeps,
+  recruitLocation,
+  recruitTasks,
+  recruitStacks,
   recruitKeepCount,
   recruitDurationWeeks,
 }) {
+  console.log(recruitStacks);
+  console.log(recruitTasks);
+  console.log(Language);
+  console.log(TechnologyStack);
   return (
     <>
       <div className="w-full mb-[18px] h-[198px] overflow-hidden">
@@ -32,11 +36,12 @@ function RecruitBoard({
         </p>
         <ul className="px-[18px] sm:mb-[18px]">
           <li className="flex mb-[6px] text-[#797979]">
-            서울/수도권
+            {Location[recruitLocation]}
             <span className="mx-[6px]">|</span>
             {recruitDurationWeeks}주 예상
           </li>
           <ul className="flex text-[12px] gap-[3%]">
+            {}
             <li className="bg-[#c0c0c0] w-[24.25%] line-clamp-1 py-[2px] px-[10px] rounded-[11px] ">
               <span className="relative ">Ruby On Rails</span>
             </li>
@@ -51,15 +56,14 @@ function RecruitBoard({
             </li>
           </ul>
         </ul>
-
-        <ul className="flex  justify-between px-[20px] text-[14px]">
-          <li className="flex w-[60%] line-clamp-1">
+        <ul className="flex justify-between px-[20px] text-[14px]">
+          <li className="flex w-[62%] line-clamp-1">
             2022-03-20
             <span className="mx-[8px] text-[#797979]">|</span>
             {author}
           </li>
           <li className="flex">
-            <p className="mr-[10px]">ㅁ 1{recruitCommentCount}</p>
+            <p className="mr-[10px]">ㅁ 111{recruitCommentCount}</p>
             <p>ㅁ 1{recruitKeepCount}</p>
           </li>
         </ul>
