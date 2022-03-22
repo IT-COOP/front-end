@@ -1,20 +1,11 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-
+import React, { useState } from "react";
 import Select from "react-select";
-
-import { setUserProfile } from "../../state/redux/module/userSlice";
 import { Close, Prev } from "../../assets/icons";
 
 function Join() {
   const [userInfo, setUserInfo] = useState({});
-  const dispatch = useDispatch();
   //const [searchParams, setSearchParams] = useSearchParams();
   //const token = searchParams.get("accessToken");
-
-  useEffect(() => {
-    dispatch(setUserProfile(userInfo));
-  }, []);
 
   const options = [
     { value: "apple", label: "Apple" },
@@ -56,7 +47,6 @@ function Join() {
 
   // const handleJoinSubmit = e => {
   //   e.preventDefault();
-  //   dispatch(setUserProfile(userInfo));
   // };
 
   const formLi = `flex flex-col absolute w-[800px] h-[500px] duration-700 rounded-[16px] bg-[#F9F9F9] sm:w-[100%] sm:h-[392px] sm:px-[20px] opacity-0 `;
@@ -77,16 +67,16 @@ function Join() {
           <p className={`${formDesc}`}>
             <span>서비스를 이용할 때</span>사용되는 이름이에요!
           </p>
-          <div className="mx-auto mb-[50px] sm:w-[100%] sm:mb-[45px] flex justify-between">
+          <div className="mx-auto mb-[50px] flex justify-between">
             <input
               type="text"
-              className="border-2 text-[24px] p-[20px] mr-[10px] rounded-[5px] w-[357px] h-[72px] sm:px-[10px] sm:py-[14px] sm:text-[12px] sm:w-[80%] sm:h-[42px]"
+              className="border-2 text-[24px] p-[20px] mr-[10px] rounded-[5px] w-[357px] h-[72px]"
               placeholder="12자 이내로 입력해주세요"
               maxLength={12}
               name="nickname"
               onChange={handleUserData}
             />
-            <button className="w-[117px] h-[72px] text-[24px] text-[#797979] bg-[#CCCCCC] rounded-[5px] sm:w-[60px] sm:h-[42px]  sm:text-[14px]">
+            <button className="w-[117px] h-[72px] text-[24px] text-[#797979] bg-[#CCCCCC] rounded-[5px]">
               중복확인
             </button>
           </div>
@@ -105,26 +95,24 @@ function Join() {
             <span className="sm:block">직군과 스택을</span> 설정해주세요.
           </h1>
           <div className="flex sm:flex-col items-center mx-[auto]">
-            <p className="text-left font-bold text-[22px] mr-[28px] sm:mb-[12px]">
-              직군
-            </p>
+            <p className="text-left font-bold text-[22px] mr-[28px]">직군</p>
             <ul className="flex sm:mb-[19px]">
-              <li className="bg-[#c0c0c0] mr-[16px] text-[22px] px-[16px] py-[6px] rounded-[20px] sm:text-[12px] sm:mr-[8px] sm:px-[11px] sm:py-[3px]">
+              <li className="bg-[#c0c0c0] mr-[16px] text-[22px] px-[16px] py-[6px] rounded-[20px]">
                 프론트엔드
               </li>
-              <li className="bg-[#c0c0c0] mr-[16px] text-[22px] px-[16px] py-[6px] rounded-[20px] sm:text-[12px] sm:mr-[8px] sm:px-[11px] sm:py-[3px]">
+              <li className="bg-[#c0c0c0] mr-[16px] text-[22px] px-[16px] py-[6px] rounded-[20px]">
                 백엔드
               </li>
-              <li className="bg-[#c0c0c0] mr-[16px] text-[22px] px-[16px] py-[6px] rounded-[20px] sm:text-[12px] sm:mr-[8px] sm:px-[11px] sm:py-[3px]">
+              <li className="bg-[#c0c0c0] mr-[16px] text-[22px] px-[16px] py-[6px] rounded-[20px]">
                 디자이너
               </li>
-              <li className="bg-[#c0c0c0] rounded-[20px] text-[22px] px-[16px] py-[6px] sm:text-[12px] sm:px-[11px] sm:py-[3px]">
+              <li className="bg-[#c0c0c0] rounded-[20px] text-[22px] px-[16px] py-[6px] ">
                 기획
               </li>
             </ul>
           </div>
           <div className="flex mx-[auto] sm:flex-col">
-            <p className="text-left sm:mb-[2px] font-bold">스택</p>
+            <p className="font-bold text-left">스택</p>
             <Select isMulti options={options} onChange={handleSelectStack} />
           </div>
           <button className={`${nextBtn}`} onClick={handleNextChapter}>
@@ -138,10 +126,7 @@ function Join() {
           >
             <Prev />
           </button>
-          <h1 className={formTitle}>
-            <span className="sm:block">사용하실 프로필 사진을</span>
-            설정해주세요.
-          </h1>
+          <h1 className={formTitle}>사용하실 프로필 사진을 설정해주세요.</h1>
           <p className={`${formDesc}`}>
             서비스를 이용할 때 사용되는 이미지에요!
           </p>

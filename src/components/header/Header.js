@@ -1,58 +1,35 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
+import { Logo, Bell, DownArrow } from "../../assets/icons";
 
 function Header() {
-  const [openNav, setNav] = useState(false);
-  const headerNav = useRef();
-
-  const handleOpenNav = e => {
-    let currentState = openNav;
-    setNav(!currentState);
-    let btnLine = e.currentTarget.childNodes;
-    if (!currentState) {
-      btnLine[0].style.top = "50%";
-      btnLine[0].style.transform = "translateY(-50%) rotate(-45deg)";
-      btnLine[1].style.opacity = "0";
-      btnLine[2].style.bottom = "50%";
-      btnLine[2].style.transform = "translateY(50%) rotate(45deg)";
-    } else {
-      btnLine[0].style.top = "0";
-      btnLine[0].style.transform = "translateY(0%) rotate(0deg)";
-      btnLine[1].style.opacity = "1";
-      btnLine[2].style.bottom = "0";
-      btnLine[2].style.transform = "translateY(0) rotate(0)";
-    }
-  };
-  useEffect(() => {
-    if (openNav) {
-      headerNav.current.style.right = "0";
-    } else {
-      headerNav.current.style.right = "-100%";
-    }
-  }, [openNav]);
-
   return (
-    <header className="fixed top-0 z-[999] flex items-center justify-between w-full p-[20px] bg-white">
-      <div>LOGO</div>
-      <button
-        onClick={handleOpenNav}
-        className="relative z-10 w-[23px] h-[17px] p-[5px] "
-      >
-        <span className="block absolute w-full left-0 top-0 h-[3px] bg-black duration-500"></span>
-        <span className="block absolute w-full left-0 top-[50%] -translate-y-[50%] h-[3px] bg-black duration-500"></span>
-        <span className="block absolute w-full left-0 bottom-0 h-[3px] bg-black duration-500"></span>
-      </button>
-      <nav
-        ref={headerNav}
-        className="fixed top-0 -right-[100%] w-screen h-screen bg-[rgba(0,0,0,.7)] duration-500"
-      >
-        <ul className="relative float-right sm:w-[226px] h-full bg-white">
-          <ul>
-            <li>HOME</li>
-            <li>협업 게시판</li>
-            <li>정보공유 게시판</li>
-            <li>마이페이지</li>
-          </ul>
-          <button className="absolute bottom-0 right-0">로그인</button>
+    <header className="w-[1224px] top-0 left-0 right-0 mx-[auto] py-[50px] z-[999] fixed flex items-start justify-between bg-white">
+      <div>
+        <Logo />
+      </div>
+      <nav>
+        <ul className="flex gap-[44px] items-center text-[22px] leading-[27.54px]">
+          <li className="cursor-pointer">About</li>
+          <li className="cursor-pointer">협업 페이지</li>
+          <li className="cursor-pointer">
+            <Bell />
+          </li>
+          <li className="cursor-pointer">로그인</li>
+          <li className="relative cursor-pointer">
+            <div className="flex items-center ">
+              <img
+                className="w-[44px] h-[44px] rounded-[50%] mr-[10px]"
+                src="https://t1.daumcdn.net/cfile/tistory/216C553953FC27C335"
+                alt="유저 프로필"
+              />
+              <DownArrow className="inline-block" />
+            </div>
+            <ul className="absolute border-[1px] mt-[8px] -right-[25px] border-gray2 w-[180px] leading-[40px] rounded-[4px] bg-white">
+              <div className="absolute border-t-[1px] border-l-[1px] -top-[9px] right-[23.5px] border-gray2  w-[16px] h-[16px] bg-white rotate-45"></div>
+              <li className="pl-[10px]">마이페이지</li>
+              <li className="pl-[10px]">로그아웃</li>
+            </ul>
+          </li>
         </ul>
       </nav>
     </header>

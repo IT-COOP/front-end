@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { Filter } from "../../assets/icons";
+
 function RecruitFilterBar() {
   const [isOpen, setOpen] = useState(false);
 
@@ -21,75 +23,59 @@ function RecruitFilterBar() {
   };
 
   return (
-    <div className="sticky ">
-      <div className="bg-[#F9F9F9]">
+    <ul className="sticky  z-[100] flex justify-between items-center mb-[24px]">
+      <li>
         <button
-          className="px-[18px] py-[6px]"
+          className="flex items-center text-[24px] font-bold"
           onClick={toggleBarRecruitFilterBar}
         >
-          필터
+          <Filter className="inline-block mr-[16px]" /> 필터
         </button>
-      </div>
-      <ul
+      </li>
+      <li>
+        <button className="text-[22px] leading-[27.54px] h-[40px] bg-black text-white rounded-[5px] w-[180px]">
+          모집글 작성하기
+        </button>
+      </li>
+      <div
         style={isOpen ? { display: "block" } : { display: "none" }}
         onClick={handleFilterSelector}
-        className="hidden overflow-hidden "
+        className="absolute top-[100%] mt-[8px] w-full hidden overflow-hidden border-[1px] border-black bg-gray2"
       >
-        <li className="flex items-center">
-          <p className="px-[18px] py-[8px] text-center whitespace-nowrap">
+        <div className="flex items-center">
+          <p className="w-[182px]  px-[12px] py-[8px] text-left whitespace-nowrap  leading-[40px] border-r-[1px] border-b-[1px] border-black">
             지역
           </p>
-          <ul className="inline-flex overflow-hidden overflow-x-auto">
+          <ul className="inline-flex overflow-hidden overflow-x-auto leading-[34px]">
             <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
               전체
             </li>
             <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
               서울/수도권
             </li>
-            <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
-              강원도
-            </li>
-            <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
-              충청도
-            </li>
-            <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
-              경상도
-            </li>
-            <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
-              전라도
-            </li>
           </ul>
-        </li>
-        <li className="flex ">
-          <p className="px-[18px] py-[8px] text-center whitespace-nowrap">
+        </div>
+        <div className="flex ">
+          <p className="w-[182px] px-[12px] py-[8px] text-left whitespace-nowrap leading-[40px] border-r-[1px] border-b-[1px] border-black">
             직군
           </p>
-          <ul className="inline-flex overflow-hidden overflow-x-auto">
+          <ul className="inline-flex overflow-hidden overflow-x-auto leading-[34px]">
             <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
               전체
             </li>
             <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
               프론트엔드
             </li>
-            <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
-              백엔드
-            </li>
-            <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
-              디자이너
-            </li>
-            <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
-              기획자
-            </li>
           </ul>
-        </li>
-        <li className="inline-flex">
-          <p className="px-[18px] py-[8px] text-center whitespace-nowrap">
+        </div>
+        <div className="inline-flex">
+          <p className="w-[182px]  px-[12px] py-[8px] text-left whitespace-nowrap leading-[40px] border-r-[1px] border-black">
             스택
           </p>
           <ul className="inline-flex overflow-hidden overflow-x-auto"></ul>
-        </li>
-      </ul>
-    </div>
+        </div>
+      </div>
+    </ul>
   );
 }
 
