@@ -1,81 +1,38 @@
-import React, { useState } from "react";
-import { Filter } from "../../assets/icons";
+import React from "react";
 
-function RecruitFilterBar() {
-  const [isOpen, setOpen] = useState(false);
-  const toggleBarRecruitFilterBar = () => {
-    let toggle = !isOpen;
-    setOpen(toggle);
-  };
-
-  const handleFilterSelector = e => {
+function RecruitFilterBar({ handleFilter }) {
+  const handleClickFilter = e => {
     let target = e.target;
-    if (target.nodeName === "LI") {
-      for (let key of target.parentNode.children) {
-        key.style.fontWeight = "normal";
-        key.style.borderBottom = "none";
+
+    if (target.nodeName === "BUTTON") {
+      for (const key of target.parentNode.childNodes) {
+        key.classList.remove("after:w-full");
+        key.classList.remove("text-black");
+        key.classList.add("text-gray3");
       }
-      target.style.fontWeight = "bold";
-      target.style.borderBottom = "2px solid black";
+      target.classList.remove("text-gray3");
+      target.classList.remove("after:w-0");
+      target.classList.add("after:w-full");
+      target.classList.add("text-black");
+
+      handleFilter(target.innerText);
     }
   };
 
   return (
-    <div className=" z-[100] w-full bg-white ">
-      <ul className="relative w-[1224px] mx-[auto] flex justify-between items-center py-[12px]">
-        <li>
-          <button
-            className="flex items-center text-[20px] font-bold"
-            onClick={toggleBarRecruitFilterBar}
-          >
-            <Filter className="inline-block mr-[16px]" /> 필터
-          </button>
-        </li>
-        <li>
-          <button className="text-[17px] leading-[27.54px] h-[40px] bg-black text-white rounded-[5px] w-[180px]">
-            모집글 작성하기
-          </button>
-        </li>
-        <div
-          style={isOpen ? { display: "block" } : { display: "none" }}
-          onClick={handleFilterSelector}
-          className="absolute top-[100%] w-full hidden overflow-hidden border-[1px] border-black bg-gray2"
-        >
-          <div className="flex items-center">
-            <p className="w-[182px]  px-[12px] py-[8px] text-left whitespace-nowrap  leading-[40px] border-r-[1px] border-b-[1px] border-black">
-              지역
-            </p>
-            <ul className="inline-flex overflow-hidden overflow-x-auto leading-[34px]">
-              <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
-                전체
-              </li>
-              <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
-                서울/수도권
-              </li>
-            </ul>
-          </div>
-          <div className="flex ">
-            <p className="w-[182px] px-[12px] py-[8px] text-left whitespace-nowrap leading-[40px] border-r-[1px] border-b-[1px] border-black">
-              직군
-            </p>
-            <ul className="inline-flex overflow-hidden overflow-x-auto leading-[34px]">
-              <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
-                전체
-              </li>
-              <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
-                프론트엔드
-              </li>
-            </ul>
-          </div>
-          <div className="inline-flex">
-            <p className="w-[182px]  px-[12px] py-[8px] text-left whitespace-nowrap leading-[40px] border-r-[1px] border-black">
-              스택
-            </p>
-            <ul className="inline-flex overflow-hidden overflow-x-auto"></ul>
-          </div>
-        </div>
-      </ul>
-    </div>
+    <ul className="w-[1224px] mx-auto flex items-center my-[24px] justify-between leading-[30.05px] text-[24px] bg-white">
+      <li onClick={handleClickFilter}>
+        <button className="py-[5px] mr-[40px] font-bold hover:text-black relative after:contents-[''] after:absolute after:top-[100%] mt-[6px]  after:left-0 after:h-[2px] after:w-full after:block after:bg-black hover:after:w-full">
+          최신순
+        </button>
+        <button className="py-[5px] font-bold text-gray3 hover:text-black relative after:contents-[''] after:absolute after:top-[100%] mt-[6px] after:left-0 after:h-[2px] after:w-0 after:block after:bg-black hover:after:w-full">
+          Keep it 많은 순
+        </button>
+      </li>
+      <li className="py- font-[500]">
+        <button>모집중인 글만 보기</button>
+      </li>
+    </ul>
   );
 }
 

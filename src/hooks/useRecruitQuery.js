@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
 import { recuritApis } from "../apis/recruitApi";
 
-function useRecruitQuery() {
-  return useQuery(["recruit"], () => {
-    return recuritApis.getRecuritBoard();
+function useRecruitQuery(filter) {
+  return useQuery(["recruit", filter], () => {
+    return recuritApis.getRecuritBoard(filter);
   });
 }
 

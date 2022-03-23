@@ -24,14 +24,14 @@ const _location = {
   109: "그 외",
 };
 
-const _technologyStack = {
+const _task = {
   100: "기획자",
   200: "디자이너",
   300: "프론트엔드",
   400: "백엔드",
 };
 
-const _language = {
+const _stack = {
   101: "React",
   102: "Vue",
   103: "Angular",
@@ -48,5 +48,5 @@ const _language = {
 };
 
 export const Location = makeEnum(Object.entries(_location));
-export const TechnologyStack = makeEnum(Object.entries(_technologyStack));
-export const Language = makeEnum(Object.entries(_language));
+export const Task = makeEnum(Object.entries(_task));
+export const Stack = makeEnum(Object.entries(_stack));

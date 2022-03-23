@@ -11,7 +11,7 @@ const GITHUB_URL = process.env.REACT_APP_AUTH_GITHUB_URL;
 const GOOGLE_URL = process.env.REACT_APP_AUTH_GOOGLE_URL;
 const KAKAO_URL = process.env.REACT_APP_AUTH_KAKAO_URL;
 
-function LoginButtons({ closeSocialModal }) {
+function SocialSignIn({ closeSignInModal }) {
   const moveToSocialLoginPage = url => () => window.location.replace(url);
   const socialBtnCss = `relative mb-4 mx-auto w-[300px] h-[46px] px-[12px] pl-[48px] rounded-[12px] font-bold text-[14px] shadow-md`;
   const btnIconCss = `absolute left-[16px]`;
@@ -19,13 +19,13 @@ function LoginButtons({ closeSocialModal }) {
 
   const closeModal = e => {
     if (e.target.nodeName === "svg" || e.target.nodeName === "SECTION") {
-      closeSocialModal(false);
+      closeSignInModal(false);
     }
   };
 
   return (
     <section
-      className="fixed flex items-center justify-center w-screen h-screen bg-black/70 "
+      className="fixed top-0 flex z-[999] items-center justify-center w-screen h-screen bg-black/70 "
       onClick={closeModal}
     >
       <section className="flex relative flex-col bg-[#F9F9F9] rounded-[15px] w-[800px] h-[500px] px-[50px] justify-center items-center">
@@ -71,4 +71,4 @@ function LoginButtons({ closeSocialModal }) {
   );
 }
 
-export default LoginButtons;
+export default SocialSignIn;
