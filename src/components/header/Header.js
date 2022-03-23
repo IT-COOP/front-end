@@ -4,7 +4,7 @@ import { NavLink, useSearchParams } from "react-router-dom";
 import { Logo, Bell, DownArrow } from "../../assets/icons";
 import SignUp from "../login/SignUp";
 import SocialSignIn from "../login/SocialSignIn";
-import useUserCheckQuery from "../../hooks/useUserCheckQuery";
+// import useUserCheckQuery from "../../hooks/useUserCheckQuery";
 function Header() {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
