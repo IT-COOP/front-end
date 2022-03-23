@@ -6,7 +6,14 @@ import RecruitFilterBar from "./RecruitFilterBar";
 import useRecruitQuery from "../../hooks/useRecruitQuery";
 
 function RecruitBoardList() {
-  const [filter, setFilter] = useState();
+  const [filter, setFilter] = useState({
+    loc: "",
+    task: "",
+    stack: "",
+    // sort: 0,
+    items: "",
+  });
+
   const { data } = useRecruitQuery(filter);
 
   const handleFilter = filter => {
@@ -14,12 +21,12 @@ function RecruitBoardList() {
   };
 
   const handleCategory = category => {
-    console.log(category);
+    setFilter(category);
   };
 
   return (
     <div className="w-full">
-      <RecruitCategoryBar handleCategory={handleCategory} />
+      <RecruitCategoryBar config={filter} onCategorySelected={handleCategory} />
       <RecruitFilterBar handleFilter={handleFilter} />
       <ul className="flex overflow-hidden mb-[20px] flex-wrap w-[1224px] mx-auto  gap-x-[2%] gap-y-[24px] rounded-[8px]">
         {data?.map(board => (
