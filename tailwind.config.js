@@ -19,6 +19,7 @@ module.exports = {
         pink: "#e5a0c0",
         red: "#ff0000", //경고색
         blue2: "#0055ff", //필수,선택
+        blue3: "#2563D7",
       },
     },
   },

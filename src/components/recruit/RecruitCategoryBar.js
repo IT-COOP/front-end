@@ -12,7 +12,7 @@ function RecruitCategoryBar({
   onCategorySelected,
 }) {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const toggleBarRecruitFilterBar = () => setIsCategoryOpen(prev => !prev);
+  const toggleCategoryList = () => setIsCategoryOpen(prev => !prev);
 
   const locationList = getPerfectFields(Location);
   const taskList = getPerfectFields(Task);
@@ -48,93 +48,94 @@ function RecruitCategoryBar({
   };
 
   return (
-    <div className=" z-[100] w-full bg-white ">
-      <ul className="relative w-[1224px] mx-[auto] flex justify-between items-center py-[12px]">
-        <li>
-          <button
-            className="flex items-center text-[20px] font-bold"
-            onClick={toggleBarRecruitFilterBar}
-          >
-            <Filter className="inline-block mr-[16px]" /> 필터
-          </button>
-        </li>
-        <li>
-          <button className="text-[17px] leading-[27.54px] h-[40px] bg-black text-white rounded-[5px] w-[180px]">
-            모집글 작성하기
-          </button>
-        </li>
-        <div
-          style={isCategoryOpen ? { display: "block" } : { display: "none" }}
-          className="absolute top-[100%] z-[99] w-full hidden overflow-hidden border border-solid border-gray2"
-        >
-          <div className="flex items-center h-[40px]">
-            <p className="shrink-0 w-[182px] h-full flex items-center pl-[12px] text-left text-[15px] text-white font-medium whitespace-nowrap border-b border-solid border-white bg-blue">
-              지역
-            </p>
-            <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white">
-              {locationList.map(locationName => (
-                <li
-                  key={locationName}
-                  className={classNames(
-                    "px-1 z-10 h-[40px] leading-[40px] cursor-pointer whitespace-nowrap relative",
-                    {
-                      "font-bold border-b-2 border-solid border-b-black":
-                        loc === (Location[locationName] ?? ""),
-                    },
-                  )}
-                  onClick={handleLocationSelect(locationName)}
-                >
-                  {locationName}
-                </li>
-              ))}
-            </ul>
+    <div className="z-[100] w-full bg-white border-b border-solid border-b-gray2">
+      <div className="relative w-[1224px] mx-auto my-[28px]">
+        <ul className="flex items-center justify-between">
+          <li>
+            <button
+              className="flex items-center text-[20px] font-bold"
+              onClick={toggleCategoryList}
+            >
+              <Filter className="inline-block mr-[16px]" /> 필터
+            </button>
+          </li>
+          <li>
+            <button className="w-[180px] text-[17px] h-[40px] bg-blue3 text-white rounded-[5px]">
+              모집글 작성하기
+            </button>
+          </li>
+        </ul>
+        {isCategoryOpen && (
+          <div className="absolute top-[100%] w-full z-10 overflow-hidden border border-solid border-gray2">
+            <div className="flex items-center h-[40px]">
+              <p className="shrink-0 w-[182px] h-full flex items-center pl-[12px] text-left text-[15px] text-white font-medium whitespace-nowrap border-b border-solid border-white bg-blue">
+                지역
+              </p>
+              <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white">
+                {locationList.map(locationName => (
+                  <li
+                    key={locationName}
+                    className={classNames(
+                      "px-1 z-10 h-[40px] leading-[40px] cursor-pointer whitespace-nowrap relative",
+                      {
+                        "font-bold border-b-2 border-solid border-b-black":
+                          loc === (Location[locationName] ?? ""),
+                      },
+                    )}
+                    onClick={handleLocationSelect(locationName)}
+                  >
+                    {locationName}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex items-center h-[40px]">
+              <p className="shrink-0 w-[182px] h-full flex items-center pl-[12px] text-left text-[15px] text-white font-medium whitespace-nowrap border-b border-solid border-white bg-blue">
+                직군
+              </p>
+              <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white">
+                {taskList.map(taskName => (
+                  <li
+                    key={taskName}
+                    className={classNames(
+                      "px-1 z-10 h-[40px] leading-[40px] cursor-pointer whitespace-nowrap ",
+                      {
+                        "font-bold border-b-2 border-solid border-b-black":
+                          task === (Task[taskName] ?? ""),
+                      },
+                    )}
+                    onClick={handleTaskSelect(taskName)}
+                  >
+                    {taskName}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex items-center h-[40px]">
+              <p className="shrink-0 w-[182px] h-full flex items-center pl-[12px] text-left text-[15px] text-white font-medium whitespace-nowrap border-b border-solid border-white bg-blue">
+                스택
+              </p>
+              <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white">
+                {filteredStackList.map(stackName => (
+                  <li
+                    key={stackName}
+                    className={classNames(
+                      "px-1 z-10 h-[40px] leading-[40px] cursor-pointer whitespace-nowrap ",
+                      {
+                        "font-bold border-b-2 border-solid border-b-black":
+                          stack === (Stack[stackName] ?? ""),
+                      },
+                    )}
+                    onClick={handleStackSelect(stackName)}
+                  >
+                    {stackName}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="flex items-center h-[40px]">
-            <p className="shrink-0 w-[182px] h-full flex items-center pl-[12px] text-left text-[15px] text-white font-medium whitespace-nowrap border-b border-solid border-white bg-blue">
-              직군
-            </p>
-            <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white">
-              {taskList.map(taskName => (
-                <li
-                  key={taskName}
-                  className={classNames(
-                    "px-1 z-10 h-[40px] leading-[40px] cursor-pointer whitespace-nowrap ",
-                    {
-                      "font-bold border-b-2 border-solid border-b-black":
-                        task === (Task[taskName] ?? ""),
-                    },
-                  )}
-                  onClick={handleTaskSelect(taskName)}
-                >
-                  {taskName}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex items-center h-[40px]">
-            <p className="shrink-0 w-[182px] h-full flex items-center pl-[12px] text-left text-[15px] text-white font-medium whitespace-nowrap border-b border-solid border-white bg-blue">
-              스택
-            </p>
-            <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white">
-              {filteredStackList.map(stackName => (
-                <li
-                  key={stackName}
-                  className={classNames(
-                    "px-1 z-10 h-[40px] leading-[40px] cursor-pointer whitespace-nowrap ",
-                    {
-                      "font-bold border-b-2 border-solid border-b-black":
-                        stack === (Stack[stackName] ?? ""),
-                    },
-                  )}
-                  onClick={handleStackSelect(stackName)}
-                >
-                  {stackName}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </ul>
+        )}
+      </div>
     </div>
   );
 }
