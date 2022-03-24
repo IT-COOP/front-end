@@ -4,19 +4,10 @@ import { NavLink, useSearchParams } from "react-router-dom";
 import { Logo, Bell, DownArrow } from "../../assets/icons";
 import SignUp from "../login/SignUp";
 import SocialSignIn from "../login/SocialSignIn";
-import useUserCheckQuery from "../../hooks/useUserCheckQuery";
 
 function Header() {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(true);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [token, setToken] = useState(null);
-  useEffect(() => {
-    if (searchParams.get("accessToken")) {
-      setToken(searchParams.get("accessToken"));
-    }
-  }, [searchParams, setSearchParams]);
-  // const { data } = useUserCheckQuery(token);
 
   const openSignInModal = () => {
     setIsSignInModalOpen(true);

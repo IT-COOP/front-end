@@ -6,21 +6,30 @@ import RecruitFilterBar from "./RecruitFilterBar";
 import useRecruitQuery from "../../hooks/useRecruitQuery";
 
 function RecruitBoardList() {
-  const [filter, setFilter] = useState();
+  const [filter, setFilter] = useState({
+    loc: "",
+    task: "",
+    stack: "",
+    sort: 0,
+    items: "",
+  });
+
   const { data } = useRecruitQuery(filter);
 
-  const handleFilter = filter => {
-    setFilter(filter);
-  };
-
-  const handleCategory = category => {
-    console.log(category);
+  const handleFilterChange = newPayload => {
+    setFilter(newPayload);
   };
 
   return (
     <div className="w-full">
-      <RecruitCategoryBar handleCategory={handleCategory} />
-      <RecruitFilterBar handleFilter={handleFilter} />
+      <RecruitCategoryBar
+        config={filter}
+        onCategorySelected={handleFilterChange}
+      />
+      <RecruitFilterBar
+        currentSortNumber={filter.sort}
+        onFilterChanged={handleFilterChange}
+      />
       <ul className="flex overflow-hidden mb-[20px] flex-wrap w-[1224px] mx-auto  gap-x-[2%] gap-y-[24px] rounded-[8px]">
         {data?.map(board => (
           <li

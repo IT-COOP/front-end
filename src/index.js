@@ -11,6 +11,7 @@ import Recruit from "./routes/Recruit/Recruit";
 import Header from "./components/header/Header";
 import User from "./routes/User";
 import UserEdit from "./routes/User/edit";
+import Auth from "./components/login/Auth";
 
 import "./index.css";
 
@@ -25,7 +26,9 @@ ReactDOM.render(
           <Route path="/app" element={<App />} />
           <Route path="/mypage" element={<User />} />
           <Route path="/mypage/edit" element={<UserEdit />} />
-          <Route path="/" element={<Recruit />}></Route>
+          <Route path="/" element={<Recruit />}>
+            <Route path="auth" element={<Auth />} />
+          </Route>
           <Route path="/recruit/write" element={<RecruitWrite />} />
           <Route path="/recruit/:id" element={<RecruitBoardDetail />} />
         </Routes>
