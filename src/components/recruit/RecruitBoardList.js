@@ -31,7 +31,7 @@ function RecruitBoardList() {
         onFilterChanged={handleFilterChange}
       />
       <ul className="flex overflow-hidden mb-[20px] flex-wrap w-[1224px] mx-auto  gap-x-[2%] gap-y-[24px] rounded-[8px]">
-        {data?.map(board => (
+        {data?.slice(0, 3).map(board => (
           <li
             key={board.recruitPostId}
             className="flex flex-col overflow-hidden w-[23.5%] h-[396px] rounded-[11px] bg-white border-[1px] cursor-pointer shadow-md"
