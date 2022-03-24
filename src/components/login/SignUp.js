@@ -1,13 +1,29 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import { Close, Prev } from "../../assets/icons";
 import classNames from "classnames";
-// import { Stack, Task } from "../../constants/enums";
+
+import { Close, Prev } from "../../assets/icons";
+import { Stack, Task } from "../../constants/enums";
 
 function SocialSignIn({ closeSignUpModal }) {
-  // const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({
+    technologyStack: "",
+  });
   const [nicknameConfirm, setConfirm] = useState(false);
-  // const [selectStack, setStack] = useState({});
+  const [selectTask, setTask] = useState(0);
+
+  const filterTask = Object.values(Task).filter(task => !isNaN(task));
+  const StackList =
+    selectTask < 300
+      ? []
+      : Object.values(Stack).filter(stack => {
+          const startPoint =
+            selectTask === 300 ? selectTask - 200 : selectTask - 100;
+          const targetPoint = Stack[stack];
+          return startPoint < targetPoint && targetPoint < startPoint + 100;
+        });
+
+  console.log(StackList);
 
   const options = [
     { a: "apple", label: "Apple" },
@@ -19,10 +35,13 @@ function SocialSignIn({ closeSignUpModal }) {
   const confirmUserNickname = e => {
     const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
     const nickname = e.target.value;
-    // const inputName = e.target.name;
+    const inputName = e.target.name;
+    const userInfoCopy = { ...userInfo };
+    userInfoCopy[inputName] = nickname;
     regex.test(nickname);
     if (regex.test(nickname) & (nickname.length > 1) & (nickname.length <= 8)) {
       setConfirm(true);
+      setUserInfo(userInfoCopy);
     } else {
       setConfirm(false);
     }
@@ -33,15 +52,6 @@ function SocialSignIn({ closeSignUpModal }) {
       closeSignUpModal();
     }
   };
-
-  // const handleUserData = e => {
-  //   const inputName = e.target.name;
-  //   const inputValue = e.target.value;
-  //   const userValue = { ...userInfo };
-  //   userValue[inputName] = inputValue;
-  //   setUserInfo(userValue);
-  //   console.log(userInfo);
-  // };
 
   const handleNextChapter = e => {
     const currentLi = e.currentTarget.parentNode;
@@ -61,8 +71,8 @@ function SocialSignIn({ closeSignUpModal }) {
     prevLi.style.opacity = 1;
   };
 
-  const handleSelectStack = e => {
-    return false;
+  const handleSelectTask = task => () => {
+    setTask(task);
   };
 
   // const handleJoinSubmit = e => {
@@ -132,18 +142,17 @@ function SocialSignIn({ closeSignUpModal }) {
               직군
             </p>
             <div className="flex">
-              <button className="bg-gray1 text-gray4 mr-[16px] text-[17px] px-[16px] py-[6px] rounded-[20px]">
-                프론트엔드
-              </button>
-              <button className="bg-gray1 text-gray4 mr-[16px] text-[17px] px-[16px] py-[6px] rounded-[20px]">
-                백엔드
-              </button>
-              <button className="bg-gray1 text-gray4 mr-[16px] text-[17px] px-[16px] py-[6px] rounded-[20px]">
-                디자이너
-              </button>
-              <button className="bg-gray1 text-gray4 rounded-[17px] text-[20px] px-[16px] py-[6px] ">
-                기획
-              </button>
+              {filterTask.map(task => (
+                <button
+                  key={task}
+                  className={classNames(
+                    "bg-gray1 text-gray4 mr-[16px] text-[17px] px-[16px] py-[6px] rounded-[20px]",
+                  )}
+                  onClick={handleSelectTask(task)}
+                >
+                  {Task[task]}
+                </button>
+              ))}
             </div>
           </div>
           <div className="flex stack">
@@ -154,7 +163,6 @@ function SocialSignIn({ closeSignUpModal }) {
               <Select
                 isMulti
                 options={options}
-                onChange={handleSelectStack}
                 placeholder="스택을 선택해주세요"
               />
               <p className="leading-[40px] text-[20px] text-gray4 mb-[63px]">

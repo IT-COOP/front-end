@@ -25,7 +25,7 @@ ReactDOM.render(
           <Route path="/app" element={<App />} />
           <Route path="/mypage" element={<User />} />
           <Route path="/mypage/edit" element={<UserEdit />} />
-          <Route path="/" element={<Recruit />} />
+          <Route path="/" element={<Recruit />}></Route>
           <Route path="/recruit/write" element={<RecruitWrite />} />
           <Route path="/recruit/:id" element={<RecruitBoardDetail />} />
         </Routes>

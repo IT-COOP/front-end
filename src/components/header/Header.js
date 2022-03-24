@@ -8,7 +8,7 @@ import useUserCheckQuery from "../../hooks/useUserCheckQuery";
 
 function Header() {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
-  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const [token, setToken] = useState(null);
   useEffect(() => {
@@ -16,8 +16,7 @@ function Header() {
       setToken(searchParams.get("accessToken"));
     }
   }, [searchParams, setSearchParams]);
-  const { data } = useUserCheckQuery(token);
-  console.log(data);
+  // const { data } = useUserCheckQuery(token);
 
   const openSignInModal = () => {
     setIsSignInModalOpen(true);
@@ -25,7 +24,6 @@ function Header() {
   const closeSignInModal = () => {
     setIsSignInModalOpen(false);
   };
-
   const closeSignUpModal = () => {
     setIsSignUpModalOpen(false);
   };
