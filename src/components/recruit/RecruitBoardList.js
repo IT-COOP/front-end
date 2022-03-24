@@ -15,7 +15,6 @@ function RecruitBoardList() {
   });
 
   const { data } = useRecruitQuery(filter);
-
   const handleFilterChange = newPayload => {
     setFilter(newPayload);
   };

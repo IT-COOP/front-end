@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Select from "react-select";
 import classNames from "classnames";
 
 import { Close, Prev } from "../../assets/icons";
@@ -15,22 +14,13 @@ function SocialSignIn({ closeSignUpModal }) {
   const filterTask = Object.values(Task).filter(task => !isNaN(task));
   const StackList =
     selectTask < 300
-      ? []
+      ? null
       : Object.values(Stack).filter(stack => {
           const startPoint =
             selectTask === 300 ? selectTask - 200 : selectTask - 100;
           const targetPoint = Stack[stack];
           return startPoint < targetPoint && targetPoint < startPoint + 100;
         });
-
-  console.log(StackList);
-
-  const options = [
-    { a: "apple", label: "Apple" },
-    { a: "banana", label: "Banana" },
-    { a: "orange", label: "Orange" },
-    { a: "berry", label: "Berry" },
-  ];
 
   const confirmUserNickname = e => {
     const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
@@ -82,7 +72,7 @@ function SocialSignIn({ closeSignUpModal }) {
   const formLi = `flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white opacity-0  px-[158px]`;
   const formTitle = `text-center font-bold text-[30px] mt-[74px] mb-[32px] `;
   const formDesc = `text-center text-[20px] text-[#797979] mb-[40px] `;
-  const nextBtn = `mx-auto font-bold text-[24px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px] `;
+  const nextBtn = `mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px] `;
 
   return (
     <section className="fixed top-0 left-0 z-[999] flex items-center justify-center w-screen h-screen transition-opacity bg-black/70">
@@ -111,16 +101,16 @@ function SocialSignIn({ closeSignUpModal }) {
               className={classNames(
                 "w-[117px] h-[72px] text-[24px]   rounded-[5px]",
                 {
-                  "pointer-events-none bg-[#CCCCCC] text-gray4":
-                    !nicknameConfirm,
-                  "pointer-events-auto bg-blue text-white": nicknameConfirm,
+                  "bg-[#CCCCCC] text-gray4": !nicknameConfirm,
+                  "bg-blue text-white": nicknameConfirm,
                 },
               )}
+              disabled={!nicknameConfirm}
             >
               중복확인
             </button>
           </div>
-          <p className="mb-[20px] text-[20px] leading-[25.04px] text-gray4">
+          <p className="mb-[70px] text-[20px] leading-[25.04px] text-gray4">
             {"닉네임은 공백잆어 한글/영문/숫자만 가능합니다"}
           </p>
           <button className={`${nextBtn}`} onClick={handleNextChapter}>
@@ -137,7 +127,7 @@ function SocialSignIn({ closeSignUpModal }) {
           <h1 className={`${formTitle} mb-[33px]`}>
             <span>직군과 스택을</span> 설정해주세요.
           </h1>
-          <div className="flex items-center mb-[25px] ">
+          <div className="flex items-center mb-[40px] ">
             <p className="text-left text-[24px] leading-[30.05px] mr-[26px] text-gray4">
               직군
             </p>
@@ -146,7 +136,7 @@ function SocialSignIn({ closeSignUpModal }) {
                 <button
                   key={task}
                   className={classNames(
-                    "bg-gray1 text-gray4 mr-[16px] text-[17px] px-[16px] py-[6px] rounded-[20px]",
+                    "bg-gray1 text-gray4 mr-[16px] text-[16px] px-[16px] py-[6px] rounded-[20px]",
                   )}
                   onClick={handleSelectTask(task)}
                 >
@@ -155,16 +145,16 @@ function SocialSignIn({ closeSignUpModal }) {
               ))}
             </div>
           </div>
-          <div className="flex stack">
-            <p className="text-left text-[24px] leading-[30.05px] mr-[26px] text-gray4">
+          <div className="flex stack mb-[12px]">
+            <p className="text-left text-[24px] leading-[50px] mr-[26px] text-gray4">
               스택
             </p>
             <div className="flex-1">
-              <Select
-                isMulti
-                options={options}
-                placeholder="스택을 선택해주세요"
-              />
+              <select className="w-full border-[1px] h-[50px] pl-[15px]">
+                {StackList?.map(stack => (
+                  <option key={stack}>{stack}</option>
+                ))}
+              </select>
               <p className="leading-[40px] text-[20px] text-gray4 mb-[63px]">
                 최소 1개부터 최대 3개까지 선택 해주세요!
               </p>

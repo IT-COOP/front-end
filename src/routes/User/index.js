@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { Heart } from "../../assets/icons";
 
@@ -80,7 +81,42 @@ function UserPage() {
               </div>
             </div>
           </li>
-          <li className="flex-1"></li>
+          <li className="flex-1 w-[912px]">
+            <div className="w-full bg-white p-[30px] border-[1px] border-gray2 rounded-[8px] mb-[42px]">
+              <div className="mb-[36px]">
+                <p className="text-[17px] mb-[22px]">포트폴리오</p>
+                <a
+                  className="pl-[14px] text-blue2 underline text-[15px]"
+                  href="https://www.naver.com"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  ㅇㅇㅇ
+                </a>
+              </div>
+              <div className="">
+                <p className="mb-[22px] text-[17px]">소개글</p>
+                <p className="pl-[14px] text-[15px]">2조 조장입니다</p>
+              </div>
+            </div>
+            <div>
+              <p className="text-[17px] mb-[29px]">나의 프로젝트</p>
+              <ul className="flex w-full">
+                <li className="flex-1 text-center text-[17px] pb-[9px] border-b-[5px] border-black">
+                  진행중
+                </li>
+                <li className="flex-1 text-center text-[17px] pb-[9px]">
+                  신청중
+                </li>
+                <li className="flex-1 text-center text-[17px] pb-[9px]">
+                  모집중
+                </li>
+                <li className="flex-1 text-center text-[17px] pb-[9px]">
+                  진행완료
+                </li>
+              </ul>
+            </div>
+          </li>
         </ul>
       </div>
     </section>

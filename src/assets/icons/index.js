@@ -9,6 +9,8 @@ import { ReactComponent as Comment } from "./comment.svg";
 import { ReactComponent as KeepIt } from "./keepIt.svg";
 import { ReactComponent as Heart } from "./heart.svg";
 import { ReactComponent as Info } from "./info.svg";
+import { ReactComponent as Flag } from "./flag.svg";
+import { ReactComponent as Check } from "./check.svg";
 
 export {
   Close,
@@ -22,4 +24,6 @@ export {
   KeepIt,
   Heart,
   Info,
+  Flag,
+  Check,
 };
