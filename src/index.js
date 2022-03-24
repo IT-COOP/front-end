@@ -19,7 +19,7 @@ const queryClient = new QueryClient();
 ReactDOM.render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
-      <main className="w-full pt-[100px]">
+      <main className="w-full">
         <Header />
         <Routes>
           <Route path="/app" element={<App />} />

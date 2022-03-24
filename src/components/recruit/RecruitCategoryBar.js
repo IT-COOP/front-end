@@ -45,7 +45,7 @@ function RecruitCategoryBar({ handleCategory }) {
             <p className="w-[182px]  px-[12px] py-[8px] text-left whitespace-nowrap  leading-[40px] border-r-[1px] border-b-[1px] border-black">
               지역
             </p>
-            <ul className="inline-flex overflow-hidden overflow-x-auto leading-[34px]">
+            <ul className="flex overflow-hidden overflow-x-auto leading-[34px]">
               <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
                 전체
               </li>
@@ -58,7 +58,7 @@ function RecruitCategoryBar({ handleCategory }) {
             <p className="w-[182px] px-[12px] py-[8px] text-left whitespace-nowrap leading-[40px] border-r-[1px] border-b-[1px] border-black">
               직군
             </p>
-            <ul className="inline-flex overflow-hidden overflow-x-auto leading-[34px]">
+            <ul className="flex overflow-hidden overflow-x-auto ">
               <li className="px-[18px] py-[8px] text-center whitespace-nowrap">
                 전체
               </li>
@@ -67,11 +67,11 @@ function RecruitCategoryBar({ handleCategory }) {
               </li>
             </ul>
           </div>
-          <div className="inline-flex">
+          <div className="flex">
             <p className="w-[182px]  px-[12px] py-[8px] text-left whitespace-nowrap leading-[40px] border-r-[1px] border-black">
               스택
             </p>
-            <ul className="inline-flex overflow-hidden overflow-x-auto"></ul>
+            <ul className="flex overflow-hidden overflow-x-auto"></ul>
           </div>
         </div>
       </ul>

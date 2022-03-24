@@ -174,13 +174,29 @@ function SocialSignIn({ closeSignUpModal }) {
             <Prev />
           </button>
           <h1 className={formTitle}>사용하실 프로필 사진을 설정해주세요.</h1>
-          <p className={`${formDesc}`}>
+          <p className={`${formDesc} mb-[36px]`}>
             서비스를 이용할 때 사용되는 이미지에요!
           </p>
-          <div className="">
-            <label></label>
-            <input type="file" className="" />
-          </div>
+          <ul className="flex items-center justify-center mb-[36px]">
+            <li>
+              <img
+                className="w-[140px] h-[140px] rounded-full bg-black overflow-hidden mr-[42px]"
+                alt="프로필 사진"
+              />
+            </li>
+            <li>
+              <label
+                htmlFor="upload"
+                className="block w-[126px] h-[40px] bg-black text-white rounded-[5px] mb-[10px] text-[18px] leading-[40px] text-center"
+              >
+                프로필 등록
+              </label>
+              <input id="upload" type="file" className="hidden" />
+              <button className="w-[126px] h-[40px] rounded-[5px] bg-gray2 text-[18px] leading-[22.54px]">
+                프로필 삭제
+              </button>
+            </li>
+          </ul>
           <button className={`${nextBtn}`} onClick={handleNextChapter}>
             완료하기
           </button>

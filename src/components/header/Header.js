@@ -4,25 +4,20 @@ import { NavLink, useSearchParams } from "react-router-dom";
 import { Logo, Bell, DownArrow } from "../../assets/icons";
 import SignUp from "../login/SignUp";
 import SocialSignIn from "../login/SocialSignIn";
-// import useUserCheckQuery from "../../hooks/useUserCheckQuery";
+import useUserCheckQuery from "../../hooks/useUserCheckQuery";
+
 function Header() {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [token, setToken] = useState(null);
   useEffect(() => {
     if (searchParams.get("accessToken")) {
-      // const token = searchParams.get("accessToken");
-      if (searchParams.get("isProfileSet") === "false") {
-        setIsSignUpModalOpen(true); //유저 정보가없어서 튜토리얼 진행
-      } else {
-        //token 전달 => 유저 정보와 엑세스토큰 리프레쉬토큰 받아옴
-      }
-      //로직 다시 해보기 세세한 흐름 생각
-      setSearchParams("");
+      setToken(searchParams.get("accessToken"));
     }
   }, [searchParams, setSearchParams]);
-  // const { data } = useUserCheckQuery();
+  const { data } = useUserCheckQuery(token);
+  console.log(data);
 
   const openSignInModal = () => {
     setIsSignInModalOpen(true);
@@ -69,7 +64,7 @@ function Header() {
                   />
                   <DownArrow className="inline-block" />
                 </div>
-                <ul className="absolute border-[1px] mt-[8px] -right-[25px] border-gray2 w-[180px] leading-[40px] rounded-[4px] bg-white">
+                <ul className="absolute border-[1px] mt-[8px] -right-[25px] border-gray2 w-[180px] leading-[40px] rounded-[4px] bg-white hidden">
                   <div className="absolute border-t-[1px] border-l-[1px] -top-[9px] right-[23.5px] border-gray2  w-[16px] h-[16px] bg-white rotate-45"></div>
                   <li>
                     <NavLink
