@@ -2,14 +2,24 @@ import { instance } from "./axiosInstance";
 
 export const userApis = {
   // 토큰 확인해서 회원가입한 사람이면 유저 정보 가져오고 아니면 빈 스트링 받음
+  checkToken: async ({ accessToken, refreshToken }) => {
+    const response = await instance.get("login/refresh", {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+        refreshToken: `Bearer ${refreshToken}`,
+      },
+    });
+    return response;
+  },
+
   checkUser: async () => {
     const { data } = await instance.get("login/validation");
     return { data };
   },
 
   getUserInfo: async () => {
-    const { data } = await instance.get("login/me");
-    return data;
+    const response = await instance.get("login/me");
+    return response;
   },
 
   uploadUserProfileImg: async formData => {

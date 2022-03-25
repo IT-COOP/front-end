@@ -1,11 +1,20 @@
 import React from "react";
 // import { Link } from "react-router-dom";/
+import classNames from "classnames";
 
 import { Heart } from "../../assets/icons";
+import RecruitBoard from "../../components/recruit/RecruitBoard";
+import useRecruitQuery from "../../hooks/useRecruitQuery";
 
 function UserPage() {
+  const { data: myKeepRecruit } = useRecruitQuery();
+
   return (
-    <section className="w-full bg-[#f8f8f8] pt-[148px]">
+    <section
+      className={classNames("w-full bg-[#f8f8f8] pt-[148px] ", {
+        "pb-[100px]": myKeepRecruit,
+      })}
+    >
       <div className="w-[1224px] mx-auto">
         <div className="flex justify-between mb-[13px]">
           <h1 className="text-[21px] font-[700] leading-[26x]]">마이페이지</h1>
@@ -102,18 +111,57 @@ function UserPage() {
             <div>
               <p className="text-[17px] mb-[29px]">나의 프로젝트</p>
               <ul className="flex w-full">
-                <li className="flex-1 text-center text-[17px] pb-[9px] border-b-[5px] border-black">
+                <li className="flex-1 text-center text-[17px] pb-[9px] border-b-[5px] border-black cursor-pointer">
                   진행중
                 </li>
-                <li className="flex-1 text-center text-[17px] pb-[9px]">
+                <li className="flex-1 text-center text-[17px] pb-[9px] cursor-pointer">
                   신청중
                 </li>
-                <li className="flex-1 text-center text-[17px] pb-[9px]">
+                <li className="flex-1 text-center text-[17px] pb-[9px] cursor-pointer">
                   모집중
                 </li>
-                <li className="flex-1 text-center text-[17px] pb-[9px]">
+                <li className="flex-1 text-center text-[17px] pb-[9px] cursor-pointer">
                   진행완료
                 </li>
+              </ul>
+              <div className="mt-[45px] mb-[38px]">
+                <p className="text-[15px]">
+                  네이티브 개발자 1명 모집, 이커머스 플랫폼 사이드 프젝 할 사람
+                  {`>`}
+                  <span className="block mt-[25px] text-[14px] text-gray4">
+                    2022.02.11 | 김홍길
+                  </span>
+                </p>
+              </div>
+              <hr className="border-gray2 mb-[42px]" />
+            </div>
+            <div>
+              <h3 className="mb-[34px] text-[17px] font-bold">
+                내가 Keep It 한 게시물
+              </h3>
+              <ul className="flex overflow-hidden w-full mb-[20px] flex-wrap mx-auto  gap-x-[2%] gap-y-[24px] rounded-[8px]">
+                {myKeepRecruit?.map(board => (
+                  <li
+                    key={board.recruitPostId}
+                    className="flex flex-col overflow-hidden w-[32%] h-[396px] rounded-[11px] bg-white border-[1px] cursor-pointer shadow-md"
+                  >
+                    <RecruitBoard
+                      recruitPostId={board.recruitPostId}
+                      title={board.title}
+                      author={board.author}
+                      recruitContent={board.recruitContent}
+                      recruitKeepCount={board.recruitKeepCount}
+                      recruitCommentCount={board.recruitCommentCount}
+                      recruitLocation={board.recruitLocation}
+                      thumbImgUrl={board.thumbImgUrl} //이미지 정보 array
+                      createdAt={board.createdAt}
+                      recruitKeeps={board.recruitKeeps} //누가 추가했는지 user의 id값이 담긴 array
+                      recruitStacks={board.recruitStacks} //직군에 대한 array
+                      recruitDurationWeeks={board.recruitDurationWeeks}
+                      recruitTasks={board.recruitTasks}
+                    />
+                  </li>
+                ))}
               </ul>
             </div>
           </li>

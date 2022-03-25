@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 
 import { KeepItActive, KeepIt, Comment } from "../../assets/icons";
 
@@ -8,6 +9,7 @@ import convertDateText from "../../lib/convertDateText";
 import { Location, Stack } from "../../constants/enums";
 
 function RecruitBoard({
+  recruitPostId,
   title,
   createdAt,
   updatedAt,
@@ -21,6 +23,8 @@ function RecruitBoard({
   recruitKeepCount,
   recruitDurationWeeks,
 }) {
+  const navigate = useNavigate();
+
   const filteredTaskList = recruitTasks.filter(
     ({
       recruitStack: taskNumber,
@@ -56,9 +60,13 @@ function RecruitBoard({
    * 1. 유저의 아이디가 recruitKeeps에 있는지 판단 후, 있다면 아이콘 fill 채우고, 그렇지 않으면 transparent으로 두어야 함.
    */
 
+  const goDetailRecruit = () => {
+    navigate(`recruit/${recruitPostId}`);
+  };
+
   return (
     <>
-      <div className="mb-[18px]">
+      <div className="mb-[18px]" onClick={goDetailRecruit}>
         <img
           className="object-cover w-full h-[198px]"
           src={`${

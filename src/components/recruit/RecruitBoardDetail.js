@@ -1,53 +1,134 @@
-import React from "react";
+import React, { useRef } from "react";
+import { useParams } from "react-router-dom";
+
+import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
+import { Location } from "../../constants/enums";
+import { KeepItDetail, KeepIt, KeepItActive } from "../../assets/icons";
+import convertDateText from "../../lib/convertDateText";
+import useAddCommentMutation from "../../hooks/useAddCommentMutation";
 
 function RecruitBoardDetail() {
+  const commentValue = useRef();
+
+  const { recruitId } = useParams();
+  const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
+
+  const { mutate: addComment } = useAddCommentMutation();
+
+  const addCommentHandler = () => {
+    if (commentValue.current.value === "") {
+      return false;
+    }
+    const commentData = {
+      data: {
+        recruitCommentContent: "commentValue.current.value",
+        commentDepth: 2,
+        commentGroup: 0,
+      },
+      recruitId,
+    };
+    addComment(commentData);
+  };
+
+  console.log(recruitBoard?.commentContent);
+
   return (
     <>
-      <ul className="w-[1224px] mx-auto">
-        <li className="flex">
+      <ul className="w-[1224px] mx-auto mt-[70px]">
+        <li className="flex w-full">
           <img
             className="w-[392px] h-[269px] mr-[24px]"
-            src="https://t1.daumcdn.net/cfile/tistory/216C553953FC27C335"
+            src={recruitBoard?.thumbImgUrl}
             alt="썸네일"
           />
-          <div>
-            <h1 className="text-[36px]">
-              리액트, 스프링 개발자를 1명 모집, 이커머스 플랫폼 사이드 프젝할
-              사람
-            </h1>
+          <div className="flex flex-wrap items-end content-between w-full">
+            <h1 className="text-[36px] w-full">{recruitBoard?.title}</h1>
+            <ul className="flex justify-between w-full">
+              <li>
+                <p className="text-[15px] text-gray4 mb-[9px]">
+                  {Location[recruitBoard?.recruitLocation]}
+                </p>
+                <p className="text-[15px] text-gray4">
+                  소요기간 : {recruitBoard?.recruitDurationWeeks}주 예상
+                </p>
+                <ul>{}</ul>
+              </li>
+              <li className="flex">
+                <button className="text-[19px] border-[1px] border-blue3 py-[6px] px-[30px] text-blue3 rounded-[5px] mr-[9px]">
+                  <KeepItDetail className="inline-block " />
+                  <span className="px-[15px] pl-[5px]">Keep It</span>
+                </button>
+                <button className="text-[19px]  px-[15px] py-[6px] rounded-[5px] bg-blue3 text-white">
+                  신청하기
+                </button>
+              </li>
+            </ul>
           </div>
         </li>
-        <hr className="my-[40px]"></hr>
-        <li>
+        <hr className="my-[40px] border-gray4"></hr>
+        <li className="mb-[70px]">
           <div className="flex items-center">
             <img
               alt="유저 프로필사진"
               className="w-[44px] h-[44px] mr-[10px] rounded-[50%] bg-black"
             />
-            <span>유저 닉네임</span>
+            <span className="text-[21px]">유저 닉네임</span>
             <span className="mx-[15px]">|</span>
-            2022.02.11
+            <span className="text-[21px]">
+              {convertDateText(recruitBoard?.createdAt)}
+            </span>
           </div>
         </li>
-        <li className="px-[104px] mb-[75px]">
-          안녕하세요😆 저희는 '저장만 되어있는 URL들을 구출🚀 '하기 위한 사이드
-          프로젝트를 진행하고 있는 URURL입니다! ✨프로젝트 개요✨ 저희는
-          성장하고 싶은 PM분들을 위한 프로젝트예요. 1 본인이 추후에 읽으려고
-          저장했던 유의미한 글이 흩어지지 않게 저희 사이트에 가져오도록 하고, 2
-          직접 가져오신 글들을 읽으며 성장을 위해 자신의 만족도를 달성하고자
-          합니다. 더 자세한 내용은 https://bit.ly/3sMah7G 에서 확인해주세요!
-        </li>
-        <li className="text-right">
-          <span>조회수</span>
+        <li className="px-[104px] mb-[80px]">{recruitBoard?.recruitContent}</li>
+        <li className="text-right mb-[34px]">
+          <p className="text-[23px]">
+            {true ? (
+              <KeepIt className="inline-block w-[24px] h-[24px]" />
+            ) : (
+              <KeepItActive className="inline-block w-[24px] h-[24px]" />
+            )}
 
-          <span>Keep it</span>
+            <span className="ml-[6px]"> {recruitBoard?.recruitKeepCount}</span>
+          </p>
         </li>
         <li>
-          <h3>댓글 작성하기</h3>
+          <h3 className="text-[23px] mb-[17px]">댓글 작성하기</h3>
+          <div className="w-full overflow-hidden">
+            <textarea
+              ref={commentValue}
+              type="text"
+              placeholder="댓글을 작성하세요"
+              className="block w-full h-[135px] p-[11px] resize-none border-[1px] border-gray2 mb-[13px]"
+            />
+            <button
+              className="float-right mr-[13px] text-[19px] px-[15px] py-[6px] rounded-[5px] text-white bg-blue3"
+              onClick={addCommentHandler}
+            >
+              댓글 작성
+            </button>
+          </div>
         </li>
         <li>
-          <ul>
-            <li></li>
+          <ul className="border-b-[1px] border-gray2">
+            {recruitBoard?.recruitComments.map(comment => (
+              <li
+                key={comment.recruitCommentId}
+                className="pt-[30px] pb-[40px] border-t-[1px] border-gray2"
+              >
+                <ul className="flex items-center">
+                  <li className="flex items-center mr-[23px]">
+                    <img
+                      src=""
+                      alt="유저 프로필"
+                      className="w-[44px] h-[44px] rounded-full overflow-hidden"
+                    />
+                    <p>유저 닉네임</p>
+                  </li>
+                  <li></li>
+                </ul>
+                {comment.recruitCommentContent}
+              </li>
+            ))}
           </ul>
         </li>
       </ul>

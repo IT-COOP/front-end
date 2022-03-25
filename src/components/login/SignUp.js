@@ -27,7 +27,7 @@ function SocialSignIn({ closeSignUpModal }) {
 
   const filterTask = Object.values(Task).filter(task => !isNaN(task));
 
-  const StackList =
+  const filteredStackList =
     selectedTask < 300
       ? null
       : Object.values(Stack).filter(stack => {
@@ -47,13 +47,13 @@ function SocialSignIn({ closeSignUpModal }) {
   };
 
   const confirmUserNickname = e => {
-    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
+    const regex = /^[가-힣|a-z|A-Z|0-9|]+$/;
     const nickname = e.target.value;
     const inputName = e.target.name;
     const userInfoCopy = { ...userInfo };
     userInfoCopy[inputName] = nickname;
     regex.test(nickname);
-    if (regex.test(nickname) & (nickname.length > 1) & (nickname.length <= 8)) {
+    if (regex.test(nickname) & (nickname.length > 1) & (nickname.length <= 5)) {
       setConfirm(true);
       setUserInfo(userInfoCopy);
     } else {
@@ -64,6 +64,7 @@ function SocialSignIn({ closeSignUpModal }) {
   const closeModal = e => {
     if (e.target.nodeName === "svg") {
       closeSignUpModal();
+      localStorage.removeItem("coopToken");
     }
   };
 
@@ -258,7 +259,7 @@ function SocialSignIn({ closeSignUpModal }) {
                 className="w-full border-[1px] h-[50px] pl-[15px]"
                 onChange={handleSelectStack}
               >
-                {StackList?.map(stack => (
+                {filteredStackList?.map(stack => (
                   <option key={stack} value={Stack[stack]}>
                     {stack}
                   </option>

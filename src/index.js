@@ -29,7 +29,7 @@ ReactDOM.render(
           <Route path="/" element={<Recruit />}></Route>
           <Route path="/auth" element={<Auth />} />
           <Route path="/recruit/write" element={<RecruitWrite />} />
-          <Route path="/recruit/:id" element={<RecruitBoardDetail />} />
+          <Route path="/recruit/:recruitId" element={<RecruitBoardDetail />} />
         </Routes>
       </main>
       <ReactQueryDevtools initialIsOpen={false} />

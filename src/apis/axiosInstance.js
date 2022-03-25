@@ -1,7 +1,5 @@
 import axios from "axios";
-
-//import { getCookie } from "../../utils/cookie";
-//import { getToken } from "../utils/until";
+import { getCookie } from "../utils/cookie";
 
 export const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -24,11 +22,36 @@ instance.interceptors.request.use(
 );
 
 instance.interceptors.response.use(
-  config => {
-    return config;
+  response => {
+    return response;
   },
-  error => {
-    // console.log(error.response);
-    // return console.log(error.response);
+  async error => {
+    const { response } = error;
+    if (response.status === 401) {
+      if (response.data.message === "Access Token Expired") {
+        //const originalRequest = config;
+        const refreshToken = getCookie("coopCookie");
+
+        let accessToken = localStorage.getItem("coopToken");
+        const tokens = {
+          accessToken,
+          refreshToken,
+        };
+        if (refreshToken) {
+          const response = await checkToken(tokens);
+          console.log(response);
+        }
+      }
+    }
   },
 );
+
+const checkToken = async ({ accessToken, refreshToken }) => {
+  const response = await instance.get("login/refresh", {
+    headers: {
+      authorization: `Bearer ${accessToken}`,
+      refreshToken: `Bearer ${refreshToken}`,
+    },
+  });
+  return response;
+};

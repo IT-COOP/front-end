@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
-import { Logo, Bell, DownArrow } from "../../assets/icons";
+import { Bell, DownArrow } from "../../assets/icons";
 import SignUp from "../login/SignUp";
 import SocialSignIn from "../login/SocialSignIn";
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
@@ -12,7 +12,9 @@ function Header() {
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [isMyPageModalOpen, setIsMyPageModalOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const { data } = useGetUserInfoQuery(localStorage.getItem("coopToken"));
+  const { data: userData } = useGetUserInfoQuery(
+    localStorage.getItem("coopToken"),
+  );
   const location = useLocation();
 
   useEffect(() => {
@@ -22,10 +24,10 @@ function Header() {
   }, [location.state]);
 
   useEffect(() => {
-    if (data) {
-      setUser(data.userInfo);
+    if (userData) {
+      setUser(userData.data.userInfo);
     }
-  }, [data]);
+  }, [userData]);
 
   const openSignInModal = () => {
     setIsSignInModalOpen(true);
@@ -58,7 +60,11 @@ function Header() {
         <div className="w-[1224px] mx-auto flex items-center justify-between">
           <div>
             <NavLink to="/">
-              <Logo />
+              <img
+                src="/images/logo.png"
+                alt="itcoop banner"
+                className="w-[84px] h-[28px]"
+              />
             </NavLink>
           </div>
           <nav>
