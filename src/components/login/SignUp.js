@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
 
 import { Close, Prev } from "../../assets/icons";
@@ -13,6 +13,7 @@ function SocialSignIn({ closeSignUpModal }) {
   const [selectedTask, setSelectedTask] = useState(0);
   const [selectedStack, setSelectedStack] = useState([]);
   const [profileImgSrc, setProfileImgSrc] = useState("");
+  console.log(setProfileImgSrc);
 
   const filterTask = Object.values(Task).filter(task => !isNaN(task));
 
