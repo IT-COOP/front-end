@@ -71,7 +71,7 @@ function RecruitCategoryBar({
               <p className="shrink-0 w-[182px] h-full flex items-center pl-[12px] text-left text-[15px] text-white font-medium whitespace-nowrap border-b border-solid border-white bg-blue">
                 지역
               </p>
-              <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white">
+              <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white scroll-bar-none">
                 {locationList.map(locationName => (
                   <li
                     key={locationName}
@@ -93,7 +93,7 @@ function RecruitCategoryBar({
               <p className="shrink-0 w-[182px] h-full flex items-center pl-[12px] text-left text-[15px] text-white font-medium whitespace-nowrap border-b border-solid border-white bg-blue">
                 직군
               </p>
-              <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white">
+              <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white scroll-bar-none">
                 {taskList.map(taskName => (
                   <li
                     key={taskName}
@@ -115,7 +115,7 @@ function RecruitCategoryBar({
               <p className="shrink-0 w-[182px] h-full flex items-center pl-[12px] text-left text-[15px] text-white font-medium whitespace-nowrap border-b border-solid border-white bg-blue">
                 스택
               </p>
-              <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white">
+              <ul className="pl-[19px] flex items-center gap-x-[23px] w-full h-full overflow-x-auto border-b border-solid border-b-gray1 bg-white scroll-bar-none">
                 {filteredStackList.map(stackName => (
                   <li
                     key={stackName}

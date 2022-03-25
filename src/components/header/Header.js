@@ -54,7 +54,7 @@ function Header() {
         <SocialSignIn closeSignInModal={closeSignInModal} />
       )}
       {isSignUpModalOpen && <SignUp closeSignUpModal={closeSignUpModal} />}
-      <header className="w-full top-0 left-0 right-0 mx-auto py-[12px] z-[900] fixed  bg-white shadow-[0_4px_4px_-4px_rgba(0,0,0,0.3)]">
+      <header className="w-full sticky top-0 mx-auto py-[12px] z-[900] bg-white shadow-[0_4px_4px_-4px_rgba(0,0,0,0.3)]">
         <div className="w-[1224px] mx-auto flex items-center justify-between">
           <div>
             <NavLink to="/">
