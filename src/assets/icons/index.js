@@ -7,6 +7,7 @@ import { ReactComponent as DownArrow } from "./downArrow.svg";
 import { ReactComponent as Filter } from "./filter.svg";
 import { ReactComponent as Comment } from "./comment.svg";
 import { ReactComponent as KeepIt } from "./keepIt.svg";
+import { ReactComponent as KeepItActive } from "./keepIt-active.svg";
 import { ReactComponent as Heart } from "./heart.svg";
 import { ReactComponent as Info } from "./info.svg";
 
@@ -20,6 +21,7 @@ export {
   Filter,
   Comment,
   KeepIt,
+  KeepItActive,
   Heart,
   Info,
 };

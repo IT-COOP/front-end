@@ -1,10 +1,16 @@
 import React from "react";
-import { Location, Task, Stack } from "../../constants/enums";
-import { KeepIt, Comment } from "../../assets/icons";
 import classNames from "classnames";
+
+import { KeepItActive, KeepIt, Comment } from "../../assets/icons";
+
+import convertDateText from "../../lib/convertDateText";
+
+import { Location, Stack } from "../../constants/enums";
+
 function RecruitBoard({
   title,
   createdAt,
+  updatedAt,
   thumbImgUrl,
   author,
   recruitCommentCount,
@@ -15,7 +21,6 @@ function RecruitBoard({
   recruitKeepCount,
   recruitDurationWeeks,
 }) {
-  const filterTask = recruitTasks.filter(task => task.recruitTask <= 200);
   const filteredTaskList = recruitTasks.filter(
     ({
       recruitStack: taskNumber,
@@ -29,6 +34,7 @@ function RecruitBoard({
       return totalCount - occupiedCount !== 0;
     },
   );
+
   const filteredStackList = recruitStacks.filter(
     ({
       numberOfPeopleRequired: totalCount,
@@ -40,6 +46,17 @@ function RecruitBoard({
 
   const isClosed =
     filteredTaskList.length === 0 && filteredStackList.length === 0;
+  const lastUpsertedDate =
+    !updatedAt || createdAt === updatedAt ? createdAt : updatedAt;
+
+  const parsedUpsertText = convertDateText(lastUpsertedDate);
+
+  console.log(recruitLocation);
+
+  /**
+   * TODO
+   * 1. 유저의 아이디가 recruitKeeps에 있는지 판단 후, 있다면 아이콘 fill 채우고, 그렇지 않으면 transparent으로 두어야 함.
+   */
 
   return (
     <>
@@ -54,8 +71,10 @@ function RecruitBoard({
           alt="게시글 사진"
         />
       </div>
-      <div className="pl-[13px] pr-[14px] text-[14px]">
-        <p className="line-clamp-2 font-bold text-[18px] mb-[14px]">{title}</p>
+      <div className="pl-[13px] pr-[14px]">
+        <p className="line-clamp-2 font-medium text-[17px] mb-[14px] h-[44px]">
+          {title}
+        </p>
         <div className="flex items-center text-[13px]">
           <p className="mr-[15px]">{Location[recruitLocation]}</p>
           <p>{recruitDurationWeeks}주 예상</p>
@@ -65,7 +84,7 @@ function RecruitBoard({
             <p className="font-medium text-[15px] text-gray4">정원 마감</p>
           ) : (
             <ul className="flex gap-x-[5px] overflow-x-scroll no-wrap scroll-bar-none text-[13px] text-white font-medium">
-              {recruitStacks.map(stack => (
+              {filteredStackList.map(stack => (
                 <li
                   className={classNames(
                     "py-[2px] px-[10px] rounded-[11px] shrink-0",
@@ -81,7 +100,7 @@ function RecruitBoard({
                   {Stack[stack.recruitStack]}
                 </li>
               ))}
-              {filterTask.map(task => (
+              {filteredTaskList.map(task => (
                 <li
                   className={classNames(
                     "py-[2px] px-[10px] rounded-[11px] shrink-0",
@@ -92,26 +111,30 @@ function RecruitBoard({
                   )}
                   key={task.recruitTaskId}
                 >
-                  {Task[task.recruitTask] === 200 ? "디자인" : "기획"}
+                  {task.recruitTask === 200 ? "디자인" : "기획"}
                 </li>
               ))}
             </ul>
           )}
         </div>
         <ul className="flex justify-between text-[14px]">
-          <li className="flex w-[62%] line-clamp-1">
-            {createdAt}
-            <span className="mx-[8px] text-[#797979]">|</span>
-            {author}
+          <li className="flex line-clamp-1 text-gray4 text-[13px]">
+            {parsedUpsertText} |{" "}
+            {author ?? "ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"}
           </li>
-          <li className="flex">
+          <li className="flex grow-1">
             <div className="mr-[10px] flex items-center">
               <Comment className="mr-[2px]" />
-              {recruitCommentCount}
+              {recruitCommentCount ?? "0"}
             </div>
-            <div className="flex items-center ">
-              <KeepIt className="mr-[2px]" />
-              {recruitKeepCount}
+            <div className="flex items-center">
+              {/* 조건부 렌더링 */}
+              {true ? (
+                <KeepItActive className="mr-[2px]" />
+              ) : (
+                <KeepIt className="mr-[2px]" />
+              )}
+              {recruitKeepCount ?? "0"}
             </div>
           </li>
         </ul>
