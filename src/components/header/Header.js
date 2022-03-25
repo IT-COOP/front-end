@@ -16,7 +16,7 @@ function Header() {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.state) {
+    if (typeof location.state === "boolean") {
       setIsSignUpModalOpen(location.state);
     }
   }, [location.state]);
@@ -26,8 +26,6 @@ function Header() {
       setUser(data.userInfo);
     }
   }, [data]);
-
-  console.log(data);
 
   const openSignInModal = () => {
     setIsSignInModalOpen(true);
@@ -46,7 +44,7 @@ function Header() {
 
   const handleLogout = () => {
     localStorage.removeItem("coopToken");
-    deleteCookie("coopCokie");
+    deleteCookie("coopCookie");
     window.location.replace("/");
   };
 

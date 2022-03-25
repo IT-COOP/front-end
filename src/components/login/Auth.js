@@ -16,16 +16,14 @@ function Auth() {
 
   const { data, error, isSuccess } = useUserCheckQuery(token);
 
-  console.log(data);
-
   useEffect(() => {
     if (data) {
-      if (!data.isProfileSet) {
-        navigate("/", { replace: true, state: !data.isProfileSet });
-      } else {
-        localStorage.setItem("coopToken", data.data.accessToken);
-        setCookie("coopCookie", data.data.refreshToken);
+      if (data.data.data.userInfo) {
+        localStorage.setItem("coopToken", data.data.data.accessToken);
+        setCookie("coopCookie", data.data.data.refreshToken);
         navigate("/", { replace: true });
+      } else {
+        navigate("/", { replace: true, state: true });
       }
     }
   }, [isSuccess, navigate, data]);

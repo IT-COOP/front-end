@@ -1,26 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import classNames from "classnames";
 
 import { Close, Prev } from "../../assets/icons";
 import { Stack, Task } from "../../constants/enums";
+import useUploadUserProfileImgMutation from "../../hooks/useUploadUserProfileImgMutation";
 
 function SocialSignIn({ closeSignUpModal }) {
   const [userInfo, setUserInfo] = useState({
-    technologyStack: "",
+    technologyStack: [],
   });
   const [nicknameConfirm, setConfirm] = useState(false);
-  const [selectTask, setTask] = useState(0);
+  const [selectedTask, setSelectedTask] = useState(0);
+  const [selectedStack, setSelectedStack] = useState([]);
+  const [profileImgSrc, setProfileImgSrc] = useState("");
 
   const filterTask = Object.values(Task).filter(task => !isNaN(task));
+
   const StackList =
-    selectTask < 300
+    selectedTask < 300
       ? null
       : Object.values(Stack).filter(stack => {
           const startPoint =
-            selectTask === 300 ? selectTask - 200 : selectTask - 100;
+            selectedTask === 300 ? selectedTask - 200 : selectedTask - 100;
           const targetPoint = Stack[stack];
           return startPoint < targetPoint && targetPoint < startPoint + 100;
         });
+
+  const { mutate: uploadImg, status, data } = useUploadUserProfileImgMutation();
 
   const confirmUserNickname = e => {
     const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
@@ -43,6 +49,28 @@ function SocialSignIn({ closeSignUpModal }) {
     }
   };
 
+  const handleSelectTask = task => () => {
+    setSelectedTask(task);
+    if (selectedTask === task) {
+      return false;
+    }
+    setSelectedStack([]);
+    setUserInfo(prev => ({ ...prev, technologyStack: [task] }));
+  };
+
+  const handleSelectStack = e => {
+    const stackValue = e.target.value;
+    if (selectedStack.length === 3 || selectedStack.includes(stackValue)) {
+      return false;
+    }
+    setSelectedStack(prev => [...prev, stackValue]);
+  };
+
+  const removeSelectedStack = stack => () => {
+    const selectedStackCopy = selectedStack.filter(v => v !== stack);
+    setSelectedStack(selectedStackCopy);
+  };
+
   const handleNextChapter = e => {
     const currentLi = e.currentTarget.parentNode;
     const nextLi = currentLi.nextElementSibling;
@@ -61,13 +89,17 @@ function SocialSignIn({ closeSignUpModal }) {
     prevLi.style.opacity = 1;
   };
 
-  const handleSelectTask = task => () => {
-    setTask(task);
+  const uploadUserProfileImg = e => {
+    const formData = new FormData();
+    let file = e.target.files[0];
+    formData.append("imgFile", file);
+    const postData = {
+      image: formData,
+    };
+    uploadImg(postData);
   };
-
-  // const handleJoinSubmit = e => {
-  //   e.preventDefault();
-  // };
+  console.log(data);
+  console.log(status);
 
   const formLi = `flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white opacity-0  px-[158px]`;
   const formTitle = `text-center font-bold text-[30px] mt-[74px] mb-[32px] `;
@@ -81,19 +113,19 @@ function SocialSignIn({ closeSignUpModal }) {
           className="absolute top-[14px] right-[14px] z-50"
           onClick={closeModal}
         >
-          <Close />
+          <Close className="fill-black" />
         </button>
         <li className={`${formLi} z-10 opacity-100`}>
           <h1 className={formTitle}>사용하실 닉네임을 설정해주세요.</h1>
           <p className={`${formDesc}`}>
-            서비스를 이용할 때사용되는 이름이에요!
+            서비스를 이용할 때 사용되는 이름이에요!
           </p>
           <div className="mb-[6px] flex justify-between">
             <input
               type="text"
               className="border-2 text-[24px] p-[20px] mr-[10px] rounded-[5px] w-[357px] h-[72px]"
-              placeholder="2~8자 이내로 입력해주세요"
-              maxLength={8}
+              placeholder="2~5자 이내로 입력해주세요"
+              maxLength={5}
               name="nickname"
               onChange={confirmUserNickname}
             />
@@ -111,7 +143,7 @@ function SocialSignIn({ closeSignUpModal }) {
             </button>
           </div>
           <p className="mb-[70px] text-[20px] leading-[25.04px] text-gray4">
-            {"닉네임은 공백잆어 한글/영문/숫자만 가능합니다"}
+            {"닉네임은 공백 없이 한글/영문/숫자만 가능합니다"}
           </p>
           <button className={`${nextBtn}`} onClick={handleNextChapter}>
             다음으로
@@ -145,19 +177,35 @@ function SocialSignIn({ closeSignUpModal }) {
               ))}
             </div>
           </div>
-          <div className="flex stack mb-[12px]">
+          <div className="flex stack mb-[40px]">
             <p className="text-left text-[24px] leading-[50px] mr-[26px] text-gray4">
               스택
             </p>
             <div className="flex-1">
-              <select className="w-full border-[1px] h-[50px] pl-[15px]">
+              <select
+                className="w-full border-[1px] h-[50px] pl-[15px]"
+                onChange={handleSelectStack}
+              >
                 {StackList?.map(stack => (
-                  <option key={stack}>{stack}</option>
+                  <option key={stack} value={Stack[stack]}>
+                    {stack}
+                  </option>
                 ))}
               </select>
-              <p className="leading-[40px] text-[20px] text-gray4 mb-[63px]">
+              <p className="leading-[40px] text-[20px] text-gray4 ">
                 최소 1개부터 최대 3개까지 선택 해주세요!
               </p>
+              <div className="flex gap-x-[10px]">
+                {selectedStack.map((stack, idx) => (
+                  <span
+                    key={idx}
+                    className="text-gray4 text-[15px] cursor-pointer"
+                    onClick={removeSelectedStack(stack)}
+                  >
+                    {Stack[stack]} <Close className="inline-block fill-gray4" />
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
           <button className={`${nextBtn}`} onClick={handleNextChapter}>
@@ -178,6 +226,7 @@ function SocialSignIn({ closeSignUpModal }) {
           <ul className="flex items-center justify-center mb-[36px]">
             <li>
               <img
+                src={profileImgSrc}
                 className="w-[140px] h-[140px] rounded-full bg-black overflow-hidden mr-[42px]"
                 alt="프로필 사진"
               />
@@ -185,11 +234,16 @@ function SocialSignIn({ closeSignUpModal }) {
             <li>
               <label
                 htmlFor="upload"
-                className="block w-[126px] h-[40px] bg-black text-white rounded-[5px] mb-[10px] text-[18px] leading-[40px] text-center"
+                className="block cursor-pointer w-[126px] h-[40px] bg-black text-white rounded-[5px] mb-[10px] text-[18px] leading-[40px] text-center"
               >
                 프로필 등록
               </label>
-              <input id="upload" type="file" className="hidden" />
+              <input
+                id="upload"
+                type="file"
+                className="hidden"
+                onChange={uploadUserProfileImg}
+              />
               <button className="w-[126px] h-[40px] rounded-[5px] bg-gray2 text-[18px] leading-[22.54px]">
                 프로필 삭제
               </button>

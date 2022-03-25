@@ -3,9 +3,13 @@ import { userApis } from "../apis/userApi";
 
 function useGetUserInfoQuery(token) {
   return useQuery(
-    ["user", token],
+    ["userInfo", token],
     () => {
-      return userApis.getUserInfo(token);
+      if (token) {
+        return userApis.getUserInfo(token);
+      } else {
+        return;
+      }
     },
     {
       refetchOnWindowFocus: false,
