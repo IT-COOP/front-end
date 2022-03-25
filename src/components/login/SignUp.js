@@ -79,6 +79,7 @@ function SocialSignIn({ closeSignUpModal }) {
       key.classList.remove("bg-coral");
       key.classList.remove("bg-black");
     }
+
     switch (task) {
       case 100:
         colorChip.classList.remove("text-gray4");
@@ -103,6 +104,7 @@ function SocialSignIn({ closeSignUpModal }) {
       default:
         return;
     }
+
     if (selectedTask === task) {
       return false;
     }
