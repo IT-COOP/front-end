@@ -30,10 +30,14 @@ export const userApis = {
   },
 
   //최초 로그인이나, 유저정보 튜토리얼 완성 안한 사람들
-  createUser: ({ data }) => instance.post("login/completion", data),
+  createUser: async userData => {
+    console.log(userData);
+    const { data } = await instance.post("login/completion", userData);
+    return data;
+  },
 
   //유저 데이터 수정
-  userProfileEdit: data =>
+  userProfileEdit: async data =>
     instance.post("api/", {
       data,
     }),

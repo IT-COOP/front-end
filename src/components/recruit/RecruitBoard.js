@@ -51,8 +51,6 @@ function RecruitBoard({
 
   const parsedUpsertText = convertDateText(lastUpsertedDate);
 
-  console.log(recruitLocation);
-
   /**
    * TODO
    * 1. 유저의 아이디가 recruitKeeps에 있는지 판단 후, 있다면 아이콘 fill 채우고, 그렇지 않으면 transparent으로 두어야 함.

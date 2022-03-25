@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 
 import { Close, Prev } from "../../assets/icons";
 import { Stack, Task } from "../../constants/enums";
@@ -17,9 +18,12 @@ function SocialSignIn({ closeSignUpModal }) {
   const [selectedStack, setSelectedStack] = useState([]);
   const [profileImgSrc, setProfileImgSrc] = useState("");
 
+  const navigate = useNavigate();
+
   const { mutateAsync: uploadImg } = useUploadUserProfileImgMutation();
   const { mutateAsync: duplicateUserNickname } = useConfirmNicknameMutation();
-  const { mutateAsync: userCreate } = useCreateUserMutation();
+  const { mutateAsync: userCreate, isSuccess: createSuccess } =
+    useCreateUserMutation();
 
   const filterTask = Object.values(Task).filter(task => !isNaN(task));
 
@@ -147,18 +151,22 @@ function SocialSignIn({ closeSignUpModal }) {
     setProfileImgSrc(imgUrl);
   };
 
-  const submitUserData = () => {
+  const submitUserData = async () => {
     const taskAndStack = [...selectedStack, String(selectedTask)].join(",");
     const userData = {
       nickname: userInfo.nickname,
       profileImgUrl: profileImgSrc,
-      techniqueStack: taskAndStack,
+      technologyStack: taskAndStack,
     };
-    console.log(userData);
-    const response = userCreate(userData);
-    console.log(response);
+    userCreate(userData);
   };
 
+  useEffect(() => {
+    if (createSuccess) {
+      navigate("/", { replace: true });
+      window.location.replace("/");
+    }
+  }, [createSuccess, navigate]);
   const formLi = `flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white opacity-0  px-[158px]`;
   const formTitle = `text-center font-bold text-[30px] mt-[74px] mb-[32px] `;
   const formDesc = `text-center text-[20px] text-[#797979] mb-[40px] `;

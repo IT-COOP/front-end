@@ -15,6 +15,8 @@ function Header() {
   const { data } = useGetUserInfoQuery(localStorage.getItem("coopToken"));
   const location = useLocation();
 
+  console.log(location);
+
   useEffect(() => {
     if (typeof location.state === "boolean") {
       setIsSignUpModalOpen(location.state);

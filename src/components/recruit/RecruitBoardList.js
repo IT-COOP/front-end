@@ -33,7 +33,7 @@ function RecruitBoardList() {
         {data?.map(board => (
           <li
             key={board.recruitPostId}
-            className="flex flex-col overflow-hidden w-[23.5%] h-[396px] rounded-[11px] bg-white border border-solid border-gray2 cursor-pointer"
+            className="flex flex-col overflow-hidden w-[23.5%] h-[396px] rounded-[11px] bg-white border-[1px] cursor-pointer shadow-md"
           >
             <RecruitBoard
               recruitPostId={board.recruitPostId}
@@ -45,7 +45,6 @@ function RecruitBoardList() {
               recruitLocation={board.recruitLocation}
               thumbImgUrl={board.thumbImgUrl} //이미지 정보 array
               createdAt={board.createdAt}
-              updatedAt={board.updatedAt}
               recruitKeeps={board.recruitKeeps} //누가 추가했는지 user의 id값이 담긴 array
               recruitStacks={board.recruitStacks} //직군에 대한 array
               recruitDurationWeeks={board.recruitDurationWeeks}
