@@ -22,7 +22,7 @@ function SocialSignIn({ closeSignUpModal }) {
 
   const { mutateAsync: uploadImg } = useUploadUserProfileImgMutation();
   const { mutateAsync: duplicateUserNickname } = useConfirmNicknameMutation();
-  const { mutateAsync: userCreate, isSuccess: createSuccess } =
+  const { mutateAsync: createUser, isSuccess: createSuccess } =
     useCreateUserMutation();
 
   const filterTask = Object.values(Task).filter(task => !isNaN(task));
@@ -158,7 +158,7 @@ function SocialSignIn({ closeSignUpModal }) {
       profileImgUrl: profileImgSrc,
       technologyStack: taskAndStack,
     };
-    userCreate(userData);
+    createUser(userData);
   };
 
   useEffect(() => {
