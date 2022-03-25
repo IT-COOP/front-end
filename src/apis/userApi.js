@@ -13,20 +13,20 @@ export const userApis = {
   },
 
   uploadUserProfileImg: async formData => {
-    console.log(formData);
-    const response = await instance.post("upload/profile", formData, {
+    const { data } = await instance.post("upload/profile", formData, {
       headers: {
-        "content-type": "multipart/form-data",
+        "Content-Type":
+          "multipart/form-data; boundary=<calculated when request is sent>",
       },
     });
-    return response;
+    return { data };
   },
 
   confirmUserNickname: async name => {
-    const { data } = await instance.post(
+    const response = await instance.get(
       `login/duplicateCheck/nickname/${name}`,
     );
-    return data;
+    return response;
   },
 
   //최초 로그인이나, 유저정보 튜토리얼 완성 안한 사람들

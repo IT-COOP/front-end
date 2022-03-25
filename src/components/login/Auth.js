@@ -7,7 +7,7 @@ function Auth() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [token] = useState(searchParams.get("accessToken"));
   const navigate = useNavigate();
-
+  console.log(searchParams.get("accessToken"));
   localStorage.setItem("coopToken", token);
 
   useEffect(() => {

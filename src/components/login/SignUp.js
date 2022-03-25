@@ -4,16 +4,22 @@ import classNames from "classnames";
 import { Close, Prev } from "../../assets/icons";
 import { Stack, Task } from "../../constants/enums";
 import useUploadUserProfileImgMutation from "../../hooks/useUploadUserProfileImgMutation";
+import useConfirmNicknameMutation from "../../hooks/useConfirmNicknameMutation";
+import useCreateUserMutation from "../../hooks/useCreateUserMutation";
 
 function SocialSignIn({ closeSignUpModal }) {
   const [userInfo, setUserInfo] = useState({
-    technologyStack: [],
+    technologyTask: [],
   });
-  const [nicknameConfirm, setConfirm] = useState(false);
+  const [confirmNickname, setConfirm] = useState(false);
+  const [checkDuplicateUserNickname, setCheckDuplicate] = useState(false);
   const [selectedTask, setSelectedTask] = useState(0);
   const [selectedStack, setSelectedStack] = useState([]);
   const [profileImgSrc, setProfileImgSrc] = useState("");
-  console.log(setProfileImgSrc);
+
+  const { mutateAsync: uploadImg } = useUploadUserProfileImgMutation();
+  const { mutateAsync: duplicateUserNickname } = useConfirmNicknameMutation();
+  const { mutateAsync: userCreate } = useCreateUserMutation();
 
   const filterTask = Object.values(Task).filter(task => !isNaN(task));
 
@@ -27,7 +33,14 @@ function SocialSignIn({ closeSignUpModal }) {
           return startPoint < targetPoint && targetPoint < startPoint + 100;
         });
 
-  const { mutate: uploadImg, status, data } = useUploadUserProfileImgMutation();
+  const handleCheckUserNickname = async () => {
+    const { data } = await duplicateUserNickname(userInfo.nickname);
+    if (data) {
+      setCheckDuplicate(true);
+    } else {
+      setCheckDuplicate(false);
+    }
+  };
 
   const confirmUserNickname = e => {
     const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
@@ -50,13 +63,49 @@ function SocialSignIn({ closeSignUpModal }) {
     }
   };
 
-  const handleSelectTask = task => () => {
-    setSelectedTask(task);
+  const handleSelectTask = task => e => {
+    const colorChipAll = e.target.parentNode.children;
+    const colorChip = e.target;
+    for (let key of colorChipAll) {
+      key.classList.add("bg-gray1");
+      key.classList.add("text-gray4");
+      key.classList.remove("text-white");
+      key.classList.remove("bg-pink");
+      key.classList.remove("bg-yellow");
+      key.classList.remove("bg-coral");
+      key.classList.remove("bg-black");
+    }
+    switch (task) {
+      case 100:
+        colorChip.classList.remove("text-gray4");
+        colorChip.classList.add("bg-pink");
+        colorChip.classList.add("text-white");
+        break;
+      case 200:
+        colorChip.classList.remove("text-gray4");
+        colorChip.classList.add("bg-yellow");
+        colorChip.classList.add("text-white");
+        break;
+      case 300:
+        colorChip.classList.remove("text-gray4");
+        colorChip.classList.add("bg-coral");
+        colorChip.classList.add("text-white");
+        break;
+      case 400:
+        colorChip.classList.remove("text-gray4");
+        colorChip.classList.add("bg-black");
+        colorChip.classList.add("text-white");
+        break;
+      default:
+        return;
+    }
     if (selectedTask === task) {
       return false;
     }
+
     setSelectedStack([]);
-    setUserInfo(prev => ({ ...prev, technologyStack: [task] }));
+    setSelectedTask(task);
+    setUserInfo(prev => ({ ...prev, technologyTask: [task] }));
   };
 
   const handleSelectStack = e => {
@@ -90,22 +139,29 @@ function SocialSignIn({ closeSignUpModal }) {
     prevLi.style.opacity = 1;
   };
 
-  const uploadUserProfileImg = e => {
+  const uploadUserProfileImg = async e => {
     const formData = new FormData();
     let file = e.target.files[0];
-    formData.append("imgFile", file);
-    const postData = {
-      image: formData,
-    };
-    uploadImg(postData);
+    formData.append("image", file);
+    const { data: imgUrl } = await uploadImg(formData);
+    setProfileImgSrc(imgUrl);
   };
-  console.log(data);
-  console.log(status);
+
+  const submitUserData = () => {
+    const taskAndStack = [...selectedStack, String(selectedTask)].join(",");
+    const userData = {
+      nickname: userInfo.nickname,
+      profileImgUrl: profileImgSrc,
+      techniqueStack: taskAndStack,
+    };
+    console.log(userData);
+    const response = userCreate(userData);
+    console.log(response);
+  };
 
   const formLi = `flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white opacity-0  px-[158px]`;
   const formTitle = `text-center font-bold text-[30px] mt-[74px] mb-[32px] `;
   const formDesc = `text-center text-[20px] text-[#797979] mb-[40px] `;
-  const nextBtn = `mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px] `;
 
   return (
     <section className="fixed top-0 left-0 z-[999] flex items-center justify-center w-screen h-screen transition-opacity bg-black/70">
@@ -134,11 +190,12 @@ function SocialSignIn({ closeSignUpModal }) {
               className={classNames(
                 "w-[117px] h-[72px] text-[24px]   rounded-[5px]",
                 {
-                  "bg-[#CCCCCC] text-gray4": !nicknameConfirm,
-                  "bg-blue text-white": nicknameConfirm,
+                  "bg-[#CCCCCC] text-gray4": !confirmNickname,
+                  "bg-blue text-white": confirmNickname,
                 },
               )}
-              disabled={!nicknameConfirm}
+              disabled={!confirmNickname}
+              onClick={handleCheckUserNickname}
             >
               중복확인
             </button>
@@ -146,8 +203,12 @@ function SocialSignIn({ closeSignUpModal }) {
           <p className="mb-[70px] text-[20px] leading-[25.04px] text-gray4">
             {"닉네임은 공백 없이 한글/영문/숫자만 가능합니다"}
           </p>
-          <button className={`${nextBtn}`} onClick={handleNextChapter}>
-            다음으로
+          <button
+            className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px]"
+            onClick={handleNextChapter}
+            disabled={!checkDuplicateUserNickname}
+          >
+            {checkDuplicateUserNickname ? "다음으로" : "중복검사를 해주세요!"}
           </button>
         </li>
         <li className={`${formLi}`}>
@@ -209,7 +270,10 @@ function SocialSignIn({ closeSignUpModal }) {
               </div>
             </div>
           </div>
-          <button className={`${nextBtn}`} onClick={handleNextChapter}>
+          <button
+            className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px]"
+            onClick={handleNextChapter}
+          >
             다음으로
           </button>
         </li>
@@ -250,7 +314,10 @@ function SocialSignIn({ closeSignUpModal }) {
               </button>
             </li>
           </ul>
-          <button className={`${nextBtn}`} onClick={handleNextChapter}>
+          <button
+            className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px]"
+            onClick={submitUserData}
+          >
             완료하기
           </button>
         </li>
