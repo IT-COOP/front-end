@@ -4,6 +4,7 @@ import { ReactComponent as Camera } from "./camera.svg";
 import { ReactComponent as Logo } from "./logo.svg";
 import { ReactComponent as Bell } from "./bell.svg";
 import { ReactComponent as DownArrow } from "./downArrow.svg";
+import { ReactComponent as LeftArrow } from "./leftArrow.svg";
 import { ReactComponent as Filter } from "./filter.svg";
 import { ReactComponent as Comment } from "./comment.svg";
 import { ReactComponent as KeepIt } from "./keepIt.svg";
@@ -30,4 +31,5 @@ export {
   Flag,
   Check,
   KeepItDetail,
+  LeftArrow,
 };

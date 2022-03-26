@@ -7,7 +7,7 @@ function Auth() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [token] = useState(searchParams.get("accessToken"));
   const navigate = useNavigate();
-  console.log(searchParams.get("accessToken"));
+
   localStorage.setItem("coopToken", token);
 
   useEffect(() => {
@@ -22,6 +22,7 @@ function Auth() {
         localStorage.setItem("coopToken", data.data.data.accessToken);
         setCookie("coopCookie", data.data.data.refreshToken);
         navigate("/", { replace: true });
+        window.location.replace("/");
       } else {
         navigate("/", { replace: true, state: true });
       }

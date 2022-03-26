@@ -3,7 +3,12 @@ import { useParams } from "react-router-dom";
 
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 import { Location } from "../../constants/enums";
-import { KeepItDetail, KeepIt, KeepItActive } from "../../assets/icons";
+import {
+  KeepItDetail,
+  KeepIt,
+  KeepItActive,
+  LeftArrow,
+} from "../../assets/icons";
 import convertDateText from "../../lib/convertDateText";
 import useAddCommentMutation from "../../hooks/useAddCommentMutation";
 
@@ -29,8 +34,6 @@ function RecruitBoardDetail() {
     };
     addComment(commentData);
   };
-
-  console.log(recruitBoard?.commentContent);
 
   return (
     <>
@@ -91,7 +94,7 @@ function RecruitBoardDetail() {
             <span className="ml-[6px]"> {recruitBoard?.recruitKeepCount}</span>
           </p>
         </li>
-        <li>
+        <li className="mb-[41px]">
           <h3 className="text-[23px] mb-[17px]">댓글 작성하기</h3>
           <div className="w-full overflow-hidden">
             <textarea
@@ -131,6 +134,10 @@ function RecruitBoardDetail() {
             ))}
           </ul>
         </li>
+        <button className="flex items-center mt-[34px] mb-[136px] py-[6px] rounded-[20px] border-[1px] border-blue2 text-blue2 px-[17px] text-[23px]">
+          <LeftArrow className="inline-block mr-[9px]" />
+          목록으로
+        </button>
       </ul>
     </>
   );
