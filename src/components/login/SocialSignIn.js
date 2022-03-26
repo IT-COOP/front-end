@@ -28,9 +28,9 @@ function SocialSignIn({ closeSignInModal }) {
       className="fixed top-0 flex z-[999] items-center justify-center w-screen h-screen bg-black/70 "
       onClick={closeModal}
     >
-      <section className="flex relative flex-col bg-[#F9F9F9] rounded-[15px] w-[800px] h-[500px] px-[50px] justify-center items-center">
+      <div className="flex relative flex-col bg-[#F9F9F9] rounded-[15px] w-[800px] h-[500px] px-[50px] justify-center items-center">
         <button className="absolute right-4 top-4">
-          <Close />
+          <Close className="fill-black" />
         </button>
         <ul className="flex flex-col w-[100%]">
           <li>
@@ -66,7 +66,7 @@ function SocialSignIn({ closeSignInModal }) {
           </li>
         </ul>
         <Outlet />
-      </section>
+      </div>
     </section>
   );
 }

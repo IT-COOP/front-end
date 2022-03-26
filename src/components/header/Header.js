@@ -61,7 +61,7 @@ function Header() {
           <div>
             <NavLink to="/">
               <img
-                src="https://s3.ap-northeast-2.amazonaws.com/it-coop.co.kr/images/banner.png"
+                src="https://s3.ap-northeast-2.amazonaws.com/it-coop.co.kr/images/Logo.png"
                 alt="itcoop banner"
                 className="w-[84px] h-[28px]"
               />
