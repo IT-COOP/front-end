@@ -78,7 +78,7 @@ function SocialSignIn({ closeSignUpModal }) {
       key.classList.remove("bg-pink");
       key.classList.remove("bg-yellow");
       key.classList.remove("bg-coral");
-      key.classList.remove("bg-black");
+      key.classList.remove("bg-blue");
     }
 
     switch (task) {
@@ -99,7 +99,7 @@ function SocialSignIn({ closeSignUpModal }) {
         break;
       case 400:
         colorChip.classList.remove("text-gray4");
-        colorChip.classList.add("bg-black");
+        colorChip.classList.add("bg-blue");
         colorChip.classList.add("text-white");
         break;
       default:
