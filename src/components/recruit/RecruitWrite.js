@@ -14,8 +14,10 @@ function RecruitWrite() {
   const [recruitTasks, setRecruitTasks] = useState([]);
   const [recruitStacks, setRecruitStacks] = useState([]);
 
+  const [isNotSelectModal, setIsNotSelectModal] = useState(false);
   const [numberOfPeopleRequired, setNumberOfPeopleRequired] = useState(1);
   const [selectedTask, setSelectedTask] = useState(0);
+  const [selectedTasks, setSelectedTasks] = useState([]);
   const [selectedStack, setSelectedStack] = useState(0);
 
   const locationList = Object.values(Location).filter(v => !isNaN(v));
@@ -77,6 +79,7 @@ function RecruitWrite() {
     const title = inputText.target.value;
     setRecruitInfo(prev => ({ ...prev, title }));
   };
+
   const handleContent = inputText => {
     const recruitContent = inputText.target.value;
     setRecruitInfo(prev => ({ ...prev, recruitContent }));
@@ -97,21 +100,56 @@ function RecruitWrite() {
     setNumberOfPeopleRequired(numberOfPeople);
   };
 
-  const addRecruitPeople = () => {
+  const removeRecruit = v => () => {
+    if (v === 100 || v === 200) {
+      setRecruitTasks(prev => prev.filter(task => task.recruitTask !== v));
+      return;
+    } else {
+      setRecruitTasks(prev => prev.filter(task => task.recruitTask !== v));
+      setRecruitStacks(prev => prev.filter(stack => stack.recruitStack !== v));
+    }
+  };
+  const addRecruit = () => {
+    if (selectedTask === 0 || selectStack === 0) {
+      setIsNotSelectModal(prev => !prev);
+      setTimeout(() => {
+        setIsNotSelectModal(prev => !prev);
+      }, 1000);
+      return;
+    }
     if (selectedTask === 100 || selectedTask === 200) {
       setRecruitTasks(prev => [
         ...prev,
-        { recruitTask: selectedTask, numberOfPeopleRequired },
+        {
+          recruitTask: selectedTask,
+          numberOfPeopleRequired: Number(numberOfPeopleRequired),
+        },
       ]);
+      setSelectedTask(0);
     } else {
+      if (selectedStack === 0) {
+        setIsNotSelectModal(prev => !prev);
+        setTimeout(() => {
+          setIsNotSelectModal(prev => !prev);
+        }, 1000);
+        return false;
+      }
       setRecruitTasks(prev => [
         ...prev,
-        { recruitTask: selectedTask, numberOfPeopleRequired },
+        {
+          recruitTask: selectedTask,
+          numberOfPeopleRequired: Number(numberOfPeopleRequired),
+        },
       ]);
       setRecruitStacks(prev => [
         ...prev,
-        { recruitStack: selectedStack, numberOfPeopleRequired },
+        {
+          recruitStack: selectedStack,
+          numberOfPeopleRequired: Number(numberOfPeopleRequired),
+        },
       ]);
+      setSelectedStack(0);
+      setSelectedTask(0);
     }
   };
 
@@ -119,6 +157,9 @@ function RecruitWrite() {
     const stack = selectValue.target.value;
     setSelectedStack(stack);
   };
+
+  console.log(recruitTasks);
+
   return (
     <section className="w-full py-[68px] bg-white3">
       <div className="w-[1224px] mx-auto">
@@ -169,8 +210,12 @@ function RecruitWrite() {
           </li>
           <li className="flex items-start mb-[100px]">
             <p className="w-[208px] text-[17px]">필요 직군</p>
-            <ul>
-              <li className="mb-[47px]">
+            <ul className="relative">
+              <li className="absolute bottom-[100%] mb-[10px] text-gray3">
+                최소 하나의 직군이 필요합니다! 각 직군과 스택은 각각 하나씩 선택
+                가능합니다!
+              </li>
+              <li className="mb-[30px]">
                 {taskList.map(task => (
                   <button
                     key={task}
@@ -182,7 +227,7 @@ function RecruitWrite() {
                   </button>
                 ))}
               </li>
-              <li className="flex">
+              <li className="flex relative">
                 <div className="flex items-center mr-[24px]">
                   <select
                     className="border-[1px] border-black px-[20px] w-[184px] text-[18px] h-[40px]"
@@ -190,7 +235,9 @@ function RecruitWrite() {
                     disabled={selectedTask === 100 || selectedTask === 200}
                     defaultValue="hidden"
                   >
-                    <option value="hidden">선택해주세요!</option>
+                    <option value="hidden" className="pointer-events-none">
+                      선택해주세요!
+                    </option>
                     {filteredStackList.map(stack => (
                       <option key={Stack[stack]} value={Stack[stack]}>
                         {stack}
@@ -220,20 +267,67 @@ function RecruitWrite() {
                   </select>
                 </div>
                 <button
-                  className="text-[15px] text-blue3"
-                  onClick={addRecruitPeople}
+                  className="text-[15px] text-blue3 relative"
+                  onClick={addRecruit}
                 >
                   추가 작성하기 +
                 </button>
+                <div
+                  className={classNames(
+                    "absolute top-[100%] mt-[10px] left-0 text-red duration-500 transition-opacity",
+                    {
+                      "opacity-0": !isNotSelectModal,
+                      "opacity-100": isNotSelectModal,
+                    },
+                  )}
+                >
+                  직군 혹은 스택을 선택하지 않으셨습니다!
+                </div>
               </li>
-              <ul>
-                {recruitTasks?.map(task => {
-                  if (task.recruitTask < 300) {
-                    return <li key={task}>{Task[task.recruitTask]}</li>;
-                  }
-                })}
+              <ul className="flex mt-[40px]">
+                {recruitTasks?.map(task =>
+                  task.recruitTask < 300 ? (
+                    <li
+                      className={classNames(
+                        "mr-[20px]  px-[14px] py-[6px] rounded-[11px] border-[1px]",
+                        {
+                          "text-pink border-pink": task.recruitTask === 100,
+                          "text-yellow border-yellow": task.recruitTask === 200,
+                        },
+                      )}
+                      key={task.recruitTask}
+                    >
+                      {Task[task.recruitTask]} / {task.numberOfPeopleRequired}명{" "}
+                      <button
+                        className="ml-[5px]"
+                        onClick={removeRecruit(task.recruitTask)}
+                      >
+                        X
+                      </button>
+                    </li>
+                  ) : null,
+                )}
                 {recruitStacks.map(stack => (
-                  <li key={stack}>{Stack[stack.recruitStack]}</li>
+                  <li
+                    className={classNames(
+                      "mr-[20px] px-[14px] py-[6px] rounded-[11px] border-[1px]",
+                      {
+                        "text-coral border-coral":
+                          100 < stack.recruitStack && stack.recruitStack < 200,
+                        "text-blue border-blue": 200 < stack.recruitStack,
+                      },
+                    )}
+                    key={stack.recruitStack}
+                  >
+                    {Stack[stack.recruitStack]} / {stack.numberOfPeopleRequired}
+                    명
+                    <button
+                      className="ml-[5px]"
+                      onClick={removeRecruit(stack.recruitStack)}
+                    >
+                      X
+                    </button>
+                  </li>
                 ))}
               </ul>
             </ul>

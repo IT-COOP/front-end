@@ -18,6 +18,7 @@ function RecruitBoardDetail() {
   const { recruitId } = useParams();
   const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
 
+  // const mutation = useAddCommentMutation();
   const { mutate: addComment } = useAddCommentMutation();
 
   const addCommentHandler = () => {
