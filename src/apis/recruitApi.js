@@ -22,4 +22,13 @@ export const recruitApis = {
     console.log(response);
     return response;
   },
+  uploadRecruitBoardImg: async formData => {
+    const { data } = await instance.post("upload/recruit", formData, {
+      headers: {
+        "Content-Type":
+          "multipart/form-data; boundary=<calculated when request is sent>",
+      },
+    });
+    return { data };
+  },
 };

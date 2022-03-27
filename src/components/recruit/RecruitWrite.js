@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classNames from "classnames";
 
 import { Location, Stack, Task } from "../../constants/enums";
-
+import useUploadRecruitBoardImgMutation from "../../hooks/useUploadRecruitBoardImgMutation";
 function RecruitWrite() {
   const [recruitInfo, setRecruitInfo] = useState({
     title: "",
@@ -11,9 +11,12 @@ function RecruitWrite() {
     recruitLocation: 0,
     imgUrl: "",
   });
+
+  const [imgUrl, setImgUrl] = useState("");
   const [recruitTasks, setRecruitTasks] = useState([]);
   const [recruitStacks, setRecruitStacks] = useState([]);
 
+  const [isSelectedTask, setIsSelectedTask] = useState(false);
   const [isNotSelectModal, setIsNotSelectModal] = useState(false);
   const [numberOfPeopleRequired, setNumberOfPeopleRequired] = useState(1);
   const [selectedTask, setSelectedTask] = useState(0);
@@ -32,45 +35,12 @@ function RecruitWrite() {
           return startPoint < targetPoint && targetPoint < startPoint + 100;
         });
 
-  const selectTask = task => e => {
-    if (selectTask === task) {
-      return false;
-    }
-    const colorChipAll = e.target.parentNode.children;
-    const colorChip = e.target;
-    for (let key of colorChipAll) {
-      key.classList.add("bg-gray1");
-      key.classList.add("text-gray4");
-      key.classList.remove("text-white");
-      key.classList.remove("bg-pink");
-      key.classList.remove("bg-yellow");
-      key.classList.remove("bg-coral");
-      key.classList.remove("bg-blue");
-    }
+  const { mutateAsync: recruitBoardImgUpload } =
+    useUploadRecruitBoardImgMutation();
 
-    switch (task) {
-      case 100:
-        colorChip.classList.remove("text-gray4");
-        colorChip.classList.add("bg-pink");
-        colorChip.classList.add("text-white");
-        break;
-      case 200:
-        colorChip.classList.remove("text-gray4");
-        colorChip.classList.add("bg-yellow");
-        colorChip.classList.add("text-white");
-        break;
-      case 300:
-        colorChip.classList.remove("text-gray4");
-        colorChip.classList.add("bg-coral");
-        colorChip.classList.add("text-white");
-        break;
-      case 400:
-        colorChip.classList.remove("text-gray4");
-        colorChip.classList.add("bg-blue");
-        colorChip.classList.add("text-white");
-        break;
-      default:
-        return;
+  const selectTask = task => () => {
+    if (selectedStack === task) {
+      return false;
     }
     setSelectedTask(task);
   };
@@ -109,7 +79,15 @@ function RecruitWrite() {
       setRecruitStacks(prev => prev.filter(stack => stack.recruitStack !== v));
     }
   };
+
   const addRecruit = () => {
+    if (selectedTasks.includes(selectedTask)) {
+      setIsSelectedTask(prev => !prev);
+      setTimeout(() => {
+        setIsSelectedTask(prev => !prev);
+      }, 1000);
+      return;
+    }
     if (selectedTask === 0 || selectStack === 0) {
       setIsNotSelectModal(prev => !prev);
       setTimeout(() => {
@@ -117,6 +95,7 @@ function RecruitWrite() {
       }, 1000);
       return;
     }
+    setSelectedTasks(prev => [...prev, selectedTask]);
     if (selectedTask === 100 || selectedTask === 200) {
       setRecruitTasks(prev => [
         ...prev,
@@ -158,7 +137,17 @@ function RecruitWrite() {
     setSelectedStack(stack);
   };
 
-  console.log(recruitTasks);
+  const uploadRecruitBoardImg = async e => {
+    const formData = new FormData();
+    let file = e.target.files[0];
+    if (!file) {
+      return;
+    }
+    formData.append("image", file);
+    const { data: imgUrl } = await recruitBoardImgUpload(formData);
+    setRecruitInfo(prev => ({ ...prev, imgUrl }));
+    setImgUrl(imgUrl);
+  };
 
   return (
     <section className="w-full py-[68px] bg-white3">
@@ -220,7 +209,19 @@ function RecruitWrite() {
                   <button
                     key={task}
                     value={task}
-                    className="px-[16px] py-[6px] text-[18px] rounded-[20px] mr-[15px] bg-gray1"
+                    className={classNames(
+                      "px-[16px] py-[6px] text-[18px] rounded-[20px] mr-[15px] bg-gray1",
+                      {
+                        "bg-pink text-white":
+                          (selectedTask === task) & (selectedTask === 100),
+                        "bg-yellow text-white":
+                          (selectedTask === task) & (selectedTask === 200),
+                        "bg-coral text-white":
+                          (selectedTask === task) & (selectedTask === 300),
+                        "bg-blue text-white":
+                          (selectedTask === task) & (selectedTask === 400),
+                      },
+                    )}
                     onClick={selectTask(task)}
                   >
                     {Task[task]}
@@ -283,6 +284,17 @@ function RecruitWrite() {
                 >
                   직군 혹은 스택을 선택하지 않으셨습니다!
                 </div>
+                <div
+                  className={classNames(
+                    "absolute top-[100%] mt-[10px] left-0 text-red duration-500 transition-opacity",
+                    {
+                      "opacity-0": !isSelectedTask,
+                      "opacity-100": isSelectedTask,
+                    },
+                  )}
+                >
+                  이미 선택된 직군입니다!
+                </div>
               </li>
               <ul className="flex mt-[40px]">
                 {recruitTasks?.map(task =>
@@ -343,20 +355,25 @@ function RecruitWrite() {
               <li className="flex">
                 <img
                   className="w-[288px] h-[186px] mr-[16px]"
-                  src="https://t1.daumcdn.net/cfile/tistory/216C553953FC27C335"
+                  src={imgUrl}
                   alt="썸네일 이미지"
                 />
                 <div>
                   <label
-                    className="block rounded-[5px] px-[15px] py-[6px] mb-[8px] bg-[#C4C4C4] cursor-pointer"
                     htmlFor="thumbnail"
+                    className="block rounded-[5px] px-[15px] py-[6px] mb-[8px] bg-[#C4C4C4] cursor-pointer"
                   >
                     이미지 등록
                   </label>
+                  <input
+                    id="thumbnail"
+                    type="file"
+                    className="hidden"
+                    onChange={uploadRecruitBoardImg}
+                  />
                   <button className="block rounded-[5px] px-[15px] py-[6px] bg-[#C4C4C4]">
                     이미지 삭제
                   </button>
-                  <input id="thumbnail" className="hidden" type="file" />
                 </div>
               </li>
               <li>썸네일로 들어갈 이미지에요 (권장사이즈 288 * 186px)</li>

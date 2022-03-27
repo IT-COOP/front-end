@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Close, Prev } from "../../assets/icons";
 import { Stack, Task } from "../../constants/enums";
-import useUploadUserProfileImgMutation from "../../hooks/useUploadUserProfileImgMutation";
+import useUploadUserProfileImgMutation from "../../hooks/useUploadRecruitBoardImgMutation";
 import useConfirmNicknameMutation from "../../hooks/useConfirmNicknameMutation";
 import useCreateUserMutation from "../../hooks/useCreateUserMutation";
 

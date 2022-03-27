@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { userApis } from "../apis/userApi";
+import { userApis } from "../apis/recruitApi";
 
 function useUploadUserProfileImgMutation() {
   return useMutation(formData => {
