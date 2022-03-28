@@ -10,6 +10,9 @@ instance.interceptors.request.use(
     let token = localStorage.getItem("coopToken");
     if (token) {
       config.headers["authorization"] = `Bearer ${token}`;
+      // config.headers[
+      //   "authorization"
+      // ] = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhIiwiaWF0IjoxNjQ3ODQ4MTc2fQ.kGOI4QW6AArkRdyryWE5EGFr0wJCRvAKoscqiSB0kXw`;
       return config;
     }
     return config;

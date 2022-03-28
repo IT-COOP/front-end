@@ -22,6 +22,7 @@ function RecruitBoard({
   recruitStacks,
   recruitKeepCount,
   recruitDurationWeeks,
+  recruitDurationDays,
 }) {
   const navigate = useNavigate();
 
@@ -83,7 +84,9 @@ function RecruitBoard({
         </p>
         <div className="flex items-center text-[13px]">
           <p className="mr-[15px]">{Location[recruitLocation]}</p>
-          <p>{recruitDurationWeeks}주 예상</p>
+          <p>
+            {recruitDurationWeeks || Math.round(recruitDurationDays / 7)}주 예상
+          </p>
         </div>
         <div className="mt-[14px] mb-[28px]">
           {isClosed ? (

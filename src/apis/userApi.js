@@ -42,6 +42,42 @@ export const userApis = {
     const { data } = await instance.post("login/completion", userData);
     return data;
   },
+
+  // 유저 상세 정보 열람
+  // 사용처: 유저 상세 페이지
+  getUserDetails:
+    (userId = "") =>
+    async () => {
+      const { data } = await instance.get(
+        `user/profile${userId ? `/${userId}` : ""}`,
+      );
+      return data;
+    },
+
+  getProjectsByEndpoint:
+    (slug, anotherUserId = "") =>
+    async () => {
+      if (!Boolean(slug)) {
+        throw new Error("The slug must be string and the endpoint of slug");
+      }
+
+      const endpoint = anotherUserId
+        ? `user/profile/${anotherUserId}/${slug}`
+        : `user/${slug}`;
+
+      const { data } = await instance.get(endpoint);
+      return data;
+    },
+
+  getAppliedProjects: async () => {
+    const { data } = await instance.get("/user/applied");
+    return data;
+  },
+
+  getKeepitList: async () => {
+    const { data } = await instance.get("/user/mykeep");
+    return data;
+  },
 };
 
 export default instance;

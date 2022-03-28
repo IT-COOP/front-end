@@ -16,7 +16,7 @@ function Auth() {
   }, [searchParams, setSearchParams]);
 
   const { data, error, isSuccess } = useUserCheckQuery(token);
-  console.log(error);
+
   useEffect(() => {
     if (data?.data) {
       console.log(data.data);

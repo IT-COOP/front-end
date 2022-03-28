@@ -28,6 +28,8 @@ function Header() {
     window.location.replace("/");
   };
 
+  console.log(userData);
+
   return (
     <>
       {isSignInModalOpen && (
@@ -65,7 +67,7 @@ function Header() {
                   >
                     <img
                       className="w-[44px] h-[44px] rounded-full mr-[10px]"
-                      src={userData?.profileImgUrl}
+                      src={userData?.userInfo?.profileImgUrl}
                       alt="유저 프로필"
                     />
                     <DownArrow className="inline-block" />
@@ -76,7 +78,7 @@ function Header() {
                       <li>
                         <NavLink
                           className=" pl-[10px] block leading-[40px]"
-                          to="/mypage"
+                          to={`/user/${userData.userInfo.userId}`}
                         >
                           마이페이지
                         </NavLink>
