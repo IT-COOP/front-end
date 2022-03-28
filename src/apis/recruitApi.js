@@ -38,4 +38,9 @@ export const recruitApis = {
     });
     return { data };
   },
+
+  deleteRecruitBoard: async recruitBoardId => {
+    const { data } = await instance.delete(`/recruit/${recruitBoardId}`);
+    return data;
+  },
 };

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import classNames from "classnames";
 
+import useDeleteRecruitBoard from "../../hooks/useDeleteRecruitBoard";
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 import { Location, Task, Stack } from "../../constants/enums";
 import {
@@ -18,8 +19,13 @@ function RecruitBoardDetail() {
 
   const { recruitId } = useParams();
   const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
-
   const { mutate: addComment } = useAddCommentMutation();
+  const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoard();
+
+  const deleteRecruitBoardHandler = async () => {
+    const data = await deleteRecruitBoard(recruitId);
+    console.log(data);
+  };
 
   const addCommentHandler = () => {
     if (commentValue.current.value === "") {
@@ -29,8 +35,6 @@ function RecruitBoardDetail() {
     const commentData = {
       data: {
         recruitCommentContent: commentValue.current.value,
-        commentDepth: 2,
-        commentGroup: 0,
       },
       recruitId,
     };
@@ -52,8 +56,6 @@ function RecruitBoardDetail() {
     return (view[comment.commentGroup] = [comment]);
   });
   const commentListView = Object.values(view);
-  console.log(Object.values(view));
-  console.log(view);
   return (
     <>
       <ul className="w-[1224px] mx-auto mt-[70px]">
@@ -154,7 +156,18 @@ function RecruitBoardDetail() {
           </p>
         </li>
         <li className="mb-[41px]">
-          <h3 className="text-[23px] mb-[17px]">댓글 작성하기</h3>
+          <div className="flex items-end justify-between mb-[17px]">
+            <h3 className="text-[23px] ">댓글 작성하기</h3>
+            <div>
+              <button
+                className="text-gray4 mr-[15px]"
+                onClick={deleteRecruitBoardHandler}
+              >
+                삭제하기
+              </button>
+              <button className="text-gray4">수정하기</button>
+            </div>
+          </div>
           <form onSubmit={addCommentHandler} className="w-full overflow-hidden">
             <textarea
               ref={commentValue}
