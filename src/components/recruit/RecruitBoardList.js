@@ -38,7 +38,7 @@ function RecruitBoardList() {
             <RecruitBoard
               recruitPostId={board.recruitPostId}
               title={board.title}
-              author={board.author}
+              nickname={board.nickname}
               recruitContent={board.recruitContent}
               recruitKeepCount={board.recruitKeepCount}
               recruitCommentCount={board.recruitCommentCount}
