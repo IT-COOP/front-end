@@ -1,8 +1,7 @@
 import { instance } from "./axiosInstance";
 
 export const userApis = {
-  // 토큰 확인해서 회원가입한 사람이면 유저 정보 가져오고 아니면 빈 스트링 받음
-
+  // 튜토리얼 진행했는지 안했는지 판별
   checkUser: async () => {
     try {
       const { data } = await instance.get("login/validation");
@@ -43,12 +42,6 @@ export const userApis = {
     const { data } = await instance.post("login/completion", userData);
     return data;
   },
-
-  //유저 데이터 수정
-  userProfileEdit: async data =>
-    instance.post("api/", {
-      data,
-    }),
 };
 
 export default instance;

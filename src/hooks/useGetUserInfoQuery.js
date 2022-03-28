@@ -1,17 +1,18 @@
 import { useQuery } from "react-query";
 import { userApis } from "../apis/userApi";
 
-function useGetUserInfoQuery(token) {
+function useGetUserInfoQuery() {
   return useQuery(
-    ["userInfo", token],
+    ["userInfo"],
     () => {
-      if (token) {
-        return userApis.getUserInfo(token);
-      } else {
-        return;
+      if (localStorage.getItem("coopToken")) {
+        return userApis.getUserInfo();
       }
     },
     {
+      cacheTime: Infinity,
+      staleTime: Infinity,
+      refetchOnMount: false,
       refetchOnWindowFocus: false,
       retry: false,
     },

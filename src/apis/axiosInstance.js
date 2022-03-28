@@ -48,7 +48,8 @@ instance.interceptors.response.use(
       if (response.data.message === "Access Token Maliciously Modified.") {
         localStorage.removeItem("coopToken");
         deleteCookie("coopCookie");
-        return Promise.reject("잘못된 접근 입니다.");
+        window.location.href = "/";
+        return;
       }
     }
     return Promise.reject(error);
