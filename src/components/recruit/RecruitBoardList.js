@@ -18,7 +18,7 @@ function RecruitBoardList() {
   const handleFilterChange = newPayload => {
     setFilter(newPayload);
   };
-
+  console.log(data);
   return (
     <div className="w-full">
       <RecruitCategoryBar
@@ -38,7 +38,7 @@ function RecruitBoardList() {
             <RecruitBoard
               recruitPostId={board.recruitPostId}
               title={board.title}
-              author={board.author}
+              nickname={board.nickname}
               recruitContent={board.recruitContent}
               recruitKeepCount={board.recruitKeepCount}
               recruitCommentCount={board.recruitCommentCount}

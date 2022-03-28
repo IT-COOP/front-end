@@ -46,10 +46,8 @@ function RecruitWrite() {
     mutateAsync: completeWriteBoard,
     isError,
     error,
+    data: boardComplete,
   } = useCompleteWriteMutation();
-
-  console.log(error);
-  console.log(isError);
 
   const selectTask = task => () => {
     if (selectedStack === task) {
@@ -217,8 +215,8 @@ function RecruitWrite() {
     setImgUrl(imgUrl);
   };
 
-  const handleCompleteWriteBoard = () => {
-    const { data } = completeWriteBoard(recruitInfo);
+  const handleCompleteWriteBoard = async () => {
+    const { data } = await completeWriteBoard(recruitInfo);
     console.log(data);
   };
 

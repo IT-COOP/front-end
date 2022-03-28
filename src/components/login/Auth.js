@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
+import SignUp from "./SignUp";
 import useUserCheckQuery from "../../hooks/useUserCheckQuery";
 import { setCookie } from "../../utils/cookie";
 function Auth() {
@@ -15,28 +16,22 @@ function Auth() {
   }, [searchParams, setSearchParams]);
 
   const { data, error, isSuccess } = useUserCheckQuery(token);
-
+  console.log(error);
   useEffect(() => {
-    if (data) {
-      if (data.data.data.userInfo) {
-        localStorage.setItem("coopToken", data.data.data.accessToken);
-        setCookie("coopCookie", data.data.data.refreshToken);
+    if (data?.data) {
+      console.log(data.data);
+      if (data.data.userInfo) {
+        localStorage.setItem("coopToken", data.data.accessToken);
+        setCookie("coopCookie", data.data.refreshToken);
         navigate("/", { replace: true });
-      } else {
-        navigate("/", { replace: true, state: true });
       }
     }
   }, [isSuccess, navigate, data]);
-
-  error && navigate("/");
-  useEffect(() => {
-    if (error) {
-      localStorage.removeItem("coopToken");
-      navigate("/");
-    }
-  }, [error, navigate]);
-
-  return <></>;
+  return (
+    <>
+      <SignUp />
+    </>
+  );
 }
 
 export default Auth;

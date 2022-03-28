@@ -1,31 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import { Bell, DownArrow } from "../../assets/icons";
-import SignUp from "../login/SignUp";
 import SocialSignIn from "../login/SocialSignIn";
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 import { deleteCookie } from "../../utils/cookie";
 
 function Header() {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
-  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [isMyPageModalOpen, setIsMyPageModalOpen] = useState(false);
   const [user, setUser] = useState(null);
   const { data: userData } = useGetUserInfoQuery(
     localStorage.getItem("coopToken"),
   );
-  const location = useLocation();
 
   useEffect(() => {
-    if (typeof location.state === "boolean") {
-      setIsSignUpModalOpen(location.state);
-    }
-  }, [location.state]);
-
-  useEffect(() => {
-    if (userData) {
-      setUser(userData.data.userInfo);
+    if (userData?.data) {
     }
   }, [userData]);
 
@@ -34,10 +24,6 @@ function Header() {
   };
   const closeSignInModal = () => {
     setIsSignInModalOpen(false);
-  };
-  const closeSignUpModal = () => {
-    localStorage.removeItem("coopToken");
-    setIsSignUpModalOpen(false);
   };
 
   const toggleMyPageModal = () => {
@@ -55,7 +41,6 @@ function Header() {
       {isSignInModalOpen && (
         <SocialSignIn closeSignInModal={closeSignInModal} />
       )}
-      {isSignUpModalOpen && <SignUp closeSignUpModal={closeSignUpModal} />}
       <header className="w-full sticky top-0 mx-auto py-[12px] z-[900] bg-white shadow-[0_4px_4px_-4px_rgba(0,0,0,0.3)]">
         <div className="w-[1224px] mx-auto flex items-center justify-between">
           <div>

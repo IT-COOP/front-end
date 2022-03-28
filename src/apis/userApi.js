@@ -4,13 +4,21 @@ export const userApis = {
   // 토큰 확인해서 회원가입한 사람이면 유저 정보 가져오고 아니면 빈 스트링 받음
 
   checkUser: async () => {
-    const { data } = await instance.get("login/validation");
-    return { data };
+    try {
+      const { data } = await instance.get("login/validation");
+      return data;
+    } catch (error) {
+      return Promise.reject("checkUser");
+    }
   },
 
   getUserInfo: async () => {
-    const { data } = await instance.get("login/me");
-    return { data };
+    try {
+      const { data } = await instance.get("login/me");
+      return data;
+    } catch (error) {
+      return Promise.reject("getUserInfo");
+    }
   },
 
   uploadUserProfileImg: async formData => {

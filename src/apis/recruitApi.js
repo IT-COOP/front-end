@@ -13,20 +13,16 @@ export const recruitApis = {
   },
 
   addRecruitComment: async commentData => {
-    console.log(commentData.data);
-
-    const response = await instance.post(
+    const { data } = await instance.post(
       `/recruit/${commentData.recruitId}/comment`,
       commentData.data,
     );
-    console.log(response);
-    return response;
+    return data;
   },
 
   addRecruitBoard: async recruitBoardInfo => {
-    console.log(recruitBoardInfo);
-    const response = await instance.post("/recruit", recruitBoardInfo);
-    return response;
+    const { data } = await instance.post("/recruit", recruitBoardInfo);
+    return data;
   },
 
   uploadRecruitBoardImg: async formData => {
