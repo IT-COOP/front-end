@@ -8,6 +8,7 @@ function useGetUserInfoQuery() {
       if (localStorage.getItem("coopToken")) {
         return userApis.getUserInfo();
       }
+      return null;
     },
     {
       cacheTime: Infinity,

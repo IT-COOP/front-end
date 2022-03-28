@@ -5,6 +5,7 @@ export const recruitApis = {
     const { data } = await instance.get("/recruit", {
       params: filter,
     });
+
     return data;
   },
   getRecruitBoardDetail: async recruitId => {

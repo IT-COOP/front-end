@@ -9,9 +9,7 @@ import { deleteCookie } from "../../utils/cookie";
 function Header() {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const [isMyPageModalOpen, setIsMyPageModalOpen] = useState(false);
-  const { data: userData } = useGetUserInfoQuery(
-    localStorage.getItem("coopToken"),
-  );
+  const { data: userData } = useGetUserInfoQuery();
 
   const openSignInModal = () => {
     setIsSignInModalOpen(true);
@@ -55,7 +53,7 @@ function Header() {
               <li className="cursor-pointer">
                 <Bell />
               </li>
-              {userData ? (
+              {!userData ? (
                 <li className="cursor-pointer" onClick={openSignInModal}>
                   로그인
                 </li>

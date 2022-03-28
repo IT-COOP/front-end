@@ -11,14 +11,15 @@ function RecruitBoardList() {
     task: "",
     stack: "",
     sort: 0,
-    items: "",
+    items: 12,
   });
 
   const { data } = useRecruitQuery(filter);
+
   const handleFilterChange = newPayload => {
     setFilter(newPayload);
   };
-  console.log(data);
+
   return (
     <div className="w-full">
       <RecruitCategoryBar
