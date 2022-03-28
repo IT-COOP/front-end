@@ -15,11 +15,9 @@ function Auth() {
     setSearchParams("");
   }, [searchParams, setSearchParams]);
 
-  const { data, error, isSuccess } = useUserCheckQuery(token);
-  console.log(error);
+  const { data, isSuccess } = useUserCheckQuery(token);
   useEffect(() => {
     if (data?.data) {
-      console.log(data.data);
       if (data.data.userInfo) {
         localStorage.setItem("coopToken", data.data.accessToken);
         setCookie("coopCookie", data.data.refreshToken);

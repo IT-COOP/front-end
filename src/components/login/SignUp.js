@@ -68,48 +68,24 @@ function SocialSignIn({ closeSignUpModal }) {
     }
   };
 
-  const handleSelectTask = task => e => {
-    const colorChipAll = e.target.parentNode.children;
-    const colorChip = e.target;
-    for (let key of colorChipAll) {
-      key.classList.add("bg-gray1");
-      key.classList.add("text-gray4");
-      key.classList.remove("text-white");
-      key.classList.remove("bg-pink");
-      key.classList.remove("bg-yellow");
-      key.classList.remove("bg-coral");
-      key.classList.remove("bg-blue");
-    }
-
-    switch (task) {
-      case 100:
-        colorChip.classList.remove("text-gray4");
-        colorChip.classList.add("bg-pink");
-        colorChip.classList.add("text-white");
-        break;
-      case 200:
-        colorChip.classList.remove("text-gray4");
-        colorChip.classList.add("bg-yellow");
-        colorChip.classList.add("text-white");
-        break;
-      case 300:
-        colorChip.classList.remove("text-gray4");
-        colorChip.classList.add("bg-coral");
-        colorChip.classList.add("text-white");
-        break;
-      case 400:
-        colorChip.classList.remove("text-gray4");
-        colorChip.classList.add("bg-blue");
-        colorChip.classList.add("text-white");
-        break;
-      default:
-        return;
-    }
-
+  const handleSelectTask = task => () => {
     if (selectedTask === task) {
       return false;
     }
-
+    if (task === 100) {
+      console.log(100);
+      setProfileImgSrc("%PUBLIC_URL%/pl.png");
+    }
+    if (task === 200) {
+      console.log(200);
+    }
+    if (task === 300) {
+      console.log(300);
+    }
+    if (task === 400) {
+      console.log(400);
+    }
+    console.log(profileImgSrc);
     setSelectedStack([]);
     setSelectedTask(task);
     setUserInfo(prev => ({ ...prev, technologyTask: [task] }));
@@ -117,7 +93,11 @@ function SocialSignIn({ closeSignUpModal }) {
 
   const handleSelectStack = e => {
     const stackValue = e.target.value;
-    if (selectedStack.length === 3 || selectedStack.includes(stackValue)) {
+    if (
+      selectedStack.length === 3 ||
+      selectedStack.includes(stackValue) ||
+      stackValue === "none"
+    ) {
       return false;
     }
     setSelectedStack(prev => [...prev, stackValue]);
@@ -241,6 +221,22 @@ function SocialSignIn({ closeSignUpModal }) {
                   key={task}
                   className={classNames(
                     "bg-gray1 text-gray4 mr-[16px] text-[16px] px-[16px] py-[6px] rounded-[20px]",
+                    {
+                      "bg-pink text-white":
+                        (selectedTask === task) & (selectedTask === 100),
+                    },
+                    {
+                      "bg-yellow text-white":
+                        (selectedTask === task) & (selectedTask === 200),
+                    },
+                    {
+                      "bg-coral text-white":
+                        (selectedTask === task) & (selectedTask === 300),
+                    },
+                    {
+                      "bg-blue text-white":
+                        (selectedTask === task) & (selectedTask === 400),
+                    },
                   )}
                   onClick={handleSelectTask(task)}
                 >
@@ -257,7 +253,9 @@ function SocialSignIn({ closeSignUpModal }) {
               <select
                 className="w-full border-[1px] h-[50px] pl-[15px]"
                 onChange={handleSelectStack}
+                disabled={selectedTask === 100 || selectedTask === 200}
               >
+                <option value="none">스택을 선택해주세요!</option>
                 {filteredStackList?.map(stack => (
                   <option key={stack} value={Stack[stack]}>
                     {stack}
@@ -324,6 +322,51 @@ function SocialSignIn({ closeSignUpModal }) {
               </button>
             </li>
           </ul>
+          <button
+            className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px]"
+            onClick={handleNextChapter}
+          >
+            다음으로
+          </button>
+        </li>
+        <li className={`${formLi}`}>
+          <button
+            className="absolute top-[14px] left-[14px]"
+            onClick={handlePrevChapter}
+          >
+            <Prev />
+          </button>
+          <h1 className={`${formTitle} mb-[33px]`}>
+            포트폴리오 URL을 작성해주세요!
+          </h1>
+          <p>
+            깃허브, 드리블, 노션 본인의 포트폴리오 URL을 한개만 작성해주세요!
+          </p>
+          <div className="flex items-center mb-[40px] ">
+            <input
+              type="text"
+              className="w-full border-b-[1px] mt-[50px] mb-[30px] py-[10px] text-[18px]"
+              placeholder="https://github.com/"
+            />
+          </div>
+          <button
+            className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px]"
+            onClick={handleNextChapter}
+          >
+            다음으로
+          </button>
+        </li>
+        <li className={`${formLi}`}>
+          <button
+            className="absolute top-[14px] left-[14px]"
+            onClick={handlePrevChapter}
+          >
+            <Prev />
+          </button>
+          <h1 className={`${formTitle} mb-[33px]`}>자기소개를 해주세요!</h1>
+          <div className="flex items-center mb-[40px] ">
+            <textarea className="w-full p-[10px] border-[1px] rounded-[10px] h-[200px] resize-none"></textarea>
+          </div>
           <button
             className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px]"
             onClick={submitUserData}
