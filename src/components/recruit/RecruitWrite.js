@@ -19,7 +19,7 @@ function RecruitWrite() {
   });
 
   const [imgUrl, setImgUrl] = useState("");
-
+  const [isSuccess, setIsSuccess] = useState(false);
   const [isSelectedTask, setIsSelectedTask] = useState(false);
   const [isNotSelectModal, setIsNotSelectModal] = useState(false);
   const [isImgConfirmMsg, setIsImgConfirmMsg] = useState(false);
@@ -221,9 +221,26 @@ function RecruitWrite() {
     setImgUrl(imgUrl);
   };
 
-  const handleCompleteWriteBoard = () => {
-    const { data } = completeWriteBoard(recruitInfo);
-    console.log(data);
+  const handleCompleteWriteBoard = async () => {
+    if (recruitInfo.title === "") {
+      return;
+    }
+    if (recruitInfo.recruitContent === "") {
+      return;
+    }
+    if (recruitInfo.recruitDurationWeek === 0) {
+      return;
+    }
+    if (recruitInfo.recruitLocation === 0) {
+      return;
+    }
+    if (recruitInfo.recruitTasks.length === 0) {
+      return;
+    }
+    const { data } = await completeWriteBoard(recruitInfo);
+    if (data.success) {
+      setIsSuccess(data.success);
+    }
   };
 
   return (
@@ -482,7 +499,7 @@ function RecruitWrite() {
           </li>
         </ul>
       </div>
-      {/* {isSuccess && (
+      {isSuccess && (
         <div className="fixed top-0 left-0 z-[999] flex items-center justify-center w-screen h-screen transition-opacity bg-black/70">
           <div className="relative w-[800px] h-[500px] flex bg-white rounded-[16px] overflow-hidden items-center justify-center">
             <div>
@@ -498,7 +515,7 @@ function RecruitWrite() {
             </div>
           </div>
         </div>
-      )} */}
+      )}
     </section>
   );
 }

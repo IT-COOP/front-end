@@ -26,22 +26,23 @@ instance.interceptors.response.use(
     return response;
   },
   async error => {
-    const { response } = error;
+    const { response, config } = error;
+    const originalRequest = config;
     if (response.status === 401) {
-      if (response.data.message === "Access Token Expired") {
-        //const originalRequest = config;
+      if (response.data.message === "Access Token Expired.") {
         const refreshToken = getCookie("coopCookie");
-
         let accessToken = localStorage.getItem("coopToken");
         const tokens = {
           accessToken,
           refreshToken,
         };
         if (refreshToken) {
-          const response = await checkToken(tokens);
-          console.log(response);
+          const { data } = await checkToken(tokens);
+          accessToken = data.accessToken;
         }
+        config.headers["authorization"] = `Bearer ${accessToken}`;
       }
+      return axios(originalRequest);
     }
   },
 );
