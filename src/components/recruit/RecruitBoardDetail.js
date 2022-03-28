@@ -13,6 +13,7 @@ import {
 } from "../../assets/icons";
 import convertDateText from "../../lib/convertDateText";
 import useAddCommentMutation from "../../hooks/useAddCommentMutation";
+import useRecruitBoardKeepItMutation from "../../hooks/useRecruitBoardKeepItMutation";
 
 function RecruitBoardDetail() {
   const commentValue = useRef();
@@ -21,6 +22,7 @@ function RecruitBoardDetail() {
   const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
   const { mutate: addComment } = useAddCommentMutation();
   const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoard();
+  const { mutateAsync: keepItRecruitBoard } = useRecruitBoardKeepItMutation();
 
   const deleteRecruitBoardHandler = async () => {
     const data = await deleteRecruitBoard(recruitId);
@@ -56,6 +58,12 @@ function RecruitBoardDetail() {
     return (view[comment.commentGroup] = [comment]);
   });
   const commentListView = Object.values(view);
+
+  const addRecruitBoardKeepIt = async () => {
+    const data = await keepItRecruitBoard(recruitId);
+    console.log(data);
+  };
+
   return (
     <>
       <ul className="w-[1224px] mx-auto mt-[70px]">
@@ -75,7 +83,7 @@ function RecruitBoardDetail() {
                 <p className="text-[15px] text-gray4 mb-[17px]">
                   소요기간 : {recruitBoard?.recruitDurationWeeks}주 예상
                 </p>
-                <ul>
+                <ul className="flex flex-wrap">
                   {recruitBoard?.recruitTasks.map(task =>
                     task.recruitTask < 300 ? (
                       <li
@@ -109,15 +117,17 @@ function RecruitBoardDetail() {
                       )}
                       key={stack.recruitStack}
                     >
-                      {Stack[stack.recruitStack]} /{" "}
+                      {Stack[stack.recruitStack]} {stack.numberOfPeopleSet}/
                       {stack.numberOfPeopleRequired}명
-                      <button className="ml-[5px]">X</button>
                     </li>
                   ))}
                 </ul>
               </li>
               <li className="flex">
-                <button className="text-[19px] border-[1px] border-blue3 py-[6px] px-[30px] text-blue3 rounded-[5px] mr-[9px]">
+                <button
+                  className="text-[19px] border-[1px] border-blue3 py-[6px] px-[30px] text-blue3 rounded-[5px] mr-[9px]"
+                  onClick={addRecruitBoardKeepIt}
+                >
                   <KeepItDetail className="inline-block " />
                   <span className="px-[15px] pl-[5px]">Keep It</span>
                 </button>
