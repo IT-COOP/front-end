@@ -14,6 +14,7 @@ import { ReactComponent as Info } from "./info.svg";
 import { ReactComponent as Flag } from "./flag.svg";
 import { ReactComponent as Check } from "./check.svg";
 import { ReactComponent as KeepItDetail } from "./keepItDetail.svg";
+import { ReactComponent as Completion } from "./completion.svg";
 
 export {
   Close,
@@ -32,4 +33,5 @@ export {
   Check,
   KeepItDetail,
   LeftArrow,
+  Completion,
 };

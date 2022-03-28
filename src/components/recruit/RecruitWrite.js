@@ -1,20 +1,24 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import classNames from "classnames";
 
 import { Location, Stack, Task } from "../../constants/enums";
 import useUploadRecruitBoardImgMutation from "../../hooks/useUploadRecruitBoardImgMutation";
+import useCompleteWriteMutation from "../../hooks/useCompleteWriteMutation";
+import { Completion } from "../../assets/icons";
+
 function RecruitWrite() {
   const [recruitInfo, setRecruitInfo] = useState({
     title: "",
     recruitContent: "",
     recruitDurationWeek: 0,
     recruitLocation: 0,
+    recruitTasks: [],
+    recruitStacks: [],
     imgUrl: "",
   });
 
   const [imgUrl, setImgUrl] = useState("");
-  const [recruitTasks, setRecruitTasks] = useState([]);
-  const [recruitStacks, setRecruitStacks] = useState([]);
 
   const [isSelectedTask, setIsSelectedTask] = useState(false);
   const [isNotSelectModal, setIsNotSelectModal] = useState(false);
@@ -38,6 +42,15 @@ function RecruitWrite() {
   const { mutateAsync: recruitBoardImgUpload } =
     useUploadRecruitBoardImgMutation();
 
+  const {
+    mutateAsync: completeWriteBoard,
+    isError,
+    error,
+  } = useCompleteWriteMutation();
+
+  console.log(error);
+  console.log(isError);
+
   const selectTask = task => () => {
     if (selectedStack === task) {
       return false;
@@ -57,12 +70,18 @@ function RecruitWrite() {
 
   const handleDurationWeek = selectValue => {
     const recruitDurationWeek = selectValue.target.value;
-    setRecruitInfo(prev => ({ ...prev, recruitDurationWeek }));
+    setRecruitInfo(prev => ({
+      ...prev,
+      recruitDurationWeek: Number(recruitDurationWeek),
+    }));
   };
 
   const handleLocation = selectValue => {
     const recruitLocation = selectValue.target.value;
-    setRecruitInfo(prev => ({ ...prev, recruitLocation }));
+    setRecruitInfo(prev => ({
+      ...prev,
+      recruitLocation: Number(recruitLocation),
+    }));
   };
 
   const setPeopleNumber = selectValue => {
@@ -72,38 +91,79 @@ function RecruitWrite() {
 
   const removeRecruit = v => () => {
     if (v === 100 || v === 200) {
-      setRecruitTasks(prev => prev.filter(task => task.recruitTask !== v));
+      setRecruitInfo(prev => ({
+        ...prev,
+        recruitTasks: prev.recruitTasks.filter(task => task.recruitTask !== v),
+      }));
+      setSelectedTasks(prev => prev.filter(task => task !== v));
       return;
     } else {
-      setRecruitTasks(prev => prev.filter(task => task.recruitTask !== v));
-      setRecruitStacks(prev => prev.filter(stack => stack.recruitStack !== v));
+      if (v < 200) {
+        setRecruitInfo(prev => ({
+          ...prev,
+          recruitTasks: prev.recruitTasks.filter(
+            task => task.recruitTask !== Number(300),
+          ),
+        }));
+        setSelectedTasks(prev => prev.filter(task => task !== Number(300)));
+      } else {
+        setRecruitInfo(prev => ({
+          ...prev,
+          recruitTasks: prev.recruitTasks.filter(
+            task => task.recruitTask !== Number(400),
+          ),
+        }));
+        setSelectedTasks(prev => prev.filter(task => task !== Number(400)));
+      }
+      setRecruitInfo(prev => ({
+        ...prev,
+        recruitStacks: prev.recruitStacks.filter(
+          stack => stack.recruitStack !== v,
+        ),
+      }));
+      return;
     }
   };
 
   const addRecruit = () => {
     if (selectedTasks.includes(selectedTask)) {
       setIsSelectedTask(prev => !prev);
+      setSelectedTask(0);
+      setSelectedStack(0);
       setTimeout(() => {
         setIsSelectedTask(prev => !prev);
       }, 1000);
       return;
     }
-    if (selectedTask === 0 || selectStack === 0) {
+    if (selectedTask === 0) {
       setIsNotSelectModal(prev => !prev);
       setTimeout(() => {
         setIsNotSelectModal(prev => !prev);
       }, 1000);
       return;
     }
+    if (selectedTask === 300 || selectedTask === 400) {
+      if (selectedStack === 0) {
+        setIsNotSelectModal(prev => !prev);
+        setTimeout(() => {
+          setIsNotSelectModal(prev => !prev);
+        }, 1000);
+        return;
+      }
+    }
     setSelectedTasks(prev => [...prev, selectedTask]);
     if (selectedTask === 100 || selectedTask === 200) {
-      setRecruitTasks(prev => [
+      setRecruitInfo(prev => ({
         ...prev,
-        {
-          recruitTask: selectedTask,
-          numberOfPeopleRequired: Number(numberOfPeopleRequired),
-        },
-      ]);
+        recruitTasks: [
+          ...prev.recruitTasks,
+          {
+            recruitTask: selectedTask,
+            numberOfPeopleSet: 0,
+            numberOfPeopleRequired: Number(numberOfPeopleRequired),
+          },
+        ],
+      }));
       setSelectedTask(0);
     } else {
       if (selectedStack === 0) {
@@ -113,20 +173,28 @@ function RecruitWrite() {
         }, 1000);
         return false;
       }
-      setRecruitTasks(prev => [
+      setRecruitInfo(prev => ({
         ...prev,
-        {
-          recruitTask: selectedTask,
-          numberOfPeopleRequired: Number(numberOfPeopleRequired),
-        },
-      ]);
-      setRecruitStacks(prev => [
+        recruitTasks: [
+          ...prev.recruitTasks,
+          {
+            recruitTask: selectedTask,
+            numberOfPeopleSet: 0,
+            numberOfPeopleRequired: Number(numberOfPeopleRequired),
+          },
+        ],
+      }));
+      setRecruitInfo(prev => ({
         ...prev,
-        {
-          recruitStack: selectedStack,
-          numberOfPeopleRequired: Number(numberOfPeopleRequired),
-        },
-      ]);
+        recruitStacks: [
+          ...prev.recruitStacks,
+          {
+            recruitStack: selectedStack,
+            numberOfPeopleSet: 0,
+            numberOfPeopleRequired: Number(numberOfPeopleRequired),
+          },
+        ],
+      }));
       setSelectedStack(0);
       setSelectedTask(0);
     }
@@ -149,6 +217,11 @@ function RecruitWrite() {
     setImgUrl(imgUrl);
   };
 
+  const handleCompleteWriteBoard = () => {
+    const { data } = completeWriteBoard(recruitInfo);
+    console.log(data);
+  };
+
   return (
     <section className="w-full py-[68px] bg-white3">
       <div className="w-[1224px] mx-auto">
@@ -165,14 +238,14 @@ function RecruitWrite() {
             />
           </li>
           <li className="flex items-center mb-[62px]">
-            <p className="w-[208px] text-[17px]"> 예상 소요 주 </p>
+            <p className="w-[208px] text-[17px]"> 예상 소요 기간 </p>
             <select
               className="border-[1px] border-black px-[20px] w-[392px] text-[17px] h-[40px] "
               defaultValue="hidden"
               onChange={handleDurationWeek}
             >
               <option value="hidden" disabled className="hidden">
-                예상 소요 주를 선택해주세요!
+                예상 소요 기간을 선택해주세요!
               </option>
               <option value="1">1주</option>
               <option value="2">2주</option>
@@ -228,7 +301,7 @@ function RecruitWrite() {
                   </button>
                 ))}
               </li>
-              <li className="flex relative">
+              <li className="relative flex">
                 <div className="flex items-center mr-[24px]">
                   <select
                     className="border-[1px] border-black px-[20px] w-[184px] text-[18px] h-[40px]"
@@ -252,7 +325,7 @@ function RecruitWrite() {
                     className="border-[1px] border-black px-[20px] w-[184px] text-[18px] h-[40px]"
                     onChange={setPeopleNumber}
                   >
-                    {selectedTask === 100 || selectedTask === 200 ? (
+                    {selectedTask < 300 ? (
                       <>
                         <option value="1">1명</option>
                         <option value="2">2명</option>
@@ -297,7 +370,7 @@ function RecruitWrite() {
                 </div>
               </li>
               <ul className="flex mt-[40px]">
-                {recruitTasks?.map(task =>
+                {recruitInfo.recruitTasks.map(task =>
                   task.recruitTask < 300 ? (
                     <li
                       className={classNames(
@@ -319,7 +392,7 @@ function RecruitWrite() {
                     </li>
                   ) : null,
                 )}
-                {recruitStacks.map(stack => (
+                {recruitInfo.recruitStacks.map(stack => (
                   <li
                     className={classNames(
                       "mr-[20px] px-[14px] py-[6px] rounded-[11px] border-[1px]",
@@ -380,7 +453,10 @@ function RecruitWrite() {
             </ul>
           </li>
           <li className="text-right">
-            <button className="rounded-[5px] mr-[24px] text-[17px] px-[15px] py-[6px] bg-black text-white">
+            <button
+              className="rounded-[5px] mr-[24px] text-[17px] px-[15px] py-[6px] bg-black text-white"
+              onClick={handleCompleteWriteBoard}
+            >
               글 등록하기
             </button>
             <button className="rounded-[5px] bg-[#C4C4C4] text-[17px] px-[15px] py-[6px]">
@@ -389,6 +465,23 @@ function RecruitWrite() {
           </li>
         </ul>
       </div>
+      {/* {isSuccess && (
+        <div className="fixed top-0 left-0 z-[999] flex items-center justify-center w-screen h-screen transition-opacity bg-black/70">
+          <div className="relative w-[800px] h-[500px] flex bg-white rounded-[16px] overflow-hidden items-center justify-center">
+            <div>
+              <h3 className="text-[23px] font-bold mb-[40px] text-center">
+                글 작성이 완료되었습니다.
+              </h3>
+              <Completion className="mx-auto mb-[50px]" />
+              <Link to="/">
+                <button className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px] ">
+                  메인 화면으로 가기
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )} */}
     </section>
   );
 }

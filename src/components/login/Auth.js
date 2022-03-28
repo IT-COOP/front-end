@@ -22,7 +22,6 @@ function Auth() {
         localStorage.setItem("coopToken", data.data.data.accessToken);
         setCookie("coopCookie", data.data.data.refreshToken);
         navigate("/", { replace: true });
-        window.location.replace("/");
       } else {
         navigate("/", { replace: true, state: true });
       }
@@ -30,6 +29,12 @@ function Auth() {
   }, [isSuccess, navigate, data]);
 
   error && navigate("/");
+  useEffect(() => {
+    if (error) {
+      localStorage.removeItem("coopToken");
+      navigate("/");
+    }
+  }, [error, navigate]);
 
   return <></>;
 }

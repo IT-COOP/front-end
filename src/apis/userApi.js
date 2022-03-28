@@ -9,8 +9,8 @@ export const userApis = {
   },
 
   getUserInfo: async () => {
-    const response = await instance.get("login/me");
-    return response;
+    const { data } = await instance.get("login/me");
+    return { data };
   },
 
   uploadUserProfileImg: async formData => {
@@ -24,15 +24,14 @@ export const userApis = {
   },
 
   confirmUserNickname: async name => {
-    const response = await instance.get(
+    const { data } = await instance.get(
       `login/duplicateCheck/nickname/${name}`,
     );
-    return response;
+    return { data };
   },
 
   //최초 로그인이나, 유저정보 튜토리얼 완성 안한 사람들
   createUser: async userData => {
-    console.log(userData);
     const { data } = await instance.post("login/completion", userData);
     return data;
   },

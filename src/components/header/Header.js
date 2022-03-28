@@ -25,7 +25,6 @@ function Header() {
 
   useEffect(() => {
     if (userData) {
-      console.log(userData);
       setUser(userData.data.userInfo);
     }
   }, [userData]);

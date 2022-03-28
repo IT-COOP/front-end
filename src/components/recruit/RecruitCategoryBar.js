@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { Filter } from "../../assets/icons";
 
 import checkAll from "../../lib/checkAll";
@@ -60,9 +62,11 @@ function RecruitCategoryBar({
             </button>
           </li>
           <li>
-            <button className="w-[180px] text-[17px] h-[40px] bg-blue3 text-white rounded-[5px]">
-              모집글 작성하기
-            </button>
+            <Link to="/recruit/write">
+              <button className="w-[180px] text-[17px] h-[40px] bg-blue3 text-white rounded-[5px]">
+                모집글 작성하기
+              </button>
+            </Link>
           </li>
         </ul>
         {isCategoryOpen && (

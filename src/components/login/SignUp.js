@@ -167,7 +167,6 @@ function SocialSignIn({ closeSignUpModal }) {
   useEffect(() => {
     if (createSuccess) {
       navigate("/", { replace: true });
-      window.location.replace("/");
     }
   }, [createSuccess, navigate]);
   const formLi = `flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white opacity-0  px-[158px]`;
