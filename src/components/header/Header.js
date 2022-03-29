@@ -28,8 +28,6 @@ function Header() {
     window.location.replace("/");
   };
 
-  console.log(userData);
-
   return (
     <>
       {isSignInModalOpen && (
@@ -78,7 +76,7 @@ function Header() {
                       <li>
                         <NavLink
                           className=" pl-[10px] block leading-[40px]"
-                          to="/mypage"
+                          to={`/user/${userData.userInfo.userId}`}
                         >
                           마이페이지
                         </NavLink>

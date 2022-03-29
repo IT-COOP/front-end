@@ -6,30 +6,27 @@ import useUserCheckQuery from "../../hooks/useUserCheckQuery";
 import { setCookie } from "../../utils/cookie";
 function Auth() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [token] = useState(searchParams.get("accessToken"));
+  const [isSignUpModal, setIsSignUpModal] = useState(false);
+  const token = searchParams.get("accessToken");
   const navigate = useNavigate();
 
-  localStorage.setItem("coopToken", token);
-
+  const { data, isSuccess } = useUserCheckQuery(token);
   useEffect(() => {
     setSearchParams("");
   }, [searchParams, setSearchParams]);
 
-  const { data, isSuccess } = useUserCheckQuery(token);
   useEffect(() => {
     if (data?.data) {
       if (data.data.userInfo) {
         localStorage.setItem("coopToken", data.data.accessToken);
         setCookie("coopCookie", data.data.refreshToken);
         navigate("/", { replace: true });
+      } else {
+        setIsSignUpModal(true);
       }
     }
   }, [isSuccess, navigate, data]);
-  return (
-    <>
-      <SignUp />
-    </>
-  );
+  return <>{isSignUpModal && <SignUp />}</>;
 }
 
 export default Auth;

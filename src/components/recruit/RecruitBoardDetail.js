@@ -52,8 +52,6 @@ function RecruitBoardDetail() {
     return (view[comment.commentGroup] = [comment]);
   });
   const commentListView = Object.values(view);
-  console.log(Object.values(view));
-  console.log(view);
   return (
     <>
       <ul className="w-[1224px] mx-auto mt-[70px]">

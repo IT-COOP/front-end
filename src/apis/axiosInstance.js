@@ -48,7 +48,6 @@ instance.interceptors.response.use(
       if (response.data.message === "Access Token Maliciously Modified.") {
         localStorage.removeItem("coopToken");
         deleteCookie("coopCookie");
-        window.location.href = "/";
         return;
       }
     }
