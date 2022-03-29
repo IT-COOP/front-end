@@ -21,6 +21,13 @@ export const recruitApis = {
     return data;
   },
 
+  deleteRecruitComment: async ({ recruitCommentId, recruitId }) => {
+    const { data } = await instance.delete(
+      `/recruit/${recruitId}/${recruitCommentId}`,
+    );
+    return data;
+  },
+
   addRecruitBoard: async recruitBoardInfo => {
     const { data } = await instance.post("/recruit", recruitBoardInfo);
     return data;

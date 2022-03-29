@@ -237,7 +237,7 @@ function RecruitWrite() {
     if (recruitInfo.recruitTasks.length === 0) {
       return;
     }
-    const { data } = await completeWriteBoard(recruitInfo);
+    const data = await completeWriteBoard(recruitInfo);
     if (data.success) {
       setIsSuccess(data.success);
     }
@@ -312,7 +312,7 @@ function RecruitWrite() {
                           (selectedTask === task) & (selectedTask === 200),
                         "bg-coral text-white":
                           (selectedTask === task) & (selectedTask === 300),
-                        "bg-blue text-white":
+                        "lg:bg-blue text-white":
                           (selectedTask === task) & (selectedTask === 400),
                       },
                     )}

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import classNames from "classnames";
 
@@ -13,6 +13,7 @@ import {
 } from "../../assets/icons";
 import convertDateText from "../../lib/convertDateText";
 import useAddCommentMutation from "../../hooks/useAddCommentMutation";
+import useDeleteCommentMutation from "../../hooks/useDeleteCommentMutation";
 import useRecruitBoardKeepItMutation from "../../hooks/useRecruitBoardKeepItMutation";
 
 function RecruitBoardDetail() {
@@ -21,8 +22,10 @@ function RecruitBoardDetail() {
   const { recruitId } = useParams();
   const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
   const { mutate: addComment } = useAddCommentMutation();
+  const { mutateAsync: deleteComment } = useDeleteCommentMutation();
   const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoard();
   const { mutateAsync: keepItRecruitBoard } = useRecruitBoardKeepItMutation();
+  console.log(recruitBoard?.recruitComments);
 
   const deleteRecruitBoardHandler = async () => {
     const data = await deleteRecruitBoard(recruitId);
@@ -34,18 +37,25 @@ function RecruitBoardDetail() {
     console.log(response);
   };
 
-  const addCommentHandler = () => {
+  const addCommentHandler = e => {
+    e.preventDefault();
     if (commentValue.current.value === "") {
-      return false;
+      return;
     }
-
     const commentData = {
       data: {
         recruitCommentContent: commentValue.current.value,
       },
       recruitId,
     };
+    console.log("요청 몇번들어가..?");
     addComment(commentData);
+    commentValue.current.value = "";
+  };
+
+  const deleteCommentHandler = recruitCommentId => async () => {
+    const data = deleteComment({ recruitCommentId, recruitId });
+    console.log(recruitCommentId);
   };
 
   let groupSet = new Set();
@@ -63,6 +73,7 @@ function RecruitBoardDetail() {
     return (view[comment.commentGroup] = [comment]);
   });
   const commentListView = Object.values(view);
+  console.log(commentListView);
   return (
     <>
       <ul className="w-[1224px] mx-auto mt-[70px]">
@@ -160,7 +171,6 @@ function RecruitBoardDetail() {
             ) : (
               <KeepItActive className="inline-block w-[24px] h-[24px]" />
             )}
-
             <span className="ml-[6px]"> {recruitBoard?.recruitKeepCount}</span>
           </p>
         </li>
@@ -195,25 +205,41 @@ function RecruitBoardDetail() {
         <li>
           <ul className="border-b-[1px] border-gray2">
             {commentListView?.map(comment =>
-              comment.map(list => (
+              comment.map((list, idx) => (
                 <li
-                  key={list.recruitCommentId}
+                  key={idx}
                   className="pt-[30px] pb-[40px] border-t-[1px] border-gray2"
                 >
-                  <ul className="flex items-center mb-[21px]">
-                    <li className="flex items-center mr-[23px] ">
+                  <div className="flex items-center mb-[21px]">
+                    <div className="flex items-center mr-[23px] ">
                       <img
                         src={list.user.profileImgUrl}
                         alt="유저 프로필"
                         className="w-[44px] h-[44px] rounded-full overflow-hidden mr-[11px]"
                       />
                       <p>{list.user.nickname}</p>
-                    </li>
-                    <li className="text-[17px] text-gray4">
+                    </div>
+                    <div className="text-[17px] text-gray4">
                       {convertDateText(list.createdAt)}
-                    </li>
-                  </ul>
-                  {list.recruitCommentContent}
+                    </div>
+                  </div>
+                  <p className="mb-[33px]">{list.recruitCommentContent}</p>
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <button className="text-[15px] text-gray4 mr-[12px]">
+                        수정하기
+                      </button>
+                      <button
+                        className="text-[15px] text-gray4"
+                        onClick={deleteCommentHandler(list.recruitCommentId)}
+                      >
+                        삭제하기
+                      </button>
+                    </div>
+                    <button className="border-[1px] border-blue3 text-[19px] text-blue3 px-[15px] py-[6px] rounded-[5px]">
+                      대댓글작성
+                    </button>
+                  </div>
                 </li>
               )),
             )}
@@ -226,6 +252,89 @@ function RecruitBoardDetail() {
           </button>
         </Link>
       </ul>
+      {!true && (
+        <div className="fixed top-0 left-0 z-[999] flex items-center justify-center w-screen h-screen transition-opacity bg-black/70">
+          <div className="relative w-[800px] h-[500px] flex bg-white rounded-[16px] overflow-hidden items-center justify-center">
+            <div>
+              <h3 className="text-[23px] font-bold mb-[40px] text-center">
+                신청할 카테고리를 선택해주세요!
+              </h3>
+              <div className="flex flex-wrap justify-center mb-[50px]">
+                {recruitBoard?.recruitTasks.map(task =>
+                  task.recruitTask < 300 ? (
+                    <button
+                      className={classNames(
+                        "mr-[20px]  px-[14px] py-[2px] rounded-[11px] text-white text-[23px]",
+                        {
+                          "bg-pink border-pink": task.recruitTask === 100,
+                          "bg-yellow border-yellow": task.recruitTask === 200,
+                        },
+                      )}
+                      key={task.recruitTask}
+                    >
+                      {Task[task.recruitTask]}
+                    </button>
+                  ) : null,
+                )}
+                {recruitBoard?.recruitStacks.map(stack => (
+                  <button
+                    className={classNames(
+                      "mr-[20px] px-[14px] py-[2px] rounded-[11px] text-white text-[23px]",
+                      {
+                        "bg-coral border-coral":
+                          100 < stack.recruitStack && stack.recruitStack < 200,
+                        "bg-blue border-blue": 200 < stack.recruitStack,
+                      },
+                    )}
+                    key={stack.recruitStack}
+                  >
+                    {Stack[stack.recruitStack]}
+                  </button>
+                ))}
+              </div>
+              <div className="mb-[50px]">
+                <select className="w-full border-[1px] border-gray2 pl-[16px] text-[15px] h-[40px]">
+                  <option value="1" disabled={true} className="hidden">
+                    선택해 주세요!
+                  </option>
+                  {recruitBoard?.recruitTasks.map(task =>
+                    task.recruitTask < 300 ? (
+                      <option
+                        value={task.recruitTask}
+                        className={classNames("h-[40px]", {
+                          "bg-pink border-pink": task.recruitTask === 100,
+                          "bg-yellow border-yellow": task.recruitTask === 200,
+                        })}
+                        key={task.recruitTask}
+                      >
+                        {Task[task.recruitTask]}
+                      </option>
+                    ) : null,
+                  )}
+                  {recruitBoard?.recruitStacks.map(stack => (
+                    <option
+                      value={stack.recruitStack}
+                      className={classNames("h-[40px]", {
+                        "bg-coral border-coral":
+                          100 < stack.recruitStack && stack.recruitStack < 200,
+                        "bg-blue border-blue": 200 < stack.recruitStack,
+                      })}
+                      key={stack.recruitStack}
+                    >
+                      {Stack[stack.recruitStack]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <Link to="/">
+                <button className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px] ">
+                  신청하기
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
