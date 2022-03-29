@@ -19,9 +19,10 @@ function RecruitWrite() {
   });
 
   const [imgUrl, setImgUrl] = useState("");
-
+  const [isSuccess, setIsSuccess] = useState(false);
   const [isSelectedTask, setIsSelectedTask] = useState(false);
   const [isNotSelectModal, setIsNotSelectModal] = useState(false);
+  const [isImgConfirmMsg, setIsImgConfirmMsg] = useState(false);
   const [numberOfPeopleRequired, setNumberOfPeopleRequired] = useState(1);
   const [selectedTask, setSelectedTask] = useState(0);
   const [selectedTasks, setSelectedTasks] = useState([]);
@@ -42,12 +43,7 @@ function RecruitWrite() {
   const { mutateAsync: recruitBoardImgUpload } =
     useUploadRecruitBoardImgMutation();
 
-  const {
-    mutateAsync: completeWriteBoard,
-    isError,
-    error,
-    data: boardComplete,
-  } = useCompleteWriteMutation();
+  const { mutateAsync: completeWriteBoard } = useCompleteWriteMutation();
 
   const selectTask = task => () => {
     if (selectedStack === task) {
@@ -206,7 +202,17 @@ function RecruitWrite() {
   const uploadRecruitBoardImg = async e => {
     const formData = new FormData();
     let file = e.target.files[0];
+    console.log(file);
     if (!file) {
+      return;
+    }
+    const regex = new RegExp("png|jpg");
+    if (!regex.test(file.name.slice(-3))) {
+      console.log(1222222222222);
+      setIsImgConfirmMsg(prev => !prev);
+      setTimeout(() => {
+        setIsImgConfirmMsg(prev => !prev);
+      }, 2000);
       return;
     }
     formData.append("image", file);
@@ -216,8 +222,25 @@ function RecruitWrite() {
   };
 
   const handleCompleteWriteBoard = async () => {
+    if (recruitInfo.title === "") {
+      return;
+    }
+    if (recruitInfo.recruitContent === "") {
+      return;
+    }
+    if (recruitInfo.recruitDurationWeek === 0) {
+      return;
+    }
+    if (recruitInfo.recruitLocation === 0) {
+      return;
+    }
+    if (recruitInfo.recruitTasks.length === 0) {
+      return;
+    }
     const { data } = await completeWriteBoard(recruitInfo);
-    console.log(data);
+    if (data.success) {
+      setIsSuccess(data.success);
+    }
   };
 
   return (
@@ -422,8 +445,8 @@ function RecruitWrite() {
           </li>
           <li className="flex mt-[70px] mb-[50px]">
             <p className="w-[208px] text-[17px]">모집공고 이미지</p>
-            <ul>
-              <li className="flex">
+            <div>
+              <div className="flex">
                 <img
                   className="w-[288px] h-[186px] mr-[16px]"
                   src={imgUrl}
@@ -440,15 +463,28 @@ function RecruitWrite() {
                     id="thumbnail"
                     type="file"
                     className="hidden"
+                    accept=".jpg, .png"
                     onChange={uploadRecruitBoardImg}
                   />
                   <button className="block rounded-[5px] px-[15px] py-[6px] bg-[#C4C4C4]">
                     이미지 삭제
                   </button>
                 </div>
-              </li>
-              <li>썸네일로 들어갈 이미지에요 (권장사이즈 288 * 186px)</li>
-            </ul>
+              </div>
+              <div>
+                썸네일로 들어갈 이미지에요 (권장사이즈 288 * 186px)
+                <p
+                  className={classNames(
+                    "absolute duration-700 transition-all",
+                    {
+                      "text-red text-[20px]": isImgConfirmMsg,
+                    },
+                  )}
+                >
+                  jpg 혹은 png 파일만 업로드 해주세요!
+                </p>
+              </div>
+            </div>
           </li>
           <li className="text-right">
             <button
@@ -463,7 +499,7 @@ function RecruitWrite() {
           </li>
         </ul>
       </div>
-      {/* {isSuccess && (
+      {isSuccess && (
         <div className="fixed top-0 left-0 z-[999] flex items-center justify-center w-screen h-screen transition-opacity bg-black/70">
           <div className="relative w-[800px] h-[500px] flex bg-white rounded-[16px] overflow-hidden items-center justify-center">
             <div>
@@ -479,7 +515,7 @@ function RecruitWrite() {
             </div>
           </div>
         </div>
-      )} */}
+      )}
     </section>
   );
 }

@@ -14,7 +14,7 @@ function RecruitBoard({
   createdAt,
   updatedAt,
   thumbImgUrl,
-  author,
+  nickname,
   recruitCommentCount,
   recruitKeeps,
   recruitLocation,
@@ -129,7 +129,7 @@ function RecruitBoard({
         <ul className="flex justify-between text-[14px]">
           <li className="flex line-clamp-1 text-gray4 text-[13px]">
             {parsedUpsertText} |{" "}
-            {author ?? "ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"}
+            {nickname ?? "ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"}
           </li>
           <li className="flex grow-1">
             <div className="mr-[10px] flex items-center">

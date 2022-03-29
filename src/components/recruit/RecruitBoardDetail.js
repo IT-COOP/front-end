@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import classNames from "classnames";
 
+import useDeleteRecruitBoard from "../../hooks/useDeleteRecruitBoard";
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 import { Location, Task, Stack } from "../../constants/enums";
 import {
@@ -12,14 +13,26 @@ import {
 } from "../../assets/icons";
 import convertDateText from "../../lib/convertDateText";
 import useAddCommentMutation from "../../hooks/useAddCommentMutation";
+import useRecruitBoardKeepItMutation from "../../hooks/useRecruitBoardKeepItMutation";
 
 function RecruitBoardDetail() {
   const commentValue = useRef();
 
   const { recruitId } = useParams();
   const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
-
   const { mutate: addComment } = useAddCommentMutation();
+  const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoard();
+  const { mutateAsync: keepItRecruitBoard } = useRecruitBoardKeepItMutation();
+
+  const deleteRecruitBoardHandler = async () => {
+    const data = await deleteRecruitBoard(recruitId);
+    console.log(data);
+  };
+
+  const addRecruitBoardKeepIt = async () => {
+    const response = await keepItRecruitBoard(recruitId);
+    console.log(response);
+  };
 
   const addCommentHandler = () => {
     if (commentValue.current.value === "") {
@@ -29,8 +42,6 @@ function RecruitBoardDetail() {
     const commentData = {
       data: {
         recruitCommentContent: commentValue.current.value,
-        commentDepth: 2,
-        commentGroup: 0,
       },
       recruitId,
     };
@@ -71,7 +82,7 @@ function RecruitBoardDetail() {
                 <p className="text-[15px] text-gray4 mb-[17px]">
                   소요기간 : {recruitBoard?.recruitDurationWeeks}주 예상
                 </p>
-                <ul>
+                <ul className="flex flex-wrap">
                   {recruitBoard?.recruitTasks.map(task =>
                     task.recruitTask < 300 ? (
                       <li
@@ -105,15 +116,17 @@ function RecruitBoardDetail() {
                       )}
                       key={stack.recruitStack}
                     >
-                      {Stack[stack.recruitStack]} /{" "}
+                      {Stack[stack.recruitStack]} {stack.numberOfPeopleSet}/
                       {stack.numberOfPeopleRequired}명
-                      <button className="ml-[5px]">X</button>
                     </li>
                   ))}
                 </ul>
               </li>
               <li className="flex">
-                <button className="text-[19px] border-[1px] border-blue3 py-[6px] px-[30px] text-blue3 rounded-[5px] mr-[9px]">
+                <button
+                  className="text-[19px] border-[1px] border-blue3 py-[6px] px-[30px] text-blue3 rounded-[5px] mr-[9px]"
+                  onClick={addRecruitBoardKeepIt}
+                >
                   <KeepItDetail className="inline-block " />
                   <span className="px-[15px] pl-[5px]">Keep It</span>
                 </button>
@@ -152,7 +165,18 @@ function RecruitBoardDetail() {
           </p>
         </li>
         <li className="mb-[41px]">
-          <h3 className="text-[23px] mb-[17px]">댓글 작성하기</h3>
+          <div className="flex items-end justify-between mb-[17px]">
+            <h3 className="text-[23px] ">댓글 작성하기</h3>
+            <div>
+              <button
+                className="text-gray4 mr-[15px]"
+                onClick={deleteRecruitBoardHandler}
+              >
+                삭제하기
+              </button>
+              <button className="text-gray4">수정하기</button>
+            </div>
+          </div>
           <form onSubmit={addCommentHandler} className="w-full overflow-hidden">
             <textarea
               ref={commentValue}

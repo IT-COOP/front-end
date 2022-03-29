@@ -50,6 +50,7 @@ instance.interceptors.response.use(
         deleteCookie("coopCookie");
         return;
       }
+      return axios(originalRequest);
     }
     return Promise.reject(error);
   },
