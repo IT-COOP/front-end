@@ -4,14 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 import { Close, Prev } from "../../assets/icons";
 import { Stack, Task } from "../../constants/enums";
+import { setCookie } from "../../utils/cookie";
 import useUploadUserProfileImgMutation from "../../hooks/useUploadRecruitBoardImgMutation";
 import useConfirmNicknameMutation from "../../hooks/useConfirmNicknameMutation";
 import useCreateUserMutation from "../../hooks/useCreateUserMutation";
 
 function SocialSignIn({ closeSignUpModal }) {
-  const [userInfo, setUserInfo] = useState({
-    technologyTask: [],
-  });
+  const [userInfo, setUserInfo] = useState({});
   const [confirmNickname, setConfirm] = useState(false);
   const [checkDuplicateUserNickname, setCheckDuplicate] = useState(false);
   const [selectedTask, setSelectedTask] = useState(0);
@@ -22,10 +21,16 @@ function SocialSignIn({ closeSignUpModal }) {
 
   const { mutateAsync: uploadImg } = useUploadUserProfileImgMutation();
   const { mutateAsync: duplicateUserNickname } = useConfirmNicknameMutation();
-  const { mutateAsync: createUser, isSuccess: createSuccess } =
-    useCreateUserMutation();
+  const {
+    mutateAsync: createUser,
+    isSuccess: createSuccess,
+    data: createdUserData,
+    error: createError,
+  } = useCreateUserMutation();
 
   const filterTask = Object.values(Task).filter(task => !isNaN(task));
+
+  console.log(createError);
 
   const filteredStackList =
     selectedTask < 300
@@ -49,16 +54,17 @@ function SocialSignIn({ closeSignUpModal }) {
   const confirmUserNickname = e => {
     const regex = /^[가-힣|a-z|A-Z|0-9|]+$/;
     const nickname = e.target.value;
-    const inputName = e.target.name;
-    const userInfoCopy = { ...userInfo };
-    userInfoCopy[inputName] = nickname;
-    regex.test(nickname);
-    if (regex.test(nickname) & (nickname.length > 1) & (nickname.length <= 5)) {
+    if (regex.test(nickname) & (nickname.length > 1) & (nickname.length <= 6)) {
       setConfirm(true);
-      setUserInfo(userInfoCopy);
+      setUserInfo(prev => ({ ...prev, nickname }));
     } else {
       setConfirm(false);
     }
+  };
+
+  const setSelfIntroductionHandler = e => {
+    const selfIntroduction = e.target.value;
+    setUserInfo(prev => ({ ...prev, selfIntroduction }));
   };
 
   const closeModal = e => {
@@ -73,22 +79,19 @@ function SocialSignIn({ closeSignUpModal }) {
       return false;
     }
     if (task === 100) {
-      console.log(100);
-      setProfileImgSrc("%PUBLIC_URL%/pl.png");
+      setProfileImgSrc("images/pl.png");
     }
     if (task === 200) {
-      console.log(200);
+      setProfileImgSrc("images/de.png");
     }
     if (task === 300) {
-      console.log(300);
+      setProfileImgSrc("images/fe.png");
     }
     if (task === 400) {
-      console.log(400);
+      setProfileImgSrc("images/be.png");
     }
-    console.log(profileImgSrc);
     setSelectedStack([]);
     setSelectedTask(task);
-    setUserInfo(prev => ({ ...prev, technologyTask: [task] }));
   };
 
   const handleSelectStack = e => {
@@ -129,26 +132,57 @@ function SocialSignIn({ closeSignUpModal }) {
   const uploadUserProfileImg = async e => {
     const formData = new FormData();
     let file = e.target.files[0];
+    const regex = new RegExp("png|jpg");
+    if (!file) {
+      return;
+    }
+    if (!regex.test(file.name.slice(-3))) {
+      return;
+    }
+
     formData.append("image", file);
     const { data: imgUrl } = await uploadImg(formData);
     setProfileImgSrc(imgUrl);
   };
 
+  const setDefaultImg = () => {
+    if (selectedTask === 100) {
+      setProfileImgSrc("images/pl.png");
+    }
+    if (selectedTask === 200) {
+      setProfileImgSrc("images/de.png");
+    }
+    if (selectedTask === 300) {
+      setProfileImgSrc("images/fe.png");
+    }
+    if (selectedTask === 400) {
+      setProfileImgSrc("images/be.png");
+    }
+  };
+
   const submitUserData = async () => {
     const taskAndStack = [...selectedStack, String(selectedTask)].join(",");
     const userData = {
-      nickname: userInfo.nickname,
-      profileImgUrl: profileImgSrc,
+      ...userInfo,
       technologyStack: taskAndStack,
+      profileImgUrl: profileImgSrc,
     };
+
     createUser(userData);
   };
 
   useEffect(() => {
     if (createSuccess) {
+      localStorage.setItem("coopToken", createdUserData?.accessToken);
+      setCookie("coopCookie", createdUserData?.refreshToken);
       navigate("/", { replace: true });
     }
-  }, [createSuccess, navigate]);
+  }, [
+    createSuccess,
+    createdUserData?.accessToken,
+    createdUserData?.refreshToken,
+    navigate,
+  ]);
   const formLi = `flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white opacity-0  px-[158px]`;
   const formTitle = `text-center font-bold text-[30px] mt-[74px] mb-[32px] `;
   const formDesc = `text-center text-[20px] text-[#797979] mb-[40px] `;
@@ -171,8 +205,8 @@ function SocialSignIn({ closeSignUpModal }) {
             <input
               type="text"
               className="border-2 text-[24px] p-[20px] mr-[10px] rounded-[5px] w-[357px] h-[72px]"
-              placeholder="2~5자 이내로 입력해주세요"
-              maxLength={5}
+              placeholder="2~6자 이내로 입력해주세요"
+              maxLength={6}
               name="nickname"
               onChange={confirmUserNickname}
             />
@@ -234,7 +268,7 @@ function SocialSignIn({ closeSignUpModal }) {
                         (selectedTask === task) & (selectedTask === 300),
                     },
                     {
-                      "bg-blue text-white":
+                      "lg:bg-blue text-white":
                         (selectedTask === task) & (selectedTask === 400),
                     },
                   )}
@@ -296,7 +330,7 @@ function SocialSignIn({ closeSignUpModal }) {
           <p className={`${formDesc} mb-[36px]`}>
             서비스를 이용할 때 사용되는 이미지에요!
           </p>
-          <ul className="flex items-center justify-center mb-[36px]">
+          <ul className="relative flex items-center justify-center mb-[36px]">
             <li>
               <img
                 src={profileImgSrc}
@@ -317,10 +351,16 @@ function SocialSignIn({ closeSignUpModal }) {
                 className="hidden"
                 onChange={uploadUserProfileImg}
               />
-              <button className="w-[126px] h-[40px] rounded-[5px] bg-gray2 text-[18px] leading-[22.54px]">
+              <button
+                className="w-[126px] h-[40px] rounded-[5px] bg-gray2 text-[18px] leading-[22.54px]"
+                onClick={setDefaultImg}
+              >
                 프로필 삭제
               </button>
             </li>
+            <p className="absolute top-[100%] mt-[10px]">
+              PNG, JPG 파일만 업로드 가능합니다!
+            </p>
           </ul>
           <button
             className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px]"
@@ -365,7 +405,10 @@ function SocialSignIn({ closeSignUpModal }) {
           </button>
           <h1 className={`${formTitle} mb-[33px]`}>자기소개를 해주세요!</h1>
           <div className="flex items-center mb-[40px] ">
-            <textarea className="w-full p-[10px] border-[1px] rounded-[10px] h-[200px] resize-none"></textarea>
+            <textarea
+              className="w-full p-[10px] border-[1px] rounded-[10px] h-[200px] resize-none"
+              onChange={setSelfIntroductionHandler}
+            ></textarea>
           </div>
           <button
             className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px]"
