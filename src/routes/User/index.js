@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 
 import Title from "./views/Title";
 import KeepItList from "./views/KeepItList";
@@ -11,15 +11,12 @@ import UserProfileSummary from "./views/UserProfileSummary";
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 
 function UserPage() {
-  const navigate = useNavigate();
   const { isLoading, isError, data: { userInfo } = {} } = useGetUserInfoQuery();
   const { id } = useParams();
   const isCurrentUserPage = userInfo?.userId === id;
 
-  console.log(userInfo);
-
   if (!Boolean(id) || isError) {
-    navigate("/", { replace: true });
+    return <Navigate replace to="/" />;
   }
 
   if (isLoading) {

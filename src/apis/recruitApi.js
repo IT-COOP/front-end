@@ -23,7 +23,7 @@ export const recruitApis = {
 
   deleteRecruitComment: async ({ recruitCommentId, recruitId }) => {
     const { data } = await instance.delete(
-      `/recruit/${recruitId}/${recruitCommentId}`,
+      `/recruit/${recruitId}/comment/${recruitCommentId}`,
     );
     return data;
   },
@@ -50,6 +50,11 @@ export const recruitApis = {
 
   keepItRecruitBoard: async recruitBoardId => {
     const { data } = await instance.post(`/recruit/${recruitBoardId}/keepIt`);
+    return data;
+  },
+
+  deleteKeepItRecruitBoard: async recruitBoardId => {
+    const { data } = await instance.delete(`/recruit/${recruitBoardId}/keepIt`);
     return data;
   },
 };

@@ -14,6 +14,7 @@ function Header() {
   const openSignInModal = () => {
     setIsSignInModalOpen(true);
   };
+
   const closeSignInModal = () => {
     setIsSignInModalOpen(false);
   };

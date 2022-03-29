@@ -1,43 +1,70 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import classNames from "classnames";
+import { useQueryClient } from "react-query";
 
-import useDeleteRecruitBoard from "../../hooks/useDeleteRecruitBoard";
-import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 import { Location, Task, Stack } from "../../constants/enums";
 import {
   KeepItDetail,
   KeepIt,
   KeepItActive,
   LeftArrow,
+  KeepItDetailActive,
 } from "../../assets/icons";
 import convertDateText from "../../lib/convertDateText";
+
+import useDeleteRecruitBoard from "../../hooks/useDeleteRecruitBoardMutation";
+import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 import useAddCommentMutation from "../../hooks/useAddCommentMutation";
 import useDeleteCommentMutation from "../../hooks/useDeleteCommentMutation";
-import useRecruitBoardKeepItMutation from "../../hooks/useRecruitBoardKeepItMutation";
+import useDeleteRecruitBoardMutation from "../../hooks/useDeleteRecruitBoardMutation";
+import useDeleteRecruitBoardKeepItMutation from "../../hooks/useDeleteRecruitBoardKeepItMutation";
 
 function RecruitBoardDetail() {
   const commentValue = useRef();
+  const queryClient = useQueryClient();
+  const userInfo = queryClient.getQueryData("userInfo");
 
   const { recruitId } = useParams();
-  const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
-  const { mutate: addComment } = useAddCommentMutation();
+  const { data: recruitBoard, isSuccess } = useGetRecruitDetailQuery(recruitId);
+  const { mutateAsync: addComment } = useAddCommentMutation();
   const { mutateAsync: deleteComment } = useDeleteCommentMutation();
   const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoard();
-  const { mutateAsync: keepItRecruitBoard } = useRecruitBoardKeepItMutation();
-  console.log(recruitBoard?.recruitComments);
+  const { mutateAsync: keepItRecruitBoard } = useDeleteRecruitBoardMutation();
+  const { mutateAsync: deleteKeepItRecruitBoard } =
+    useDeleteRecruitBoardKeepItMutation();
+
+  const [isFetchData, setIsFetchData] = useState(false);
+
+  useEffect(() => {
+    if (isSuccess) {
+    }
+  }, [isSuccess]);
+
+  console.log(recruitBoard);
 
   const deleteRecruitBoardHandler = async () => {
-    const data = await deleteRecruitBoard(recruitId);
-    console.log(data);
+    const { success } = await deleteRecruitBoard(recruitId);
+    if (success) {
+      queryClient.invalidateQueries("recruitBoardDetail");
+    }
   };
 
   const addRecruitBoardKeepIt = async () => {
-    const response = await keepItRecruitBoard(recruitId);
-    console.log(response);
+    const { success } = await keepItRecruitBoard(recruitId);
+    if (success) {
+      queryClient.invalidateQueries("recruitBoardDetail");
+    }
   };
 
-  const addCommentHandler = e => {
+  const deleteRecruitBoardKeepIt = async () => {
+    const { success } = await deleteKeepItRecruitBoard(recruitId);
+    if (success) {
+      queryClient.invalidateQueries("recruitBoardDetail");
+    }
+  };
+
+  const addCommentHandler = async e => {
     e.preventDefault();
     if (commentValue.current.value === "") {
       return;
@@ -48,18 +75,24 @@ function RecruitBoardDetail() {
       },
       recruitId,
     };
-    console.log("요청 몇번들어가..?");
-    addComment(commentData);
+    const { success } = await addComment(commentData);
     commentValue.current.value = "";
+    if (success) {
+      queryClient.invalidateQueries("recruitBoardDetail");
+    }
   };
 
   const deleteCommentHandler = recruitCommentId => async () => {
-    const data = deleteComment({ recruitCommentId, recruitId });
-    console.log(recruitCommentId);
+    const { success } = await deleteComment({ recruitCommentId, recruitId });
+    if (success) {
+      queryClient.invalidateQueries("recruitBoardDetail");
+    }
   };
 
   let groupSet = new Set();
+
   let view = {};
+
   recruitBoard?.recruitComments.map(comment => {
     if (groupSet.has(comment.commentGroup)) {
       view[comment.commentGroup] = [...view[comment.commentGroup], comment];
@@ -72,8 +105,9 @@ function RecruitBoardDetail() {
     view[comment.commentGroup] = [comment];
     return (view[comment.commentGroup] = [comment]);
   });
+
   const commentListView = Object.values(view);
-  console.log(commentListView);
+
   return (
     <>
       <ul className="w-[1224px] mx-auto mt-[70px]">
@@ -127,20 +161,31 @@ function RecruitBoardDetail() {
                       )}
                       key={stack.recruitStack}
                     >
-                      {Stack[stack.recruitStack]} {stack.numberOfPeopleSet}/
+                      {Stack[stack.recruitStack]} {stack.numberOfPeopleSet} /{" "}
                       {stack.numberOfPeopleRequired}명
                     </li>
                   ))}
                 </ul>
               </li>
               <li className="flex">
-                <button
-                  className="text-[19px] border-[1px] border-blue3 py-[6px] px-[30px] text-blue3 rounded-[5px] mr-[9px]"
-                  onClick={addRecruitBoardKeepIt}
-                >
-                  <KeepItDetail className="inline-block " />
-                  <span className="px-[15px] pl-[5px]">Keep It</span>
-                </button>
+                {recruitBoard?.isKeeps ? (
+                  <button
+                    className="text-[19px] border-[1px] border-blue3 py-[6px] px-[30px] text-blue3 rounded-[5px] mr-[9px]"
+                    onClick={deleteRecruitBoardKeepIt}
+                  >
+                    <KeepItDetailActive className="inline-block " />
+                    <span className="px-[15px] pl-[5px]">Keep It</span>
+                  </button>
+                ) : (
+                  <button
+                    className="text-[19px] border-[1px] border-blue3 py-[6px] px-[30px] text-blue3 rounded-[5px] mr-[9px]"
+                    onClick={addRecruitBoardKeepIt}
+                  >
+                    <KeepItDetail className="inline-block " />
+                    <span className="px-[15px] pl-[5px]">Keep It</span>
+                  </button>
+                )}
+
                 <button className="text-[19px]  px-[15px] py-[6px] rounded-[5px] bg-blue3 text-white">
                   신청하기
                 </button>
@@ -194,10 +239,7 @@ function RecruitBoardDetail() {
               placeholder="댓글을 작성하세요"
               className="block w-full h-[135px] p-[11px] resize-none border-[1px] border-gray2 mb-[13px]"
             />
-            <button
-              className="float-right mr-[13px] text-[19px] px-[15px] py-[6px] rounded-[5px] text-white bg-blue3"
-              onClick={addCommentHandler}
-            >
+            <button className="float-right mr-[13px] text-[19px] px-[15px] py-[6px] rounded-[5px] text-white bg-blue3">
               댓글 작성
             </button>
           </form>

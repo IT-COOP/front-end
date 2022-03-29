@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { Close, Prev } from "../../assets/icons";
 import { Stack, Task } from "../../constants/enums";
 import { setCookie } from "../../utils/cookie";
-import useUploadUserProfileImgMutation from "../../hooks/useUploadRecruitBoardImgMutation";
+import useUploadUserProfileImgMutation from "../../hooks/useUploadUserProfileImgMutation";
 import useConfirmNicknameMutation from "../../hooks/useConfirmNicknameMutation";
 import useCreateUserMutation from "../../hooks/useCreateUserMutation";
 
 function SocialSignIn({ closeSignUpModal }) {
   const [userInfo, setUserInfo] = useState({});
-  const [confirmNickname, setConfirm] = useState(false);
+  const [confirmNickname, setConfirmNickname] = useState(false);
   const [checkDuplicateUserNickname, setCheckDuplicate] = useState(false);
   const [selectedTask, setSelectedTask] = useState(0);
   const [selectedStack, setSelectedStack] = useState([]);
@@ -25,12 +25,9 @@ function SocialSignIn({ closeSignUpModal }) {
     mutateAsync: createUser,
     isSuccess: createSuccess,
     data: createdUserData,
-    error: createError,
   } = useCreateUserMutation();
 
-  const filterTask = Object.values(Task).filter(task => !isNaN(task));
-
-  console.log(createError);
+  const filteredTask = Object.values(Task).filter(task => !isNaN(task));
 
   const filteredStackList =
     selectedTask < 300
@@ -55,10 +52,10 @@ function SocialSignIn({ closeSignUpModal }) {
     const regex = /^[가-힣|a-z|A-Z|0-9|]+$/;
     const nickname = e.target.value;
     if (regex.test(nickname) & (nickname.length > 1) & (nickname.length <= 6)) {
-      setConfirm(true);
+      setConfirmNickname(true);
       setUserInfo(prev => ({ ...prev, nickname }));
     } else {
-      setConfirm(false);
+      setConfirmNickname(false);
     }
   };
 
@@ -250,7 +247,7 @@ function SocialSignIn({ closeSignUpModal }) {
               직군
             </p>
             <div className="flex">
-              {filterTask.map(task => (
+              {filteredTask.map(task => (
                 <button
                   key={task}
                   className={classNames(

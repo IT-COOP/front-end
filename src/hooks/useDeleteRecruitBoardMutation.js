@@ -1,10 +1,10 @@
 import { useMutation } from "react-query";
 import { recruitApis } from "../apis/recruitApi";
 
-function useDeleteRecruitBoard() {
+function useDeleteRecruitBoardMutation() {
   return useMutation(recruitBoardId => {
     return recruitApis.deleteRecruitBoard(recruitBoardId);
   });
 }
 
-export default useDeleteRecruitBoard;
+export default useDeleteRecruitBoardMutation;

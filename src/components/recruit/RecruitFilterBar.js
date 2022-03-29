@@ -3,22 +3,6 @@ import classNames from "classnames";
 import { RecruitFilter } from "../../constants/enums";
 
 function RecruitFilterBar({ onFilterChanged, currentSortNumber }) {
-  // const handleClickFilter = e => {
-  //   let target = e.target;
-
-  //   if (target.nodeName === "BUTTON") {
-  //     for (const key of target.parentNode.childNodes) {
-  //       key.classList.remove("after:w-full");
-  //       key.classList.remove("text-black");
-  //       key.classList.add("text-gray3");
-  //     }
-  //     target.classList.remove("text-gray3");
-  //     target.classList.remove("after:w-0");
-  //     target.classList.add("after:w-full");
-  //     target.classList.add("text-black");
-  //   }
-  // };
-
   const filterList = Object.values(RecruitFilter).filter(v => !isNaN(v));
 
   const handleFilterButtonClick = sortNumber => () => {
