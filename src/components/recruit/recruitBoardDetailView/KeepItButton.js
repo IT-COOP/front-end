@@ -8,7 +8,7 @@ import useDeleteRecruitBoardKeepItMutation from "../../../hooks/useDeleteRecruit
 import useRecruitBoardKeepItMutation from "../../../hooks/useRecruitBoardKeepItMutation";
 
 function KeepItButton({ recruitId, keepId }) {
-  const [preventClick, setPreventClick] = useState(false);
+  const [preventClickKeepIt, setPreventClickKeepIt] = useState(false);
   const [isKeepItModal, setIsKeepItModal] = useState(false);
 
   const { mutateAsync: keepItRecruitBoard } = useRecruitBoardKeepItMutation();
@@ -20,11 +20,10 @@ function KeepItButton({ recruitId, keepId }) {
     const { success } = await keepItRecruitBoard(recruitId);
     if (success) {
       queryClient.invalidateQueries("recruitBoardDetail");
-      setPreventClick(prev => !prev);
       setIsKeepItModal(true);
       setTimeout(() => {
         setIsKeepItModal(false);
-      }, 600);
+      }, 500);
     }
   };
 
@@ -39,7 +38,7 @@ function KeepItButton({ recruitId, keepId }) {
     <div>
       {keepId ? (
         <button
-          className="relative text-[19px] border-[1px] border-blue3 py-[6px] px-[30px] text-blue3 rounded-[5px] mr-[9px]"
+          className="relative text-[19px] border-[1px] border-blue3 py-[6px] text-center w-[138px] text-blue3 rounded-[5px] mr-[9px]"
           onClick={deleteRecruitBoardKeepIt}
         >
           <KeepItDetailActive className="inline-block " />
@@ -56,7 +55,7 @@ function KeepItButton({ recruitId, keepId }) {
         </button>
       ) : (
         <button
-          className="text-[19px] border-[1px] border-blue3 py-[6px] px-[30px] text-blue3 rounded-[5px] mr-[9px]"
+          className="text-[19px] border-[1px] border-blue3 py-[6px] text-center w-[138px] text-blue3 rounded-[5px] mr-[9px]"
           onClick={addRecruitBoardKeepIt}
         >
           <KeepItDetail className="inline-block " />

@@ -49,16 +49,16 @@ export const recruitApis = {
   },
 
   keepItRecruitBoard: async recruitBoardId => {
-    console.log(recruitBoardId);
     const { data } = await instance.post(`/recruit/${recruitBoardId}/keep`);
     return data;
   },
 
   deleteKeepItRecruitBoard: async ({ recruitId, keepId }) => {
-    console.log(recruitId, keepId);
     const { data } = await instance.delete(
       `/recruit/${recruitId}/keep/${keepId}`,
     );
     return data;
   },
+
+  applyRecruit: async ({}) => {},
 };
