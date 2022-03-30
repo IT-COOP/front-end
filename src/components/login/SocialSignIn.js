@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+
 import {
   GoogleIcon,
   KakaoIcon,
@@ -65,7 +65,6 @@ function SocialSignIn({ closeSignInModal }) {
             </button>
           </li>
         </ul>
-        <Outlet />
       </div>
     </section>
   );

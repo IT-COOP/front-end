@@ -10,6 +10,7 @@ function useGetUserInfoQuery(userId = "", config) {
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       retry: false,
+      select: data => data?.profile ?? null,
       ...config,
     },
   );

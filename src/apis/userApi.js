@@ -7,7 +7,7 @@ export const userApis = {
       const { data } = await instance.get("login/validation");
       return data;
     } catch (error) {
-      return Promise.reject("checkUser");
+      return error.response;
     }
   },
 
