@@ -25,6 +25,7 @@ ReactDOM.render(
     <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="auth" element={<Auth />} />
+
         <Route path="/" element={<Layout />}>
           <Route index element={<Recruit />} />
           <Route path="recruit/write" element={<RecruitWrite />} />

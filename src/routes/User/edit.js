@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "react-query";
 import useModifyUserMutation from "../../hooks/useModifyUserMutation";
 
 import EditUserImage from "./views/edit/EditUserImage";
@@ -9,6 +11,7 @@ import EditUserPortfolioURL from "./views/edit/EditUserPortfolioURL";
 import EditUserSelfIntroduction from "./views/edit/EditUserSelfIntroduction";
 
 function Edit({
+  currentUserId,
   portfolioUrl,
   profileImgUrl,
   selfIntroduction,
@@ -16,6 +19,9 @@ function Edit({
   stackList,
   nickname,
 }) {
+  const client = useQueryClient();
+  const navigate = useNavigate();
+
   const { mutateAsync } = useModifyUserMutation();
   const [changedProfile, setChangedProfile] = useState(() => ({
     stackList,
@@ -44,7 +50,10 @@ function Edit({
     };
 
     const response = await mutateAsync(variables);
-    console.log(response);
+    if (response.profile) {
+      await client.invalidateQueries(["userInfo", "currentUser"]);
+    }
+    navigate(`/user/${currentUserId}`, { replace: true });
   };
 
   return (
