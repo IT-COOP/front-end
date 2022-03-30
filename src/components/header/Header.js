@@ -11,6 +11,8 @@ function Header() {
   const [isMyPageModalOpen, setIsMyPageModalOpen] = useState(false);
   const { data: userData } = useGetUserInfoQuery();
 
+  const isUserLogin = !Boolean(userData);
+
   const openSignInModal = () => {
     setIsSignInModalOpen(true);
   };
@@ -53,7 +55,7 @@ function Header() {
               <li className="cursor-pointer">
                 <Bell />
               </li>
-              {!userData ? (
+              {isUserLogin ? (
                 <li className="cursor-pointer" onClick={openSignInModal}>
                   로그인
                 </li>

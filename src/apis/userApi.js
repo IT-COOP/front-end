@@ -11,14 +11,21 @@ export const userApis = {
     }
   },
 
-  getUserInfo: async () => {
-    try {
-      const { data } = await instance.get("login/me");
+  // 유저 상세 정보 열람
+  // 사용처: 유저 상세 페이지
+  getUserInfo:
+    (userId = "") =>
+    async () => {
+      const token = localStorage.getItem("coopToken");
+      if (!token) {
+        return null;
+      }
+
+      const { data } = await instance.get(
+        `user/profile${userId ? `/${userId}` : ""}`,
+      );
       return data;
-    } catch (error) {
-      return Promise.reject("getUserInfo");
-    }
-  },
+    },
 
   uploadUserProfileImg: async formData => {
     const { data } = await instance.post("upload/profile", formData, {
@@ -42,17 +49,6 @@ export const userApis = {
     const { data } = await instance.post("login/completion", userData);
     return data;
   },
-
-  // 유저 상세 정보 열람
-  // 사용처: 유저 상세 페이지
-  getUserDetails:
-    (userId = "") =>
-    async () => {
-      const { data } = await instance.get(
-        `user/profile${userId ? `/${userId}` : ""}`,
-      );
-      return data;
-    },
 
   getProjectsByEndpoint:
     (slug, anotherUserId = "") =>

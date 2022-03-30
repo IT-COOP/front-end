@@ -16,6 +16,7 @@ import { ReactComponent as Check } from "./check.svg";
 import { ReactComponent as KeepItDetail } from "./keepItDetail.svg";
 import { ReactComponent as Completion } from "./completion.svg";
 import { ReactComponent as More } from "./more.svg";
+import { ReactComponent as Reset } from "./reset.svg";
 
 export {
   Close,
@@ -36,4 +37,5 @@ export {
   LeftArrow,
   Completion,
   More,
+  Reset,
 };

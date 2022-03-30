@@ -1,54 +1,76 @@
-import React from "react";
-import { Camera } from "../../assets/icons/";
+import React, { useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
+
+import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
+
+import EditUserImage from "./views/edit/EditUserImage";
+import EditUserInformationWrapper from "./views/edit/EditUserInformationWrapper";
+import UserNickname from "./views/edit/UserNickname";
+import EditUserTaskAndStack from "./views/edit/EditUserTaskAndStack";
+import useGetUserDetailsQuery from "../../hooks/useGetUserDetailsQuery";
 
 function Edit() {
+  const { id } = useParams();
+  const { isLoading, isError, data } = useGetUserInfoQuery();
+  const { data: userDetails } = useGetUserDetailsQuery(id, true, {
+    enabled: data?.userInfo?.userId === id,
+  });
+  console.log(data);
+  console.log(userDetails);
+
+  const [changedProfile, setChangedProfile] = useState({
+    stack: null,
+    task: null,
+    profileImgUrl: null,
+    selfIntroduction: null,
+    portfolioUrl: null,
+  });
+
+  const handleProfileChangeByKeyName = keyName => newArg => {
+    setChangedProfile(previous => {
+      return {
+        ...previous,
+        [keyName]: newArg,
+      };
+    });
+  };
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (isError) {
+    return <Navigate replace to="/" />;
+  }
+
   return (
-    <>
-      <h1 className="leading-tight lg:font-medium lg:text-[24px] lg:mb-[75px]">
-        프로필 수정
-      </h1>
-      <div className="block lg:flex">
-        <div className="w-[100px] h-[100px] lg:w-[140px] lg:h-[140px] lg:mr-[98px] relative">
-          <img
-            src="https://t1.daumcdn.net/cfile/tistory/216C553953FC27C335"
-            alt="user profile"
-            className="object-cover w-full h-full rounded-full"
-          />
-          <button className="absolute bottom-0 right-0 w-[34px] h-[34px] bg-white rounded-full flex justify-center items-center border border-solid border-[#cccccc]">
-            <Camera />
-          </button>
-        </div>
-        <form>
-          <label htmlFor="nickname">
-            <h2>닉네임</h2>
-            <input type="text" id="nickname" />
-            <span>Itcoop 에서 사용되는 닉네임 입니다.</span>
-          </label>
+    <section className="h-screen w-[1224px] mx-auto">
+      <h1 className="mt-[66px] mb-[76px] font-bold text-[21px]">프로필 수정</h1>
+      <div className="flex gap-x-[98px]">
+        <EditUserImage
+          onChange={handleProfileChangeByKeyName("profileImgUrl")}
+        />
+        <EditUserInformationWrapper>
+          <UserNickname />
           <div>
-            <p>직군과 스택을 설정해주세요</p>
-            <div className="lg:flex lg:items-center">
-              <h2 className="lg:mr-[27.5px]">직군</h2>
-              {/* 3개 중 택 일 */}
-              <ul className="lg:flex lg:gap-x-[14.5px]">
-                <li>프론트엔드</li>
-                <li>백엔드</li>
-                <li>디자인</li>
-              </ul>
+            <p className="mb-[27px] font-medium text-[17px]">
+              직군과 스택을 설정해주세요
+            </p>
+            <EditUserTaskAndStack
+              changedTask={changedProfile.task}
+              changedStack={changedProfile.stack}
+              onTaskChange={handleProfileChangeByKeyName("task")}
+              onStackChange={handleProfileChangeByKeyName("stack")}
+            />
+
+            <div>
+              <span>스택</span>
+              <div className="relative">
+                <div className="w-[412px] py-[15px] pl-[17px] pr-[7px]">
+                  태그 선택
+                </div>
+              </div>
             </div>
-            <label htmlFor="technologyStack" className="lg:flex lg:items-start">
-              <h2 className="lg:mr-[27.5px]">스택</h2>
-              <select id="technologyStack">
-                <option>태그 선택</option>
-                <option>태그 선택2</option>
-                <option>태그 선택3</option>
-                <option>태그 선택4</option>
-                <option>태그 선택5</option>
-                <option>태그 선택6</option>
-                <option>태그 선택7</option>
-                <option>태그 선택8</option>
-                <option>태그 선택9</option>
-              </select>
-            </label>
           </div>
           <hr className="lg:w-full lg:mt-[30px] lg:mb-[37px] lg:bg-[#c4c4c4]" />
           <label htmlFor="portfolio">
@@ -60,9 +82,9 @@ function Edit() {
             <textarea id="introduction" maxLength={300} />
           </label>
           <button type="submit">수정 완료</button>
-        </form>
+        </EditUserInformationWrapper>
       </div>
-    </>
+    </section>
   );
 }
 export default Edit;

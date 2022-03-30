@@ -16,8 +16,6 @@ function UserPage() {
   const { id } = useParams();
   const isCurrentUserPage = userInfo?.userId === id;
 
-  console.log(userInfo);
-
   if (!Boolean(id) || isError) {
     navigate("/", { replace: true });
   }
@@ -29,7 +27,7 @@ function UserPage() {
   return (
     <section className="w-full min-h-screen bg-white3">
       <div className="w-[1224px] mx-auto">
-        <Title isCurrentUserPage={isCurrentUserPage} />
+        <Title userId={id} isCurrentUserPage={isCurrentUserPage} />
         <div className="flex gap-[24px]">
           {/* 마이페이지 왼쪽 */}
           <UserProfileSummary isCurrentUser={isCurrentUserPage} userId={id} />

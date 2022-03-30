@@ -23,11 +23,11 @@ ReactDOM.render(
       <main className="w-full">
         <Header />
         <Routes>
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/" element={<Recruit />} />
           <Route path="/app" element={<App />} />
           <Route path="/user/:id" element={<User />} />
-          <Route path="/mypage/edit" element={<UserEdit />} />
-          <Route path="/" element={<Recruit />} />
-          <Route path="/auth" element={<Auth />} />
+          <Route path="/user/:id/edit" element={<UserEdit />} />
           <Route path="/recruit/write" element={<RecruitWrite />} />
           <Route path="/recruit/:recruitId" element={<RecruitBoardDetail />} />
         </Routes>
