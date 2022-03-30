@@ -6,7 +6,9 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 import App from "./App";
 import Layout from "./components/Layout";
+import PrivateRoute from "./components/PrivateRoute";
 import RecruitBoardDetail from "./components/recruit/RecruitBoardDetail";
+
 import RecruitWrite from "./components/recruit/RecruitWrite";
 import Recruit from "./routes/Recruit/Recruit";
 
@@ -27,8 +29,22 @@ ReactDOM.render(
           <Route index element={<Recruit />} />
           <Route path="recruit/write" element={<RecruitWrite />} />
           <Route path="recruit/:recruitId" element={<RecruitBoardDetail />} />
-          <Route path="user/:id" element={<User />} />
-          <Route path="user/:id/edit" element={<UserEdit />} />
+          <Route
+            path="user/:id"
+            element={
+              <PrivateRoute>
+                <User />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="user/:id/edit"
+            element={
+              <PrivateRoute>
+                <UserEdit />
+              </PrivateRoute>
+            }
+          />
           <Route path="app" element={<App />} />
         </Route>
       </Routes>

@@ -5,9 +5,9 @@ import useUploadUserProfileImgMutation from "../../../../hooks/useUploadUserProf
 
 import { Camera } from "../../../../assets/icons";
 
-function EditUserImage({ onChange }) {
+function EditUserImage({ onChange, profileImgUrl, nickname }) {
   const client = useQueryClient();
-  const { userInfo } = client.getQueryData("userInfo");
+
   const { mutate } = useUploadUserProfileImgMutation();
 
   const handleFileChange = e => {
@@ -17,10 +17,10 @@ function EditUserImage({ onChange }) {
 
     mutate(formData, {
       onSuccess: ({ data: remoteImageUrl }) => {
-        client.setQueryData("userInfo", user => {
+        client.setQueryData(["userInfo", "currentUser"], user => {
           return {
             ...user,
-            userInfo: { ...userInfo, profileImgUrl: remoteImageUrl },
+            profile: { ...user.profile, profileImgUrl: remoteImageUrl },
           };
         });
         onChange(remoteImageUrl);
@@ -31,8 +31,8 @@ function EditUserImage({ onChange }) {
   return (
     <div className="shrink-0 w-[140px] h-[140px] relative">
       <img
-        src={userInfo.profileImgUrl}
-        alt={`${userInfo.nickname}'s profile`}
+        src={profileImgUrl}
+        alt={`${nickname}'s profile`}
         className="object-cover w-full h-full rounded-full"
       />
       <label className="absolute bottom-0 right-0 w-[34px] h-[34px] cursor-pointer bg-white rounded-full flex justify-center items-center border border-solid border-[#cccccc]">

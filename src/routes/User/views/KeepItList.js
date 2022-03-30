@@ -3,13 +3,11 @@ import { useNavigate } from "react-router-dom";
 import RecruitBoard from "../../../components/recruit/RecruitBoard";
 import useGetKeepItList from "../../../hooks/useGetKeepItList";
 
-function KeepItList({ isCurrentUser }) {
+function KeepItList({ isCurrentUserPage }) {
   const navigate = useNavigate();
   const { data, isIdle, isLoading } = useGetKeepItList({
-    enabled: isCurrentUser,
+    enabled: isCurrentUserPage,
   });
-
-  console.log(data);
 
   if (isIdle || isLoading) {
     return null;

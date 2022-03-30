@@ -1,17 +1,7 @@
 import React from "react";
 import useGetUserDetailsQuery from "../../../hooks/useGetUserDetailsQuery";
 
-function UserDetails({ isCurrentUser, userId }) {
-  const { data: userData, isLoading } = useGetUserDetailsQuery(
-    userId,
-    isCurrentUser,
-  );
-
-  if (isLoading) {
-    return null;
-  }
-
-  const { portfolioUrl = null, selfIntroduction = null } = userData;
+function UserDetails({ portfolioUrl, selfIntroduction }) {
   return (
     <div className="w-full bg-white p-[30px] border border-solid border-gray2 rounded-[8px] mb-[42px]">
       <div className="mb-[36px]">

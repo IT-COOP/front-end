@@ -1,18 +1,8 @@
 import { instance } from "./axiosInstance";
 
 export const userApis = {
-  // 튜토리얼 진행했는지 안했는지 판별
-  checkUser: async () => {
-    try {
-      const { data } = await instance.get("login/validation");
-      return data;
-    } catch (error) {
-      return error.response;
-    }
-  },
-
   // 유저 상세 정보 열람
-  // 사용처: 유저 상세 페이지
+
   getUserInfo:
     (userId = "") =>
     async () => {
@@ -24,8 +14,22 @@ export const userApis = {
       const { data } = await instance.get(
         `user/profile${userId ? `/${userId}` : ""}`,
       );
+
       return data;
     },
+  modifyUserInfo: async variables => {
+    const { data } = await instance.patch("/user/profile", variables);
+    return data;
+  },
+  // 튜토리얼 진행했는지 안했는지 판별
+  checkUser: async () => {
+    try {
+      const { data } = await instance.get("login/validation");
+      return data;
+    } catch (error) {
+      return error.response;
+    }
+  },
 
   uploadUserProfileImg: async formData => {
     const { data } = await instance.post("upload/profile", formData, {
@@ -51,15 +55,17 @@ export const userApis = {
   },
 
   getProjectsByEndpoint:
-    (slug, anotherUserId = "") =>
+    (slug, userId = "") =>
     async () => {
       if (!Boolean(slug)) {
         throw new Error("The slug must be string and the endpoint of slug");
       }
 
-      const endpoint = anotherUserId
-        ? `user/profile/${anotherUserId}/${slug}`
-        : `user/${slug}`;
+      if (!Boolean(userId)) {
+        throw new Error("UserId doesn't exist");
+      }
+
+      const endpoint = `user/${slug}/${userId}`;
 
       const { data } = await instance.get(endpoint);
       return data;
@@ -71,7 +77,7 @@ export const userApis = {
   },
 
   getKeepitList: async () => {
-    const { data } = await instance.get("/user/mykeep");
+    const { data } = await instance.get("/user/keep");
     return data;
   },
 };

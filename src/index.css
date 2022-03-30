@@ -53,3 +53,29 @@ select::-ms-expand {
 
 select > option {
 } */
+
+summary {
+  display: block;
+  position: relative;
+}
+
+summary:before {
+  content: "";
+  border-width: 0.4rem;
+  border-style: solid;
+  border-color: transparent #000 transparent transparent;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: rotate(0) translateY(-50%);
+  transform-origin: 0.2rem 50%;
+  transition: 0.25s transform ease;
+}
+
+details[open] > summary:before {
+  transform: rotate(-90deg);
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}

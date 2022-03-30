@@ -10,9 +10,10 @@ import { deleteCookie } from "../../utils/cookie";
 function Header() {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const [isMyPageModalOpen, setIsMyPageModalOpen] = useState(false);
-  const { data: userData, isLoading } = useGetUserInfoQuery();
-  const client = useQueryClient();
 
+  const { data: userData, isLoading } = useGetUserInfoQuery();
+
+  const client = useQueryClient();
   const isUserLogin = Boolean(userData);
 
   const openSignInModal = () => {

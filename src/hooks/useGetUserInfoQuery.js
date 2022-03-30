@@ -6,10 +6,12 @@ function useGetUserInfoQuery(userId = "", config) {
     ["userInfo", userId || "currentUser"],
     userApis.getUserInfo(userId),
     {
+      staleTime: 3000000,
       cacheTime: Infinity,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       retry: false,
+      keepPreviousData: true,
       select: data => data?.profile ?? null,
       ...config,
     },
