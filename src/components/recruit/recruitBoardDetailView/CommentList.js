@@ -1,7 +1,5 @@
 import React from "react";
-import { useQueryClient } from "react-query";
 
-import classNames from "classnames";
 import Comment from "./Comment";
 
 function CommentList({ recruitBoard, recruitId }) {
@@ -12,15 +10,18 @@ function CommentList({ recruitBoard, recruitId }) {
   return (
     <li>
       <ul className="border-b-[1px] border-gray2">
-        {sortedComment?.map(comment => {
+        {sortedComment?.map((comment, idx) => {
           if (
             !commentGroupSet.has(comment.commentGroup) &
             (comment.commentDepth === 1)
           ) {
             commentGroupSet.add(comment.commentGroup);
             return (
-              <>
-                <li key="0" className="py-[50px] border-t-[1px] border-gray2">
+              <React.Fragment key={idx}>
+                <li
+                  key={comment.updatedAt}
+                  className="py-[50px] border-t-[1px] border-gray2"
+                >
                   이미 삭제된 댓글입니다.
                 </li>
                 <Comment
@@ -28,7 +29,7 @@ function CommentList({ recruitBoard, recruitId }) {
                   comment={comment}
                   recruitId={recruitId}
                 />
-              </>
+              </React.Fragment>
             );
           }
           commentGroupSet.add(comment.commentGroup);

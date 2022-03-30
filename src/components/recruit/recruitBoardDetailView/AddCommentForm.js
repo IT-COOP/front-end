@@ -18,7 +18,7 @@ function AddCommentForm({ recruitId }) {
       return;
     }
     const commentData = {
-      data: {
+      commentData: {
         recruitCommentContent,
         commentGroup: 0,
       },
@@ -38,6 +38,7 @@ function AddCommentForm({ recruitId }) {
         placeholder="댓글을 작성하세요"
         className="block w-full h-[135px] p-[11px] resize-none border-[1px] border-gray2 mb-[13px]"
         onChange={commentContentHandler}
+        maxLength="150"
       />
       <button className="float-right mr-[13px] text-[19px] px-[15px] py-[6px] rounded-[5px] text-white bg-blue3">
         댓글 작성

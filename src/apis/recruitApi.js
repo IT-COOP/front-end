@@ -13,10 +13,19 @@ export const recruitApis = {
     return data;
   },
 
-  addRecruitComment: async commentData => {
+  addRecruitComment: async ({ commentData, recruitId }) => {
     const { data } = await instance.post(
-      `/recruit/${commentData.recruitId}/comment`,
-      commentData.data,
+      `/recruit/${recruitId}/comment`,
+      commentData,
+    );
+    return data;
+  },
+
+  editRecruitComment: async ({ commentData, commentId, recruitId }) => {
+    console.log(commentData, commentId, recruitId);
+    const { data } = await instance.put(
+      `/recruit/${recruitId}/comment/${commentId}`,
+      commentData,
     );
     return data;
   },

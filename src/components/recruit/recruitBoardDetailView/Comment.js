@@ -6,6 +6,7 @@ import convertDateText from "../../../lib/convertDateText";
 
 import useDeleteCommentMutation from "../../../hooks/useDeleteCommentMutation";
 import AddCommentReplyForm from "./AddCommentReplyForm";
+import EditCommentForm from "./EditCommentForm";
 
 function Comment({ comment, recruitId }) {
   const [isAddCommentReplyToggle, setIsAddCommentReplyToggle] = useState(false);
@@ -22,9 +23,11 @@ function Comment({ comment, recruitId }) {
     setIsAddCommentReplyToggle(prev => !prev);
   };
 
+  const closeCommentReply = () => {
+    setIsAddCommentReplyToggle(false);
+  };
   return (
     <li
-      key={comment.recruitCommentId}
       className={classNames("pt-[30px] pb-[40px] border-t-[1px] border-gray2", {
         "pl-[80px]": comment.commentDepth === 1,
       })}
@@ -42,6 +45,13 @@ function Comment({ comment, recruitId }) {
           {convertDateText(comment.createdAt)}
         </div>
       </div>
+      <EditCommentForm
+        commentId={comment.recruitCommentId}
+        commentGroup={comment.commentGroup}
+        commentContent={comment.recruitCommentContent}
+        recruitId={comment.recruitPostId}
+        commentDepth={comment.commentDepth}
+      />
       <p className="mb-[33px]">{comment.recruitCommentContent}</p>
       <div className="flex items-end justify-between mb-[20px]">
         <div>
@@ -69,6 +79,7 @@ function Comment({ comment, recruitId }) {
               recruitId={comment.recruitPostId}
               user={comment.user}
               userId={comment.userId}
+              closeCommentReply={closeCommentReply}
             />
           )
         : null}

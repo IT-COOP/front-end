@@ -30,8 +30,6 @@ function RecruitBoardDetail() {
     }
   };
 
-  console.log(recruitBoard);
-
   const completedRequiredPeople = Boolean(
     (recruitBoard?.recruitStacks.filter(
       stack => stack.numberOfPeopleRequired !== stack.numberOfPeopleSet,
