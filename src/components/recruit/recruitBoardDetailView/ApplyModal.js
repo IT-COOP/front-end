@@ -1,16 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
+import { useQueryClient } from "react-query";
 
 import { Task, Stack } from "../../../constants/enums";
 import { Close } from "../../../assets/icons";
 
-function ApplyModal({ stack, task, closeApplyModal }) {
+import useApplyRecruitMutation from "../../../hooks/useApplyRecruitMutation";
+
+function ApplyModal({ stack, task, closeApplyModal, recruitId }) {
+  const [applyData, setApplyData] = useState({
+    selectedTask: "",
+    applyMessage: "잘 부탁드립니다!",
+  });
+
+  const queryClient = useQueryClient();
+  const { mutateAsync: recruitApply } = useApplyRecruitMutation();
+
   const filteredTaskList = task.filter(
     task => task.numberOfPeopleRequired !== task.numberOfPeopleSet,
   );
   const filteredStackList = stack.filter(
     stack => stack.numberOfPeopleRequired !== stack.numberOfPeopleSet,
   );
+
+  const handleApplyMessage = e => {
+    setApplyData(prev => ({ ...prev, applyMessage: e.target.value }));
+  };
+
+  const selectTaskHandler = e => {
+    setApplyData(prev => ({ ...prev, selectedTask: e.target.value }));
+  };
+
+  const sendApplyData = async () => {
+    const sendData = {
+      applyData,
+      recruitId,
+    };
+    const { success } = await recruitApply(sendData);
+    if (success) {
+      queryClient.invalidateQueries("recruitBoardDetail");
+    }
+  };
 
   return (
     <div className="fixed top-0 left-0 z-[999] flex items-center justify-center w-screen h-screen transition-opacity bg-black/70">
@@ -57,7 +87,10 @@ function ApplyModal({ stack, task, closeApplyModal }) {
             ))}
           </div>
           <div className="mb-[50px]">
-            <select className="w-full border-[1px] border-gray2 pl-[16px] text-[15px] h-[40px]">
+            <select
+              className="w-full border-[1px] border-gray2 pl-[16px] text-[15px] h-[40px]"
+              onChange={selectTaskHandler}
+            >
               <option value="1">선택해 주세요!</option>
               {filteredTaskList.map(task =>
                 task.recruitTask < 300 ? (
@@ -87,12 +120,16 @@ function ApplyModal({ stack, task, closeApplyModal }) {
               placeholder="20자 까지 입력가능합니다!"
               className="w-full text-[18px] border-b-[1px] py-[2px] mb-[9px]"
               maxLength={20}
+              onChange={handleApplyMessage}
             />
             <p className="text-gray3 text-[15px]">
               당부를 입력해주세요! 20자 까지 작성 가능합니다.
             </p>
           </div>
-          <button className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px] ">
+          <button
+            className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px] "
+            onClick={sendApplyData}
+          >
             신청하기
           </button>
         </div>

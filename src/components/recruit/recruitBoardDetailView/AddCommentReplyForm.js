@@ -20,6 +20,7 @@ const AddCommentReplyForm = ({
     setRecruitCommentReplyContent(onChangeEvent.target.value);
   };
 
+  console.log(commentGroup);
   const addCommentReplyHandler = async submitEvent => {
     submitEvent.preventDefault();
     let textareaValue = submitEvent.target.children[1].value;
@@ -27,7 +28,7 @@ const AddCommentReplyForm = ({
       return;
     }
     const commentData = {
-      data: {
+      commentData: {
         recruitCommentContent: recruitCommentReplyContent,
         commentGroup,
       },

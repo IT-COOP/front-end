@@ -34,7 +34,6 @@ function EditComment({
       recruitId,
       commentId,
     };
-
     const { success } = await editComment(commentData);
     if (success) {
       submitEvent.target.children[0].value = "";

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import classNames from "classnames";
+import { useQueryClient } from "react-query";
 
 import { LeftArrow } from "../../assets/icons";
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
+import useCancelApplyRecruitMutation from "../../hooks/useCancelApplyRecruitMutation";
 // import useDeleteRecruitBoardMutation from "../../hooks/useDeleteRecruitBoardMutation";
 import KeepItButton from "./recruitBoardDetailView/KeepItButton";
 import AddCommentForm from "./recruitBoardDetailView/AddCommentForm";
@@ -16,11 +18,12 @@ import CommentList from "./recruitBoardDetailView/CommentList";
 
 function RecruitBoardDetail() {
   const navigate = useNavigate();
-
+  const queryClient = useQueryClient();
   const { data: userData } = useGetUserInfoQuery();
   const [isApplyModalToggle, setIsApplyModalToggle] = useState(false);
   const { recruitId } = useParams();
   const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
+  const { mutateAsync: cancelApply } = useCancelApplyRecruitMutation();
 
   // const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoardMutation();
 
@@ -51,6 +54,17 @@ function RecruitBoardDetail() {
   };
 
   const handleEditButtonClick = () => navigate(`/recruit/edit/${recruitId}`);
+
+  const cancelRecruitApply = async () => {
+    const applyData = {
+      recruitId,
+      applyId: recruitBoard.applyId,
+    };
+    const { success } = await cancelApply(applyData);
+    if (success) {
+      queryClient.invalidateQueries("recruitBoardDetail");
+    }
+  };
 
   return (
     <>
@@ -89,18 +103,33 @@ function RecruitBoardDetail() {
                       recruitId={recruitId}
                       keepId={recruitBoard?.keepId}
                     />
-                    <button
-                      className={classNames(
-                        "text-[19px]  px-[15px] py-[6px] rounded-[5px] bg-blue3 text-white",
-                        {
-                          "pointer-events-none lg:bg-gray2":
-                            completedRequiredPeople,
-                        },
-                      )}
-                      onClick={openApplyModal}
-                    >
-                      신청하기
-                    </button>
+                    {Boolean(recruitBoard?.applyId) ? (
+                      <button
+                        className={classNames(
+                          "text-[19px]  px-[15px] py-[6px] rounded-[5px] bg-blue3 text-white",
+                          {
+                            "pointer-events-none lg:bg-gray2":
+                              completedRequiredPeople,
+                          },
+                        )}
+                        onClick={cancelRecruitApply}
+                      >
+                        취소하기
+                      </button>
+                    ) : (
+                      <button
+                        className={classNames(
+                          "text-[19px]  px-[15px] py-[6px] rounded-[5px] bg-blue3 text-white",
+                          {
+                            "pointer-events-none lg:bg-gray2":
+                              completedRequiredPeople,
+                          },
+                        )}
+                        onClick={openApplyModal}
+                      >
+                        신청하기
+                      </button>
+                    )}
                   </>
                 )}
               </li>
@@ -128,6 +157,7 @@ function RecruitBoardDetail() {
           stack={recruitBoard?.recruitStacks}
           task={recruitBoard?.recruitTasks}
           closeApplyModal={closeApplyModal}
+          recruitId={recruitId}
         />
       )}
     </>

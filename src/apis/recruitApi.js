@@ -14,6 +14,8 @@ export const recruitApis = {
   },
 
   addRecruitComment: async ({ commentData, recruitId }) => {
+    console.log(commentData);
+    console.log(recruitId);
     const { data } = await instance.post(
       `/recruit/${recruitId}/comment`,
       commentData,
@@ -77,5 +79,18 @@ export const recruitApis = {
     return data;
   },
 
-  // applyRecruit: async ({}) => {},
+  applyRecruit: async ({ recruitId, applyData }) => {
+    const { data } = await instance.post(
+      `/recruit/${recruitId}/apply`,
+      applyData,
+    );
+    return data;
+  },
+
+  cancelApplyRecruit: async ({ recruitId, applyId }) => {
+    const { data } = await instance.delete(
+      `/recruit/${recruitId}/apply/${applyId}`,
+    );
+    return data;
+  },
 };
