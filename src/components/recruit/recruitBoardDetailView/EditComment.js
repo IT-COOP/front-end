@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 
 import useEditCommentMutation from "../../../hooks/useEditCommentMutation";
-function EditCommentForm({
+function EditComment({
   recruitId,
   commentGroup,
   commentId,
@@ -44,7 +44,7 @@ function EditCommentForm({
   };
 
   return (
-    <form onSubmit={editCommentHandler} className="w-full overflow-hidden">
+    <div onSubmit={editCommentHandler} className="w-full overflow-hidden">
       <textarea
         type="text"
         placeholder="댓글을 작성하세요"
@@ -56,8 +56,8 @@ function EditCommentForm({
       <button className="float-right mr-[13px] text-[15px] px-[15px] py-[6px] rounded-[5px] text-white bg-blue3">
         수정하기
       </button>
-    </form>
+    </div>
   );
 }
 
-export default EditCommentForm;
+export default EditComment;

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import classNames from "classnames";
-// import { useQueryClient } from "react-query";
 
 import { LeftArrow } from "../../assets/icons";
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 
+import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 // import useDeleteRecruitBoardMutation from "../../hooks/useDeleteRecruitBoardMutation";
 import KeepItButton from "./recruitBoardDetailView/KeepItButton";
 import AddCommentForm from "./recruitBoardDetailView/AddCommentForm";
@@ -15,12 +15,13 @@ import BoardDetailContent from "./recruitBoardDetailView/BoardDetailContent";
 import CommentList from "./recruitBoardDetailView/CommentList";
 
 function RecruitBoardDetail() {
-  // const queryClient = useQueryClient();
-  // const userInfo = queryClient.getQueryData("userInfo");
-  const [isApplyModalToggle, setIsApplyModalToggle] = useState(false);
+  const navigate = useNavigate();
 
+  const { data: userData } = useGetUserInfoQuery();
+  const [isApplyModalToggle, setIsApplyModalToggle] = useState(false);
   const { recruitId } = useParams();
   const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
+
   // const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoardMutation();
 
   // const deleteRecruitBoardHandler = async () => {
@@ -49,6 +50,8 @@ function RecruitBoardDetail() {
     setIsApplyModalToggle(false);
   };
 
+  const handleEditButtonClick = () => navigate(`/recruit/edit/${recruitId}`);
+
   return (
     <>
       <ul className="w-[1224px] mx-auto mt-[70px]">
@@ -63,22 +66,43 @@ function RecruitBoardDetail() {
             <ul className="flex items-end justify-between w-full">
               <BoardDetailInfo recruitBoard={recruitBoard} />
               <li className="flex ">
-                <KeepItButton
-                  recruitId={recruitId}
-                  keepId={recruitBoard?.keepId}
-                />
-                <button
-                  className={classNames(
-                    "text-[19px]  px-[15px] py-[6px] rounded-[5px] bg-blue3 text-white",
-                    {
-                      "pointer-events-none lg:bg-gray2":
-                        completedRequiredPeople,
-                    },
-                  )}
-                  onClick={openApplyModal}
-                >
-                  신청하기
-                </button>
+                {userData?.userId === recruitBoard?.userId ? (
+                  <>
+                    {" "}
+                    <button
+                      className="text-[19px]  px-[15px] py-[6px] border-blue3 border-[1px] rounded-[5px] bg-blue3 text-white mr-[9px]"
+                      onClick={handleEditButtonClick}
+                    >
+                      수정하기
+                    </button>
+                    <button
+                      className={classNames(
+                        "text-[19px]  px-[15px] py-[6px] border-blue3 border-[1px] rounded-[5px] text-blue3 bg-white",
+                      )}
+                    >
+                      삭제하기
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <KeepItButton
+                      recruitId={recruitId}
+                      keepId={recruitBoard?.keepId}
+                    />
+                    <button
+                      className={classNames(
+                        "text-[19px]  px-[15px] py-[6px] rounded-[5px] bg-blue3 text-white",
+                        {
+                          "pointer-events-none lg:bg-gray2":
+                            completedRequiredPeople,
+                        },
+                      )}
+                      onClick={openApplyModal}
+                    >
+                      신청하기
+                    </button>
+                  </>
+                )}
               </li>
             </ul>
           </div>

@@ -10,6 +10,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import RecruitBoardDetail from "./components/recruit/RecruitBoardDetail";
 
 import RecruitWrite from "./components/recruit/RecruitWrite";
+import RecruitEdit from "./components/recruit/RecruitEdit";
 import Recruit from "./routes/Recruit/Recruit";
 
 import User from "./routes/User";
@@ -29,6 +30,7 @@ ReactDOM.render(
         <Route path="/" element={<Layout />}>
           <Route index element={<Recruit />} />
           <Route path="recruit/write" element={<RecruitWrite />} />
+          <Route path="recruit/edit/:recruitId" element={<RecruitEdit />} />
           <Route path="recruit/:recruitId" element={<RecruitBoardDetail />} />
           <Route
             path="user/:id"

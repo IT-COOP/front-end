@@ -6,10 +6,11 @@ import convertDateText from "../../../lib/convertDateText";
 
 import useDeleteCommentMutation from "../../../hooks/useDeleteCommentMutation";
 import AddCommentReplyForm from "./AddCommentReplyForm";
-import EditCommentForm from "./EditCommentForm";
+import EditComment from "./EditComment";
 
 function Comment({ comment, recruitId }) {
-  const [isAddCommentReplyToggle, setIsAddCommentReplyToggle] = useState(false);
+  const [isAddCommentReplyOpen, setIsAddCommentReplyOpen] = useState(false);
+  const [isEditCommentOpen, setIsEditCommentOpen] = useState(false);
   const { mutateAsync: deleteComment } = useDeleteCommentMutation();
   const queryClient = useQueryClient();
   const deleteCommentHandler = recruitCommentId => async () => {
@@ -19,12 +20,14 @@ function Comment({ comment, recruitId }) {
     }
   };
 
+  const openEditComment = () => {};
+
   const toggleCommentReply = () => {
-    setIsAddCommentReplyToggle(prev => !prev);
+    setIsAddCommentReplyOpen(prev => !prev);
   };
 
   const closeCommentReply = () => {
-    setIsAddCommentReplyToggle(false);
+    setIsAddCommentReplyOpen(false);
   };
   return (
     <li
@@ -45,7 +48,7 @@ function Comment({ comment, recruitId }) {
           {convertDateText(comment.createdAt)}
         </div>
       </div>
-      <EditCommentForm
+      <EditComment
         commentId={comment.recruitCommentId}
         commentGroup={comment.commentGroup}
         commentContent={comment.recruitCommentContent}
@@ -73,7 +76,7 @@ function Comment({ comment, recruitId }) {
         ) : null}
       </div>
       {comment.commentDepth === 0
-        ? isAddCommentReplyToggle && (
+        ? isAddCommentReplyOpen && (
             <AddCommentReplyForm
               commentGroup={comment.commentGroup}
               recruitId={comment.recruitPostId}

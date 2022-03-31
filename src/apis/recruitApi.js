@@ -57,6 +57,14 @@ export const recruitApis = {
     return data;
   },
 
+  editRecruitBoard: async ({ recruitData, recruitPostId }) => {
+    const { data } = await instance.patch(
+      `/recruit/${recruitPostId}`,
+      recruitData,
+    );
+    return data;
+  },
+
   keepItRecruitBoard: async recruitBoardId => {
     const { data } = await instance.post(`/recruit/${recruitBoardId}/keep`);
     return data;

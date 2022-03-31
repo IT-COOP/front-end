@@ -15,10 +15,10 @@ function RecruitWrite() {
     recruitLocation: 0,
     recruitTasks: [],
     recruitStacks: [],
-    imgUrl: "",
+    thumbImgUrl: "",
   });
 
-  const [imgUrl, setImgUrl] = useState("");
+  const [thumbImgUrl, setThumbImgUrl] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isSelectedTask, setIsSelectedTask] = useState(false);
   const [isNotSelectModal, setIsNotSelectModal] = useState(false);
@@ -216,9 +216,9 @@ function RecruitWrite() {
       return;
     }
     formData.append("image", file);
-    const { data: imgUrl } = await recruitBoardImgUpload(formData);
-    setRecruitInfo(prev => ({ ...prev, imgUrl }));
-    setImgUrl(imgUrl);
+    const { data: ImgUrl } = await recruitBoardImgUpload(formData);
+    setRecruitInfo(prev => ({ ...prev, ImgUrl }));
+    setThumbImgUrl(ImgUrl);
   };
 
   const handleCompleteWriteBoard = async () => {
@@ -449,7 +449,7 @@ function RecruitWrite() {
               <div className="flex">
                 <img
                   className="w-[288px] h-[186px] mr-[16px]"
-                  src={imgUrl}
+                  src={thumbImgUrl}
                   alt="썸네일 이미지"
                 />
                 <div>
