@@ -8,7 +8,6 @@ import useDeleteRecruitBoardKeepItMutation from "../../../hooks/useDeleteRecruit
 import useRecruitBoardKeepItMutation from "../../../hooks/useRecruitBoardKeepItMutation";
 
 function KeepItButton({ recruitId, keepId }) {
-  const [preventClickKeepIt, setPreventClickKeepIt] = useState(false);
   const [isKeepItModal, setIsKeepItModal] = useState(false);
 
   const { mutateAsync: keepItRecruitBoard } = useRecruitBoardKeepItMutation();

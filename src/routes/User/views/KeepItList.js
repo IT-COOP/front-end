@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import RecruitBoard from "../../../components/recruit/RecruitBoard";
 import useGetKeepItList from "../../../hooks/useGetKeepItList";
 
-function KeepItList({ isCurrentUser }) {
+function KeepItList({ isCurrentUserPage }) {
   const navigate = useNavigate();
-  const { data, isIdle } = useGetKeepItList({ enabled: isCurrentUser });
+  const { data, isIdle, isLoading } = useGetKeepItList({
+    enabled: isCurrentUserPage,
+  });
 
-  if (isIdle) {
+  if (isIdle || isLoading) {
     return null;
   }
 
@@ -17,7 +19,7 @@ function KeepItList({ isCurrentUser }) {
         내가 Keep It 한 게시물
       </h3>
       <ul className="flex overflow-hidden w-full mb-[20px] flex-wrap mx-auto  gap-x-[2%] gap-y-[24px] rounded-[8px]">
-        {data?.map(({ recruitPost: board }) => (
+        {data?.map(board => (
           <li
             key={board.recruitPostId}
             onClick={() => navigate(`/recruit/${board.recruitPostId}`)}

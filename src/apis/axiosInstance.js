@@ -7,7 +7,7 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    let token = localStorage.getItem("coopToken");
+    const token = localStorage.getItem("coopToken");
     if (token) {
       config.headers["authorization"] = `Bearer ${token}`;
       return config;
@@ -44,6 +44,7 @@ instance.interceptors.response.use(
       }
       return axios(originalRequest);
     }
+
     if (response.status === 403) {
       if (response.data.message === "Access Token Maliciously Modified.") {
         localStorage.removeItem("coopToken");
@@ -52,6 +53,7 @@ instance.interceptors.response.use(
       }
       return axios(originalRequest);
     }
+
     return Promise.reject(error);
   },
 );

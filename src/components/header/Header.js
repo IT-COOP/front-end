@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useQueryClient } from "react-query";
 import { NavLink } from "react-router-dom";
 
 import { Bell, DownArrow } from "../../assets/icons";
@@ -9,7 +10,11 @@ import { deleteCookie } from "../../utils/cookie";
 function Header() {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const [isMyPageModalOpen, setIsMyPageModalOpen] = useState(false);
-  const { data: userData } = useGetUserInfoQuery();
+
+  const { data: userData, isLoading } = useGetUserInfoQuery();
+
+  const client = useQueryClient();
+  const isUserLogin = Boolean(userData);
 
   const openSignInModal = () => {
     setIsSignInModalOpen(true);
@@ -26,6 +31,7 @@ function Header() {
   const handleLogout = () => {
     localStorage.removeItem("coopToken");
     deleteCookie("coopCookie");
+    client.clear();
     window.location.replace("/");
   };
 
@@ -34,7 +40,7 @@ function Header() {
       {isSignInModalOpen && (
         <SocialSignIn closeSignInModal={closeSignInModal} />
       )}
-      <header className="w-full sticky top-0 mx-auto py-[12px] z-[900] bg-white shadow-[0_4px_4px_-4px_rgba(0,0,0,0.3)]">
+      <header className="w-full sticky top-0 mx-auto py-[12px] z-10 bg-white shadow-[0_4px_4px_-4px_rgba(0,0,0,0.3)]">
         <div className="w-[1224px] mx-auto flex items-center justify-between">
           <div>
             <NavLink to="/">
@@ -54,11 +60,10 @@ function Header() {
               <li className="cursor-pointer">
                 <Bell />
               </li>
-              {!userData ? (
-                <li className="cursor-pointer" onClick={openSignInModal}>
-                  로그인
-                </li>
-              ) : (
+
+              {isLoading ? (
+                <div className="w-[82px] h-[21px] animate-pulse bg-white2" />
+              ) : isUserLogin ? (
                 <li className="relative cursor-pointer">
                   <div
                     className="flex items-center "
@@ -66,7 +71,7 @@ function Header() {
                   >
                     <img
                       className="w-[44px] h-[44px] rounded-full mr-[10px]"
-                      src={userData?.userInfo.profileImgUrl}
+                      src={userData.profileImgUrl}
                       alt="유저 프로필"
                     />
                     <DownArrow className="inline-block" />
@@ -77,7 +82,7 @@ function Header() {
                       <li>
                         <NavLink
                           className=" pl-[10px] block leading-[40px]"
-                          to={`/user/${userData.userInfo.userId}`}
+                          to={`/user/${userData.userId}`}
                         >
                           마이페이지
                         </NavLink>
@@ -90,6 +95,10 @@ function Header() {
                       </li>
                     </ul>
                   )}
+                </li>
+              ) : (
+                <li className="cursor-pointer" onClick={openSignInModal}>
+                  로그인
                 </li>
               )}
             </ul>

@@ -1,68 +1,103 @@
-import React from "react";
-import { Camera } from "../../assets/icons/";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "react-query";
+import useModifyUserMutation from "../../hooks/useModifyUserMutation";
 
-function Edit() {
+import EditUserImage from "./views/edit/EditUserImage";
+import EditUserInformationWrapper from "./views/edit/EditUserInformationWrapper";
+import UserNickname from "./views/edit/UserNickname";
+import EditUserTaskAndStack from "./views/edit/EditUserTaskAndStack";
+import EditUserPortfolioURL from "./views/edit/EditUserPortfolioURL";
+import EditUserSelfIntroduction from "./views/edit/EditUserSelfIntroduction";
+
+function Edit({
+  currentUserId,
+  portfolioUrl,
+  profileImgUrl,
+  selfIntroduction,
+  task,
+  stackList,
+  nickname,
+}) {
+  const client = useQueryClient();
+  const navigate = useNavigate();
+
+  const { mutateAsync } = useModifyUserMutation();
+  const [changedProfile, setChangedProfile] = useState(() => ({
+    stackList,
+    task,
+    profileImgUrl,
+    selfIntroduction: selfIntroduction ?? "",
+    portfolioUrl,
+  }));
+
+  const handleProfileChangeByKeyName = keyName => newArg => {
+    setChangedProfile(previous => {
+      return {
+        ...previous,
+        [keyName]: newArg,
+      };
+    });
+  };
+
+  const handleSubmit = async () => {
+    const technologyStack = stackList.join(",") + "," + String(task);
+    const variables = {
+      technologyStack,
+      profileImgUrl: changedProfile.profileImgUrl,
+      selfIntroduction: changedProfile.selfIntroduction,
+      portfolioUrl: changedProfile.portfolioUrl,
+    };
+
+    const response = await mutateAsync(variables);
+    if (response.profile) {
+      await client.invalidateQueries(["userInfo", "currentUser"]);
+    }
+    navigate(`/user/${currentUserId}`, { replace: true });
+  };
+
   return (
-    <>
-      <h1 className="leading-tight lg:font-medium lg:text-[24px] lg:mb-[75px]">
-        프로필 수정
-      </h1>
-      <div className="block lg:flex">
-        <div className="w-[100px] h-[100px] lg:w-[140px] lg:h-[140px] lg:mr-[98px] relative">
-          <img
-            src="https://t1.daumcdn.net/cfile/tistory/216C553953FC27C335"
-            alt="user profile"
-            className="object-cover w-full h-full rounded-full"
-          />
-          <button className="absolute bottom-0 right-0 w-[34px] h-[34px] bg-white rounded-full flex justify-center items-center border border-solid border-[#cccccc]">
-            <Camera />
-          </button>
-        </div>
-        <form>
-          <label htmlFor="nickname">
-            <h2>닉네임</h2>
-            <input type="text" id="nickname" />
-            <span>Itcoop 에서 사용되는 닉네임 입니다.</span>
-          </label>
+    <section className="h-screen w-[1224px] mx-auto">
+      <h1 className="mt-[66px] mb-[76px] font-bold text-[21px]">프로필 수정</h1>
+      <div className="flex gap-x-[98px]">
+        <EditUserImage
+          profileImgUrl={profileImgUrl}
+          nickname={nickname}
+          onChange={handleProfileChangeByKeyName("profileImgUrl")}
+        />
+        <EditUserInformationWrapper>
+          <UserNickname nickname={nickname} />
           <div>
-            <p>직군과 스택을 설정해주세요</p>
-            <div className="lg:flex lg:items-center">
-              <h2 className="lg:mr-[27.5px]">직군</h2>
-              {/* 3개 중 택 일 */}
-              <ul className="lg:flex lg:gap-x-[14.5px]">
-                <li>프론트엔드</li>
-                <li>백엔드</li>
-                <li>디자인</li>
-              </ul>
-            </div>
-            <label htmlFor="technologyStack" className="lg:flex lg:items-start">
-              <h2 className="lg:mr-[27.5px]">스택</h2>
-              <select id="technologyStack">
-                <option>태그 선택</option>
-                <option>태그 선택2</option>
-                <option>태그 선택3</option>
-                <option>태그 선택4</option>
-                <option>태그 선택5</option>
-                <option>태그 선택6</option>
-                <option>태그 선택7</option>
-                <option>태그 선택8</option>
-                <option>태그 선택9</option>
-              </select>
-            </label>
+            <p className="mb-[27px] font-medium text-[17px]">
+              직군과 스택을 설정해주세요
+            </p>
+            <EditUserTaskAndStack
+              task={changedProfile.task}
+              stackList={changedProfile.stackList}
+              onTaskChange={handleProfileChangeByKeyName("task")}
+              onStackChange={handleProfileChangeByKeyName("stackList")}
+            />
           </div>
-          <hr className="lg:w-full lg:mt-[30px] lg:mb-[37px] lg:bg-[#c4c4c4]" />
-          <label htmlFor="portfolio">
-            <h2>포트폴리오</h2>
-            <input type="text" placeholder="URL" id="portfolio" />
-          </label>
-          <label htmlFor="introduction">
-            <h2>소개글</h2>
-            <textarea id="introduction" maxLength={300} />
-          </label>
-          <button type="submit">수정 완료</button>
-        </form>
+          <hr className="w-full mt-[30px] mb-[37px] bg-gray2" />
+          <EditUserPortfolioURL
+            portfolioUrl={changedProfile.portfolioUrl}
+            onPortfolioUrlChange={handleProfileChangeByKeyName("portfolioUrl")}
+          />
+          <EditUserSelfIntroduction
+            selfIntroduction={changedProfile.selfIntroduction}
+            onSelfIntroductionChange={handleProfileChangeByKeyName(
+              "selfIntroduction",
+            )}
+          />
+          <button
+            onClick={handleSubmit}
+            className="w-[180px] h-[40px] text-center text-white bg-blue3 font-medium text-[19px] rounded-[5px]"
+          >
+            수정 완료
+          </button>
+        </EditUserInformationWrapper>
       </div>
-    </>
+    </section>
   );
 }
 export default Edit;

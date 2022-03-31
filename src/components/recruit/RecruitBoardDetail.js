@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import classNames from "classnames";
-import { useQueryClient } from "react-query";
+// import { useQueryClient } from "react-query";
 
 import { LeftArrow } from "../../assets/icons";
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 
-import useDeleteRecruitBoardMutation from "../../hooks/useDeleteRecruitBoardMutation";
+// import useDeleteRecruitBoardMutation from "../../hooks/useDeleteRecruitBoardMutation";
 import KeepItButton from "./recruitBoardDetailView/KeepItButton";
 import AddCommentForm from "./recruitBoardDetailView/AddCommentForm";
 import ApplyModal from "./recruitBoardDetailView/ApplyModal";
@@ -15,20 +15,20 @@ import BoardDetailContent from "./recruitBoardDetailView/BoardDetailContent";
 import CommentList from "./recruitBoardDetailView/CommentList";
 
 function RecruitBoardDetail() {
-  const queryClient = useQueryClient();
-  const userInfo = queryClient.getQueryData("userInfo");
+  // const queryClient = useQueryClient();
+  // const userInfo = queryClient.getQueryData("userInfo");
   const [isApplyModalToggle, setIsApplyModalToggle] = useState(false);
 
   const { recruitId } = useParams();
   const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
-  const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoardMutation();
+  // const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoardMutation();
 
-  const deleteRecruitBoardHandler = async () => {
-    const { success } = await deleteRecruitBoard(recruitId);
-    if (success) {
-      queryClient.invalidateQueries("recruitBoardDetail");
-    }
-  };
+  // const deleteRecruitBoardHandler = async () => {
+  //   const { success } = await deleteRecruitBoard(recruitId);
+  //   if (success) {
+  //     queryClient.invalidateQueries("recruitBoardDetail");
+  //   }
+  // };
 
   const completedRequiredPeople = Boolean(
     (recruitBoard?.recruitStacks.filter(

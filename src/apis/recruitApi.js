@@ -69,5 +69,5 @@ export const recruitApis = {
     return data;
   },
 
-  applyRecruit: async ({}) => {},
+  // applyRecruit: async ({}) => {},
 };

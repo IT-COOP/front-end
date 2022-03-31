@@ -17,6 +17,7 @@ import { ReactComponent as KeepItDetail } from "./keepItDetail.svg";
 import { ReactComponent as Completion } from "./completion.svg";
 import { ReactComponent as More } from "./more.svg";
 import { ReactComponent as KeepItDetailActive } from "./keepItDetailActive.svg";
+import { ReactComponent as Reset } from "./reset.svg";
 
 export {
   Close,
@@ -38,4 +39,5 @@ export {
   Completion,
   More,
   KeepItDetailActive,
+  Reset,
 };

@@ -12,21 +12,24 @@ const DEFAULT_TAB_LIST = [
   { slug: "over", name: "진행완료", max: 3 },
 ];
 
-function UserProjects({ isCurrentUser, userId }) {
+function UserProjects({ isCurrentUserPage, userId }) {
   const navigate = useNavigate();
-  const tabList = isCurrentUser
+  const tabList = isCurrentUserPage
     ? DEFAULT_TAB_LIST
     : DEFAULT_TAB_LIST.filter(v => v.name !== "신청중");
 
   const [activeIndex, setActiveIndex] = useState(0);
   const handleTabClicks = index => () => setActiveIndex(index);
-  const headingText = isCurrentUser ? "나의 프로젝트" : "프로젝트";
+  const headingText = isCurrentUserPage ? "나의 프로젝트" : "프로젝트";
 
-  const { data: projectList } = useGetProjectsByEndpoint({
+  const { data: projectList, isLoading } = useGetProjectsByEndpoint({
     slug: tabList[activeIndex].slug,
-    isCurrentUser,
     userId,
   });
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <div>

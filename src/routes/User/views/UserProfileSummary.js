@@ -1,28 +1,24 @@
 import React from "react";
 import classNames from "classnames";
 
-import useGetUserDetailsQuery from "../../../hooks/useGetUserDetailsQuery";
-
 import { Heart } from "../../../assets/icons";
 
 import { Stack, Task } from "../../../constants/enums";
 
-function UserProfileSummary({ isCurrentUser, userId }) {
-  const { data: userData } = useGetUserDetailsQuery(userId, isCurrentUser);
-
-  const _stackAndTaskList = userData?.technologyStack.split(",").map(Number);
-  const currentTask = _stackAndTaskList?.find(v => v % 10 === 0);
-  const currentStackList = _stackAndTaskList?.filter(v => v % 10 !== 0);
-
-  const totalVoteCount = userData?.userReputations2.length;
-  const upvoteCount = userData?.userReputations2.filter(
-    ({ userReputationPoint }) => Boolean(userReputationPoint),
+function UserProfileSummary({
+  profileImgUrl,
+  nickname,
+  userReputationList,
+  stackList,
+  task,
+}) {
+  const totalVoteCount = userReputationList.length;
+  const upvoteCount = userReputationList.filter(({ userReputationPoint }) =>
+    Boolean(userReputationPoint),
   ).length;
 
   const reputationRatio =
-    totalVoteCount !== 0
-      ? Math.round((upvoteCount / userData?.userReputations2.length) * 100)
-      : 0;
+    totalVoteCount !== 0 ? Math.round((upvoteCount / totalVoteCount) * 100) : 0;
 
   return (
     <aside>
@@ -30,16 +26,16 @@ function UserProfileSummary({ isCurrentUser, userId }) {
         <div className="flex flex-col w-full mt-[45px] mb-[23px]">
           <img
             alt="유저 프로필"
-            src={userData?.profileImgUrl}
+            src={profileImgUrl}
             className="mx-auto rounded-full overflow-hidden w-[140px] h-[140px] bg-[#c0c0c0] mb-[20px]"
           />
           <div className="flex flex-col justify-center ">
             <div className="flex mx-auto gap-x-[17px] mb-[17px]">
-              <p className=" text-19px">{userData?.nickname}</p>
-              <p className="text-gray4 text-[15px]">{Task[currentTask]}</p>
+              <p className=" text-19px">{nickname}</p>
+              <p className="text-gray4 text-[15px]">{Task[task]}</p>
             </div>
             <div className="mb-[24px] flex flex-wrap gap-[5px] justify-center">
-              {currentStackList?.map(stackNumber => (
+              {stackList?.map(stackNumber => (
                 <p
                   key={stackNumber}
                   className={classNames(
