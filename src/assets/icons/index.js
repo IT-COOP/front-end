@@ -18,6 +18,8 @@ import { ReactComponent as Completion } from "./completion.svg";
 import { ReactComponent as More } from "./more.svg";
 import { ReactComponent as KeepItDetailActive } from "./keepItDetailActive.svg";
 import { ReactComponent as Reset } from "./reset.svg";
+import { ReactComponent as People } from "./people.svg";
+import { ReactComponent as Mascot } from "./mascot.svg";
 
 export {
   Close,
@@ -40,4 +42,6 @@ export {
   More,
   KeepItDetailActive,
   Reset,
+  People,
+  Mascot,
 };

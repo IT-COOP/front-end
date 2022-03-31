@@ -16,6 +16,7 @@ import Recruit from "./routes/Recruit/Recruit";
 import User from "./routes/User";
 import UserEdit from "./routes/User/edit";
 import Auth from "./components/login/Auth";
+import ChatRoom from "./routes/User/ChatRoom";
 
 import "./index.css";
 
@@ -26,7 +27,6 @@ ReactDOM.render(
     <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="auth" element={<Auth />} />
-
         <Route path="/" element={<Layout />}>
           <Route index element={<Recruit />} />
           <Route path="recruit/write" element={<RecruitWrite />} />
@@ -49,6 +49,7 @@ ReactDOM.render(
             }
           />
           <Route path="app" element={<App />} />
+          <Route path="chat" element={<ChatRoom />} />
         </Route>
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} />
