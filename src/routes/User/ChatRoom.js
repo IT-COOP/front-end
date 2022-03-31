@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import classNames from "classnames";
-import { useQueryClient } from "react-query";
 
 import { People, Mascot } from "../../assets/icons";
+
+import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
+import convertTimeText from "../../lib/convertTimeText";
 
 const socket = io(process.env.REACT_APP_API_URL_SOCKET, {
   extraHeaders: {
@@ -18,15 +20,11 @@ const ChatRoom = () => {
 
   const chatEndRef = useRef();
 
+  const { data: userData } = useGetUserInfoQuery();
+
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
-  const queryClient = useQueryClient();
-
-  const user = queryClient.getQueryData(["userInfo,currentUser"]);
-
-  console.log(user);
 
   useEffect(() => {
     scrollToBottom();
@@ -44,6 +42,7 @@ const ChatRoom = () => {
 
   useEffect(() => {
     socket.on("msgToClient", ({ chat }) => {
+      console.log(chat);
       setUserChatList(prev => [...prev, chat]);
     });
     return () => {
@@ -68,7 +67,7 @@ const ChatRoom = () => {
   };
 
   return (
-    <section className="w-full bg-white3 pt-[40px] pb-[157px]">
+    <section className="w-full bg-white3 pt-[40px]">
       <div className="w-[1224px]  mx-[auto]  ">
         <div className="flex justify-between w-full mb-[37px]">
           <h1 className="text-[21px] font-bold">
@@ -96,9 +95,20 @@ const ChatRoom = () => {
                 {userChatList?.map(chat => (
                   <li
                     key={chat.chatId}
-                    className="flex w-full mb-[30px] flex-reverse"
+                    className={classNames("flex w-full mb-[30px]", {
+                      "flex-row-reverse":
+                        chat.speaker2.userId === userData?.userId,
+                    })}
                   >
-                    <div className="w-[60px] h-[60px] overflow-hidden rounded-full mr-[20px]">
+                    <div
+                      className={classNames(
+                        "w-[60px] h-[60px] overflow-hidden rounded-full mr-[20px]",
+                        {
+                          "lg:ml-[20px] lg:mr-0":
+                            chat.speaker2.userId === userData?.userId,
+                        },
+                      )}
+                    >
                       <img
                         src={chat.speaker2.profileImgUrl}
                         alt={`${chat.speaker2.nickname}의 프로필사진`}
@@ -106,15 +116,25 @@ const ChatRoom = () => {
                       />
                     </div>
                     <div>
-                      <p className="text-[20px] leading-[40px]">
+                      <p
+                        className={classNames("text-[20px] leading-[40px]", {
+                          "text-right":
+                            chat.speaker2.userId === userData?.userId,
+                        })}
+                      >
                         {chat.speaker2.nickname}
                       </p>
-                      <div className="flex items-end gap-x-[10px]">
+                      <div
+                        className={classNames("flex items-end gap-x-[10px]", {
+                          "flex-row-reverse":
+                            chat.speaker2.userId === userData?.userId,
+                        })}
+                      >
                         <p className="bg-white3 p-[10px] text-[18px] rounded-r-[8px] rounded-b-[8px] ">
                           {chat.chat}
                         </p>
                         <span className="text-[16px] leading-[26px] font-light">
-                          {chat.createdAt}
+                          {convertTimeText(chat.createdAt)}
                         </span>
                       </div>
                     </div>
