@@ -5,6 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { Close, Prev } from "../../assets/icons";
 import { Stack, Task } from "../../constants/enums";
 import { setCookie } from "../../utils/cookie";
+import {
+  beDefaultImgUrl,
+  feDefaultImgUrl,
+  deDefaultImgUrl,
+  plDefaultImgUrl,
+} from "../../constants/defaultImages";
 import useUploadUserProfileImgMutation from "../../hooks/useUploadUserProfileImgMutation";
 import useConfirmNicknameMutation from "../../hooks/useConfirmNicknameMutation";
 import useCreateUserMutation from "../../hooks/useCreateUserMutation";
@@ -76,16 +82,16 @@ function SocialSignIn({ closeSignUpModal }) {
       return false;
     }
     if (task === 100) {
-      setProfileImgSrc("images/pl.png");
+      setProfileImgSrc(plDefaultImgUrl);
     }
     if (task === 200) {
-      setProfileImgSrc("images/de.png");
+      setProfileImgSrc(deDefaultImgUrl);
     }
     if (task === 300) {
-      setProfileImgSrc("images/fe.png");
+      setProfileImgSrc(feDefaultImgUrl);
     }
     if (task === 400) {
-      setProfileImgSrc("images/be.png");
+      setProfileImgSrc(beDefaultImgUrl);
     }
     setSelectedStack([]);
     setSelectedTask(task);
@@ -144,16 +150,16 @@ function SocialSignIn({ closeSignUpModal }) {
 
   const setDefaultImg = () => {
     if (selectedTask === 100) {
-      setProfileImgSrc("images/pl.png");
+      setProfileImgSrc(plDefaultImgUrl);
     }
     if (selectedTask === 200) {
-      setProfileImgSrc("images/de.png");
+      setProfileImgSrc(deDefaultImgUrl);
     }
     if (selectedTask === 300) {
-      setProfileImgSrc("images/fe.png");
+      setProfileImgSrc(feDefaultImgUrl);
     }
     if (selectedTask === 400) {
-      setProfileImgSrc("images/be.png");
+      setProfileImgSrc(beDefaultImgUrl);
     }
   };
 
