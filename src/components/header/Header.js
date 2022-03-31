@@ -14,6 +14,8 @@ function Header() {
 
   const { data: userData, isLoading } = useGetUserInfoQuery();
 
+  console.log(userData);
+
   const client = useQueryClient();
   const isUserLogin = Boolean(userData);
 

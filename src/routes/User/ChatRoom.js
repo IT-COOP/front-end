@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import classNames from "classnames";
+import { useQueryClient } from "react-query";
 
 import { People, Mascot } from "../../assets/icons";
-import useGetChatRoomNumberQuery from "../../hooks/useGetChatRoomNumberQuery";
 
 const socket = io(process.env.REACT_APP_API_URL_SOCKET, {
   extraHeaders: {
@@ -21,6 +21,12 @@ const ChatRoom = () => {
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const queryClient = useQueryClient();
+
+  const user = queryClient.getQueryData(["userInfo,currentUser"]);
+
+  console.log(user);
 
   useEffect(() => {
     scrollToBottom();
