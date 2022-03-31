@@ -6,6 +6,7 @@ import { Location, Stack, Task } from "../../constants/enums";
 import useUploadRecruitBoardImgMutation from "../../hooks/useUploadRecruitBoardImgMutation";
 import useCompleteWriteMutation from "../../hooks/useCompleteWriteMutation";
 import { Completion } from "../../assets/icons";
+import { recruitBoardDefaultUrl } from "../../constants/defaultImages";
 
 function RecruitWrite() {
   const [recruitInfo, setRecruitInfo] = useState({
@@ -15,7 +16,7 @@ function RecruitWrite() {
     recruitLocation: 0,
     recruitTasks: [],
     recruitStacks: [],
-    thumbImgUrl: "",
+    thumbImgUrl: recruitBoardDefaultUrl,
   });
 
   const [thumbImgUrl, setThumbImgUrl] = useState("");
@@ -208,7 +209,6 @@ function RecruitWrite() {
     }
     const regex = new RegExp("png|jpg");
     if (!regex.test(file.name.slice(-3))) {
-      console.log(1222222222222);
       setIsImgConfirmMsg(prev => !prev);
       setTimeout(() => {
         setIsImgConfirmMsg(prev => !prev);
@@ -219,6 +219,10 @@ function RecruitWrite() {
     const { data: ImgUrl } = await recruitBoardImgUpload(formData);
     setRecruitInfo(prev => ({ ...prev, ImgUrl }));
     setThumbImgUrl(ImgUrl);
+  };
+
+  const deleteRecruitBoardImg = () => {
+    setThumbImgUrl(recruitBoardDefaultUrl);
   };
 
   const handleCompleteWriteBoard = async () => {
@@ -449,7 +453,7 @@ function RecruitWrite() {
               <div className="flex">
                 <img
                   className="w-[288px] h-[186px] mr-[16px]"
-                  src={thumbImgUrl}
+                  src={recruitInfo.thumbImgUrl}
                   alt="썸네일 이미지"
                 />
                 <div>
@@ -466,7 +470,10 @@ function RecruitWrite() {
                     accept=".jpg, .png"
                     onChange={uploadRecruitBoardImg}
                   />
-                  <button className="block rounded-[5px] px-[15px] py-[6px] bg-[#C4C4C4]">
+                  <button
+                    className="block rounded-[5px] px-[15px] py-[6px] bg-[#C4C4C4]"
+                    onClick={deleteRecruitBoardImg}
+                  >
                     이미지 삭제
                   </button>
                 </div>
