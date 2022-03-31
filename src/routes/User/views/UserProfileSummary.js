@@ -11,6 +11,8 @@ function UserProfileSummary({
   userReputationList,
   stackList,
   task,
+  currentProjectList,
+  children,
 }) {
   const totalVoteCount = userReputationList.length;
   const upvoteCount = userReputationList.filter(({ userReputationPoint }) =>
@@ -22,8 +24,8 @@ function UserProfileSummary({
 
   return (
     <aside>
-      <div className="w-[288px] h-max bg-white border-[1px] border-gray2 rounded-[8px] px-[20px]">
-        <div className="flex flex-col w-full mt-[45px] mb-[23px]">
+      <div className="w-[288px] h-max bg-white border-[1px] border-gray2 rounded-[8px] ">
+        <div className="flex flex-col w-full px-[20px] mt-[45px] mb-[23px]">
           <img
             alt="유저 프로필"
             src={profileImgUrl}
@@ -64,46 +66,9 @@ function UserProfileSummary({
             </div>
           </div>
         </div>
-        {false && (
-          <>
-            <hr className="w-[278px] block border-gray2 -ml-[16px] mt-[19px] mb-[24px]"></hr>
-            <div>
-              <p className="mb-[9px] text-[17px]">
-                팀 채팅방
-                <span className="text-[11px] rounded-[8.5px] px-[6px] text-white bg-gray4">
-                  OFF
-                </span>
-                <span className="text-[11px] rounded-[8.5px] px-[6px] text-white bg-blue">
-                  ON
-                </span>
-              </p>
-              <p className="text-[#999] text-[15px]">
-                아직 진행중인 프로젝트가 없습니다.
-              </p>
-            </div>
-          </>
-        )}
+        {currentProjectList}
       </div>
-      {false && (
-        <div className="w-[288px] h-max p-[20px] bg-white border-[1px] border-gray2 rounded-[8px] pt-[20px] px-[20px] mt-[24px]">
-          <div className="flex justify-between">
-            <p className="text-[17px]">협업한 횟수</p>
-            <p className="text-[17px] text-blue3">{totalVoteCount}회</p>
-          </div>
-          <div>
-            <div className="mt-[17px] mb-[14px]">
-              <span className="block w-[212px] h-[8px] bg-[#F8F9FD] rounded-[4px] overflow-hidden">
-                <span className="block w-[70%] h-[8px] bg-blue2"></span>
-              </span>
-            </div>
-          </div>
-          <div className="text-[#999]">
-            <span className="text-blue3">1번</span> 더 협업하면
-            <br />
-            실버 왕관을 얻을 수 있어요!
-          </div>
-        </div>
-      )}
+      {children}
     </aside>
   );
 }

@@ -13,6 +13,7 @@ module.exports = {
         gray2: "#c4c4c4",
         gray3: "#999999",
         gray4: "#797979",
+        gray5: "#cfcfcf",
         white2: "#F8F9FD",
         white3: "#F8F8F8",
         white4: "#f9fafb",

@@ -9,5 +9,6 @@ export default function useGetProjectsByEndpoint({ slug, userId }) {
 
   return useQuery(["projects", userId, slug], queryFn, {
     select: data => data.posts,
+    keepPreviousData: true,
   });
 }

@@ -23,13 +23,13 @@ function Edit({
   const navigate = useNavigate();
 
   const { mutateAsync } = useModifyUserMutation();
-  const [changedProfile, setChangedProfile] = useState(() => ({
+  const [changedProfile, setChangedProfile] = useState({
     stackList,
     task,
     profileImgUrl,
     selfIntroduction: selfIntroduction ?? "",
     portfolioUrl,
-  }));
+  });
 
   const handleProfileChangeByKeyName = keyName => newArg => {
     setChangedProfile(previous => {
@@ -41,7 +41,8 @@ function Edit({
   };
 
   const handleSubmit = async () => {
-    const technologyStack = stackList.join(",") + "," + String(task);
+    const technologyStack =
+      changedProfile.stackList.join(",") + "," + String(task);
     const variables = {
       technologyStack,
       profileImgUrl: changedProfile.profileImgUrl,
