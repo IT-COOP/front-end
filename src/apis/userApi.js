@@ -2,7 +2,6 @@ import { instance } from "./axiosInstance";
 
 export const userApis = {
   // 유저 상세 정보 열람
-
   getUserInfo:
     (userId = "") =>
     async () => {
@@ -15,7 +14,10 @@ export const userApis = {
         `user/profile${userId ? `/${userId}` : ""}`,
       );
 
-      return data;
+      const copy = { ...data, profile: { ...data.profile } };
+      delete copy["profile"];
+
+      return { profile: { ...data.profile, ...copy } };
     },
   modifyUserInfo: async variables => {
     const { data } = await instance.patch("/user/profile", variables);
@@ -76,8 +78,10 @@ export const userApis = {
     return data;
   },
 
-  getKeepitList: async () => {
-    const { data } = await instance.get("/user/keep");
+  getKeepitList: async cursor => {
+    const { data } = await instance.get("/user/keep", {
+      params: { items: 12, cur: cursor },
+    });
     return data;
   },
 };

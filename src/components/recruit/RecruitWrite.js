@@ -19,7 +19,6 @@ function RecruitWrite() {
     thumbImgUrl: recruitBoardDefaultUrl,
   });
 
-  const [thumbImgUrl, setThumbImgUrl] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isSelectedTask, setIsSelectedTask] = useState(false);
   const [isNotSelectModal, setIsNotSelectModal] = useState(false);
@@ -216,13 +215,12 @@ function RecruitWrite() {
       return;
     }
     formData.append("image", file);
-    const { data: ImgUrl } = await recruitBoardImgUpload(formData);
-    setRecruitInfo(prev => ({ ...prev, ImgUrl }));
-    setThumbImgUrl(ImgUrl);
+    const { data: thumbImgUrl } = await recruitBoardImgUpload(formData);
+    setRecruitInfo(prev => ({ ...prev, thumbImgUrl }));
   };
 
   const deleteRecruitBoardImg = () => {
-    setThumbImgUrl(recruitBoardDefaultUrl);
+    setRecruitInfo(prev => ({ ...prev, thumbImgUrl: recruitBoardDefaultUrl }));
   };
 
   const handleCompleteWriteBoard = async () => {

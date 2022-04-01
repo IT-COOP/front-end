@@ -6,8 +6,11 @@ import Title from "./views/Title";
 import KeepItList from "./views/KeepItList";
 import UserDetails from "./views/UserDetails";
 import UserProjects from "./views/UserProjects";
+import ProjectCount from "./views/ProjectCount";
 import UserDashBoard from "./views/UserDashBoard";
 import UserProfileSummary from "./views/UserProfileSummary";
+import ScrollTopButton from "./views/ScrollTopButton";
+import RunningProjectSummary from "./views/RunningProjectSummary";
 
 function UserPage({
   currentUserId,
@@ -18,9 +21,10 @@ function UserPage({
   userReputationList,
   task,
   stackList,
+  projectCount,
+  isCurrentUserPage,
 }) {
   const { id } = useParams();
-  const isCurrentUserPage = currentUserId === id;
 
   if (!Boolean(id)) {
     return <Navigate to="/" replace />;
@@ -28,10 +32,9 @@ function UserPage({
 
   return (
     <section className="w-full min-h-screen bg-white3">
-      <div className="w-[1224px] mx-auto">
+      <div className="w-[1224px] mx-auto relative">
         <Title userId={id} isCurrentUserPage={isCurrentUserPage} />
         <div className="flex gap-[24px]">
-          {/* 마이페이지 왼쪽 */}
           <UserProfileSummary
             profileImgUrl={profileImgUrl}
             nickname={nickname}
@@ -40,17 +43,28 @@ function UserPage({
             userReputationList={userReputationList}
             isCurrentUser={isCurrentUserPage}
             userId={id}
-          />
+            currentProjectList={
+              isCurrentUserPage ? (
+                <RunningProjectSummary userId={currentUserId} />
+              ) : null
+            }
+          >
+            <ProjectCount
+              projectCount={projectCount}
+              isCurrentUserPage={isCurrentUserPage}
+            />
+          </UserProfileSummary>
           <UserDashBoard>
             <UserDetails
               portfolioUrl={portfolioUrl}
               selfIntroduction={selfIntroduction}
             />
             <UserProjects isCurrentUserPage={isCurrentUserPage} userId={id} />
-            <KeepItList isCurrentUserPage={isCurrentUserPage} />
+            {isCurrentUserPage ? <KeepItList /> : null}
           </UserDashBoard>
         </div>
       </div>
+      <ScrollTopButton />
     </section>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQueryClient } from "react-query";
 import { NavLink } from "react-router-dom";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 import { Bell, DownArrow } from "../../assets/icons";
 import SocialSignIn from "../login/SocialSignIn";
@@ -13,8 +13,6 @@ function Header() {
   const [isMyPageModalOpen, setIsMyPageModalOpen] = useState(false);
 
   const { data: userData, isLoading } = useGetUserInfoQuery();
-
-  console.log(userData);
 
   const client = useQueryClient();
   const isUserLogin = Boolean(userData);
@@ -38,17 +36,17 @@ function Header() {
     window.location.replace("/");
   };
 
-  const eventList = {
-    1: "recruitComment",
-    2: "recruitCommentReply",
-    3: "recruitApply",
-    4: "recruitApplyAccepted",
-    5: "informationComment",
-    6: "informationCommentReply",
-    7: "recruitFulfilled",
-    8: "chat",
-    9: "chatRoomCreation",
-  };
+  // const eventList = {
+  //   1: "recruitComment",
+  //   2: "recruitCommentReply",
+  //   3: "recruitApply",
+  //   4: "recruitApplyAccepted",
+  //   5: "informationComment",
+  //   6: "informationCommentReply",
+  //   7: "recruitFulfilled",
+  //   8: "chat",
+  //   9: "chatRoomCreation",
+  // };
 
   // const socketInitiate = () => {
   //   const socket = io(process.env.REACT_APP_API_URL_SOCKET, {

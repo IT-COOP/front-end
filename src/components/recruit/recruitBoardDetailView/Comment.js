@@ -10,7 +10,7 @@ import EditComment from "./EditComment";
 
 function Comment({ comment, recruitId }) {
   const [isAddCommentReplyOpen, setIsAddCommentReplyOpen] = useState(false);
-  const [isEditCommentOpen, setIsEditCommentOpen] = useState(false);
+  // const [isEditCommentOpen, setIsEditCommentOpen] = useState(false);
   const { mutateAsync: deleteComment } = useDeleteCommentMutation();
   const queryClient = useQueryClient();
   const deleteCommentHandler = recruitCommentId => async () => {
@@ -20,7 +20,7 @@ function Comment({ comment, recruitId }) {
     }
   };
 
-  const openEditComment = () => {};
+  // const openEditComment = () => {};
 
   const toggleCommentReply = () => {
     setIsAddCommentReplyOpen(prev => !prev);

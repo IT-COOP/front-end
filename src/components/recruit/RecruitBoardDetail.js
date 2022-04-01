@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { useQueryClient } from "react-query";
 
 import { LeftArrow } from "../../assets/icons";
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 import useCancelApplyRecruitMutation from "../../hooks/useCancelApplyRecruitMutation";

@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { userApis } from "../apis/userApi";
 
-function useGetUserInfoQuery(userId = "", config) {
+function useGetUserInfoQuery(userId = "", config = {}) {
   return useQuery(
     ["userInfo", userId || "currentUser"],
     userApis.getUserInfo(userId),
