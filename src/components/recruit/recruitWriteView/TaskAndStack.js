@@ -15,7 +15,6 @@ const TaskAndStack = ({
   const [selectedPeopleNumber, setSelectedPeopleNumber] = useState(1);
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [selectedStack, setSelectedStack] = useState(0);
-  const [isSelectedTask, setIsSelectedTask] = useState(false);
   const [isNotSelectModal, setIsNotSelectModal] = useState(false);
 
   const stackDetailsRef = useRef(null);
@@ -250,17 +249,6 @@ const TaskAndStack = ({
             )}
           >
             직군 혹은 스택을 선택하지 않으셨습니다!
-          </div>
-          <div
-            className={classNames(
-              "absolute top-[100%] mt-[10px] left-0 pointer-events-none text-red duration-500 transition-opacity",
-              {
-                "opacity-0": !isSelectedTask,
-                "opacity-100": isSelectedTask,
-              },
-            )}
-          >
-            이미 선택된 직군입니다!
           </div>
         </li>
         <ul className="flex mt-[40px]">
