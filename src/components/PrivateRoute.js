@@ -1,32 +1,39 @@
 import React from "react";
-import { useQueryClient } from "react-query";
+
 import { Navigate, useParams } from "react-router-dom";
 import useGetUserInfoQuery from "../hooks/useGetUserInfoQuery";
 
 function PrivateRoute({ children }) {
-  const client = useQueryClient();
-  const userInfo = client.getQueryData(["userInfo", "currentUser"]);
   const { id: targetUserId } = useParams();
 
-  const { data: currentUserData } = useGetUserInfoQuery(userInfo?.userId);
+  // 유저 정보: 객체 또는 null 또는 undefined
+  const {
+    isLoading: isBaseUserDataLoading,
+    isSuccess: isBaseUserDataFetched,
+    data: currentUserData,
+  } = useGetUserInfoQuery(undefined);
 
   const {
-    isIdle: isCurrentUserPage,
+    isIdle,
     isLoading: isTargetUserDataLoading,
     isError,
     data: targetUserData,
   } = useGetUserInfoQuery(targetUserId, {
-    enabled:
-      currentUserData !== null && currentUserData?.userId !== targetUserId,
+    enabled: isBaseUserDataFetched && currentUserData?.userId !== targetUserId,
   });
+
+  if (isBaseUserDataLoading || isTargetUserDataLoading) {
+    return null;
+  }
 
   if (currentUserData === null || isError) {
     return <Navigate to="/" replace />;
   }
 
-  if (isTargetUserDataLoading) {
-    return null;
-  }
+  console.log(`isBaseUserFetched: ${isBaseUserDataFetched}`);
+  console.log(`isCurrentUserData: ${currentUserData}`);
+  console.log(`isTargetUserDataLoading: ${isTargetUserDataLoading}`);
+  console.log(`isTargetUserIdle: ${isIdle}`);
 
   const {
     userId,
@@ -37,7 +44,7 @@ function PrivateRoute({ children }) {
     technologyStack,
     userReputations2,
     projectCount,
-  } = isCurrentUserPage ? currentUserData : targetUserData;
+  } = isIdle ? currentUserData : targetUserData;
 
   const _stackAndTaskList = technologyStack.split(",").map(Number);
   const currentTask = _stackAndTaskList?.find(v => v % 10 === 0);
@@ -54,7 +61,7 @@ function PrivateRoute({ children }) {
       task: currentTask,
       stackList: currentStackList,
       projectCount: projectCount,
-      isCurrentUserPage,
+      isCurrentUserPage: isIdle,
     });
   });
 

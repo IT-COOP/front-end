@@ -62,7 +62,7 @@ function RecruitBoard({
    */
 
   const goDetailRecruit = () => {
-    navigate(`recruit/${recruitPostId}`);
+    navigate(`/recruit/${recruitPostId}`);
   };
 
   return (

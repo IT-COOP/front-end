@@ -1,11 +1,9 @@
 import React, { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+
 import RecruitBoard from "../../../components/recruit/RecruitBoard";
 import useGetKeepItList from "../../../hooks/useGetKeepItList";
 
 function KeepItList() {
-  const navigate = useNavigate();
-
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetKeepItList();
 
@@ -48,7 +46,6 @@ function KeepItList() {
               <li
                 key={board.recruitPostId}
                 ref={isTarget ? targetRef : null}
-                onClick={() => navigate(`/recruit/${board.recruitPostId}`)}
                 className="flex flex-col overflow-hidden w-[32%] h-[396px] rounded-[11px] bg-white border-[1px] cursor-pointer shadow-md"
               >
                 <RecruitBoard

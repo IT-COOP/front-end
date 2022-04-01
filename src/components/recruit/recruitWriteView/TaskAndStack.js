@@ -129,12 +129,12 @@ const TaskAndStack = ({
     setNeedPeopleNumber(0);
     setSelectedTask(0);
   };
-  console.log(recruitData.recruitTasks);
+
   const removeRecruit = taskAndStack => () => {
     const filteredRecruitData = recruitData.recruitTasks.filter(
       task => task.recruitTask !== taskAndStack,
     );
-    console.log(filteredRecruitData);
+
     if (taskAndStack === 100 || taskAndStack === 200) {
       handleRemoveRecruitTask(filteredRecruitData);
     }

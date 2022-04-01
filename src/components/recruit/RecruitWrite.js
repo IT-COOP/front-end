@@ -85,7 +85,7 @@ function RecruitWrite() {
   const uploadRecruitBoardImg = async e => {
     const formData = new FormData();
     let file = e.target.files[0];
-    console.log(file);
+
     if (!file) {
       return;
     }

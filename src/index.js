@@ -29,27 +29,31 @@ ReactDOM.render(
         <Route path="auth" element={<Auth />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Recruit />} />
-          <Route path="recruit/write" element={<RecruitWrite />} />
-          <Route path="recruit/edit/:recruitId" element={<RecruitEdit />} />
-          <Route path="recruit/:recruitId" element={<RecruitBoardDetail />} />
-          <Route
-            path="user/:id"
-            element={
-              <PrivateRoute>
-                <User />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="user/:id/edit"
-            element={
-              <PrivateRoute>
-                <UserEdit />
-              </PrivateRoute>
-            }
-          />
-          <Route path="app" element={<App />} />
-          <Route path="chat" element={<ChatRoom />} />
+          <Route path="recruit">
+            <Route path="write" element={<RecruitWrite />} />
+            <Route path="edit/:recruitId" element={<RecruitEdit />} />
+            <Route path=":recruitId" element={<RecruitBoardDetail />} />
+          </Route>
+          <Route path="user">
+            <Route
+              path=":id"
+              element={
+                <PrivateRoute>
+                  <User />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path=":id/edit"
+              element={
+                <PrivateRoute>
+                  <UserEdit />
+                </PrivateRoute>
+              }
+            />
+          </Route>
+          <Route path="/app" element={<App />} />
+          <Route path="/chat" element={<ChatRoom />} />
         </Route>
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} />

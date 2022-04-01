@@ -46,8 +46,6 @@ function RecruitEdit() {
   const { mutateAsync: recruitBoardImgUpload } =
     useUploadRecruitBoardImgMutation();
 
-  console.log(recruitBoard);
-
   const { mutateAsync: completeEditBoard } = useEditRecruitBoardMutation();
 
   const handleTitle = inputText => {
@@ -79,7 +77,7 @@ function RecruitEdit() {
   const uploadRecruitBoardImg = async e => {
     const formData = new FormData();
     let file = e.target.files[0];
-    console.log(file);
+
     if (!file) {
       return;
     }

@@ -12,7 +12,6 @@ function AddCommentForm({ recruitId }) {
   };
 
   const addCommentHandler = async submitEvent => {
-    console.log(submitEvent);
     submitEvent.preventDefault();
     if (recruitCommentContent === "") {
       return;

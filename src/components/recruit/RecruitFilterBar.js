@@ -7,7 +7,6 @@ function RecruitFilterBar({
   currentSortNumber,
   currentStatusNumber,
 }) {
-  console.log(RecruitStatus);
   const filterList = Object.values(RecruitFilter).filter(v => !isNaN(v));
 
   const handleFilterButtonClick = sortNumber => () => {

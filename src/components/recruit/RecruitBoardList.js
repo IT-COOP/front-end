@@ -14,7 +14,6 @@ function RecruitBoardList() {
     items: 12,
     over: 0,
   });
-  console.log(filter);
 
   const { data } = useRecruitQuery(filter);
 
