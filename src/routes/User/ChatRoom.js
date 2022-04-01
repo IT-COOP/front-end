@@ -36,11 +36,8 @@ const ChatRoom = () => {
       socket.emit("enterChatRoom", 1, data => {
         setUserChatList(data.data.chats);
       });
-      console.log(socket);
     } else {
-      socket.on("disconnect", () => {
-        console.log(socket);
-      });
+      socket.on("disconnect", () => {});
     }
   }, [isSuccess, userData]);
 
