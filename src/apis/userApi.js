@@ -6,6 +6,7 @@ export const userApis = {
     (userId = "") =>
     async () => {
       const token = localStorage.getItem("coopToken");
+
       if (!token) {
         return null;
       }

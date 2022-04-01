@@ -8,8 +8,7 @@ function PrivateRoute({ children }) {
   const userInfo = client.getQueryData(["userInfo", "currentUser"]);
   const { id: targetUserId } = useParams();
 
-  const { isSuccess: isBaseUserFetched, data: currentUserData } =
-    useGetUserInfoQuery(userInfo?.userId);
+  const { data: currentUserData } = useGetUserInfoQuery(userInfo?.userId);
 
   const {
     isIdle: isCurrentUserPage,
@@ -17,16 +16,16 @@ function PrivateRoute({ children }) {
     isError,
     data: targetUserData,
   } = useGetUserInfoQuery(targetUserId, {
-    enabled: isBaseUserFetched && currentUserData?.userId !== targetUserId,
+    enabled:
+      currentUserData !== null && currentUserData?.userId !== targetUserId,
   });
 
-  if (!isBaseUserFetched || isTargetUserDataLoading) {
-    return null;
+  if (currentUserData === null || isError) {
+    return <Navigate to="/" replace />;
   }
 
-  if (isError) {
-    alert("알 수 없는 에러가 발생하였습니다.");
-    return <Navigate to="/" replace />;
+  if (isTargetUserDataLoading) {
+    return null;
   }
 
   const {
