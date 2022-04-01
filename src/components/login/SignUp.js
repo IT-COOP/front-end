@@ -15,14 +15,14 @@ import useUploadUserProfileImgMutation from "../../hooks/useUploadUserProfileImg
 import useConfirmNicknameMutation from "../../hooks/useConfirmNicknameMutation";
 import useCreateUserMutation from "../../hooks/useCreateUserMutation";
 
-function SocialSignIn({ closeSignUpModal }) {
+function SignUp({ closeSignUpModal }) {
   const [userInfo, setUserInfo] = useState({});
   const [confirmNickname, setConfirmNickname] = useState(false);
   const [checkDuplicateUserNickname, setCheckDuplicate] = useState(false);
   const [selectedTask, setSelectedTask] = useState(0);
   const [selectedStack, setSelectedStack] = useState([]);
   const [profileImgSrc, setProfileImgSrc] = useState("");
-
+  const [portfolioUrl, setPortfolioUrl] = useState("");
   const navigate = useNavigate();
 
   const { mutateAsync: uploadImg } = useUploadUserProfileImgMutation();
@@ -163,6 +163,13 @@ function SocialSignIn({ closeSignUpModal }) {
     }
   };
 
+  const handlePortfolioUrl = e => {
+    setPortfolioUrl(e.target.value);
+    setUserInfo(prev => ({ ...prev, portfolioUrl: e.target.value }));
+  };
+
+  console.log(userInfo);
+
   const submitUserData = async () => {
     const taskAndStack = [...selectedStack, String(selectedTask)].join(",");
     const userData = {
@@ -170,7 +177,7 @@ function SocialSignIn({ closeSignUpModal }) {
       technologyStack: taskAndStack,
       profileImgUrl: profileImgSrc,
     };
-
+    console.log(userData);
     createUser(userData);
   };
 
@@ -189,6 +196,8 @@ function SocialSignIn({ closeSignUpModal }) {
   const formLi = `flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white opacity-0  px-[158px]`;
   const formTitle = `text-center font-bold text-[30px] mt-[74px] mb-[32px] `;
   const formDesc = `text-center text-[20px] text-[#797979] mb-[40px] `;
+
+  console.log(userInfo);
 
   return (
     <section className="fixed top-0 left-0 z-[999] flex items-center justify-center w-screen h-screen transition-opacity bg-black/70">
@@ -390,6 +399,8 @@ function SocialSignIn({ closeSignUpModal }) {
               type="text"
               className="w-full border-b-[1px] mt-[50px] mb-[30px] py-[10px] text-[18px]"
               placeholder="https://github.com/"
+              value={portfolioUrl}
+              onChange={handlePortfolioUrl}
             />
           </div>
           <button
@@ -425,4 +436,4 @@ function SocialSignIn({ closeSignUpModal }) {
   );
 }
 
-export default SocialSignIn;
+export default SignUp;

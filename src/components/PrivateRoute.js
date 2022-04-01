@@ -23,7 +23,7 @@ function PrivateRoute({ children }) {
     alert("알 수 없는 에러가 발생하였습니다.");
     return <Navigate to="/" replace />;
   }
-
+  console.log(data);
   const {
     nickname,
     portfolioUrl,

@@ -29,6 +29,8 @@ const ChatRoom = () => {
     scrollToBottom();
   }, [userChatList]);
 
+  console.log(userData);
+
   useEffect(() => {
     if (userData) {
       socket.emit("enterChatRoom", 1, data => {
