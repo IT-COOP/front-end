@@ -12,7 +12,9 @@ function RecruitBoardList() {
     stack: "",
     sort: 0,
     items: 12,
+    over: 0,
   });
+  console.log(filter);
 
   const { data } = useRecruitQuery(filter);
 
@@ -28,6 +30,7 @@ function RecruitBoardList() {
       />
       <RecruitFilterBar
         currentSortNumber={filter.sort}
+        currentStatusNumber={filter.over}
         onFilterChanged={handleFilterChange}
       />
       <ul className="flex overflow-hidden mb-[20px] flex-wrap w-[1224px] mx-auto  gap-x-[2%] gap-y-[24px] rounded-[8px]">
