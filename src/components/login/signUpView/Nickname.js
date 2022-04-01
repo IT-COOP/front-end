@@ -7,14 +7,21 @@ function Nickname({ handleNextChapter, handleUserNickname }) {
   const [userNickname, setUserNickname] = useState("");
   const [confirmNickname, setConfirmNickname] = useState(false);
   const [checkDuplicateUserNickname, setCheckDuplicate] = useState(false);
+  const [isDuplicate, setIsDuplicate] = useState(false);
+
   const { mutateAsync: duplicateUserNickname } = useConfirmNicknameMutation();
 
   const handleCheckUserNickname = async () => {
     const { data } = await duplicateUserNickname(userNickname);
     if (data) {
       setCheckDuplicate(true);
+      setIsDuplicate(false);
     } else {
       setCheckDuplicate(false);
+      setIsDuplicate(true);
+      setTimeout(() => {
+        setIsDuplicate(false);
+      }, 1500);
     }
   };
 
@@ -33,7 +40,7 @@ function Nickname({ handleNextChapter, handleUserNickname }) {
   };
 
   return (
-    <li className="flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white px-[158px] z-10 opacity-100">
+    <li className="flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white px-[158px] z-10 opacity-100 rounded-[16px] ">
       <h1 className="text-center font-bold text-[30px] mt-[74px] mb-[32px]">
         사용하실 닉네임을 설정해주세요.
       </h1>
@@ -56,6 +63,7 @@ function Nickname({ handleNextChapter, handleUserNickname }) {
             {
               "bg-[#CCCCCC] text-gray4": !confirmNickname,
               "bg-blue text-white": confirmNickname,
+              "bg-red text-white": isDuplicate,
             },
           )}
           disabled={!confirmNickname}
@@ -65,7 +73,7 @@ function Nickname({ handleNextChapter, handleUserNickname }) {
         </button>
       </div>
       <p className="mb-[70px] text-[20px] leading-[25.04px] text-gray4">
-        {"닉네임은 공백 없이 한글/영문/숫자만 가능합니다"}
+        <span>닉네임은 공백 없이 한글/영문/숫자만 가능합니다</span>
       </p>
       <button
         className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px]"

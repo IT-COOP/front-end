@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import classNames from "classnames";
 import { Stack, Task } from "../../../constants/enums";
 import { Close, Prev } from "../../../assets/icons";
@@ -8,15 +8,19 @@ import {
   deDefaultImgUrl,
   plDefaultImgUrl,
 } from "../../../constants/defaultImages";
+
 const SignUpTaskAndStack = ({
   handlePrevChapter,
   handleNextChapter,
   handleDefaultImg,
+  handleSelectedTask,
+  handleSelectedStacks,
+  handleremoveStacks,
 }) => {
-  const [selectedTask, setSelectedTask] = useState(0);
+  const [selectedTask, setSelectedTask] = useState(100);
   const [selectedStack, setSelectedStack] = useState([]);
-  const filteredTask = Object.values(Task).filter(task => !isNaN(task));
 
+  const filteredTask = Object.values(Task).filter(task => !isNaN(task));
   const filteredStackList =
     selectedTask < 300
       ? null
@@ -27,29 +31,53 @@ const SignUpTaskAndStack = ({
           return startPoint < targetPoint && targetPoint < startPoint + 100;
         });
 
+  const detailsRef = useRef(null);
+
   const handleSelectTask = task => () => {
-    console.log(task);
-    if (selectedTask === task) {
-      return false;
-    }
-    if (selectedTask === 100) {
+    if (task === 100) {
       handleDefaultImg(plDefaultImgUrl);
     }
-    if (selectedTask === 200) {
+    if (task === 200) {
       handleDefaultImg(deDefaultImgUrl);
     }
-    if (selectedTask === 300) {
+    if (task === 300) {
       handleDefaultImg(feDefaultImgUrl);
     }
-    if (selectedTask === 400) {
+    if (task === 400) {
       handleDefaultImg(beDefaultImgUrl);
+    }
+    if (selectedTask === task) {
+      return;
     }
     setSelectedStack([]);
     setSelectedTask(task);
+    handleSelectedTask([task]);
+
+    const details = detailsRef.current;
+    if (details) {
+      details.open = false;
+    }
+  };
+
+  const handleSelectStack = stack => () => {
+    if (selectedStack.includes(stack) || selectedStack.length === 3) {
+      const details = detailsRef.current;
+      if (details) {
+        details.open = false;
+      }
+      return;
+    }
+    setSelectedStack(prev => [...prev, stack]);
+    handleSelectedStacks(stack);
+  };
+
+  const removeSelectedStack = stack => () => {
+    setSelectedStack(prev => [...prev].filter(v => v !== stack));
+    handleremoveStacks(stack);
   };
 
   return (
-    <li className="flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white opacity-0  px-[158px]">
+    <li className="flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white opacity-0  px-[158px] rounded-[16px] ">
       <button
         className="absolute top-[14px] left-[14px]"
         onClick={handlePrevChapter}
@@ -94,34 +122,77 @@ const SignUpTaskAndStack = ({
         </div>
       </div>
       <div className="flex stack mb-[40px]">
-        <p className="text-left text-[24px] leading-[50px] mr-[26px] text-gray4">
+        <p className="text-left text-[24px] leading-[40px] mr-[26px] text-gray4">
           스택
         </p>
         <div className="flex-1">
-          <details>
-            <summary className="leading-[40px] text-[20px] text-gray4">
+          <details
+            ref={detailsRef}
+            className={classNames("relative", {
+              "pointer-events-none":
+                selectedTask === 100 ||
+                selectedTask === 200 ||
+                selectedTask === 0,
+            })}
+          >
+            <summary className="leading-[40px] text-[18px] text-gray4 border border-black pl-[20px] cursor-pointer">
               최소 1개부터 최대 3개까지 선택 해주세요!
             </summary>
-            <select
-              className="w-full border-[1px] h-[50px] pl-[15px]"
-              // onChange={handleSelectStack}
-            >
-              <ul></ul>
+            <ul className="absolute z-10 w-full bg-white border border-black ">
               {filteredStackList?.map(stack => (
-                <li key={stack} onClick={Stack[stack]}>
+                <li
+                  key={stack}
+                  className={classNames(
+                    "leading-[40px] text-[18px] pl-[20px] hover:bg-gray2 cursor-pointer",
+                    {
+                      "bg-coral text-white":
+                        (selectedTask === 300) &
+                        selectedStack.includes(Stack[stack]),
+                    },
+                    {
+                      "lg:bg-blue text-white":
+                        (selectedTask === 400) &
+                        selectedStack.includes(Stack[stack]),
+                    },
+                  )}
+                  onClick={handleSelectStack(Stack[stack])}
+                >
                   {stack}
                 </li>
               ))}
-            </select>
+            </ul>
           </details>
-          <div className="flex gap-x-[10px]">
+          <div className="flex gap-[10px] mt-[10px] flex-wrap">
             {selectedStack.map((stack, idx) => (
               <span
                 key={idx}
-                className="text-gray4 text-[15px] cursor-pointer"
-                // onClick={removeSelectedStack(stack)}
+                className={classNames(
+                  "text-[15px] cursor-pointer border px-[14px] py-[6px] rounded-[15px]",
+                  {
+                    "border-coral text-coral":
+                      (selectedTask === 300) & selectedStack.includes(stack),
+                  },
+                  {
+                    "border-blue text-blue":
+                      (selectedTask === 400) & selectedStack.includes(stack),
+                  },
+                )}
+                onClick={removeSelectedStack(stack)}
               >
-                {Stack[stack]} <Close className="inline-block fill-gray4" />
+                {Stack[stack]}{" "}
+                <Close
+                  className={classNames(
+                    "inline-block",
+                    {
+                      "fill-coral":
+                        (selectedTask === 300) & selectedStack.includes(stack),
+                    },
+                    {
+                      "fill-blue ":
+                        (selectedTask === 400) & selectedStack.includes(stack),
+                    },
+                  )}
+                />
               </span>
             ))}
           </div>
