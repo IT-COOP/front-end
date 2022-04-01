@@ -8,6 +8,7 @@ function EditComment({
   commentId,
   commentContent,
   commentDepth,
+  closeEditComment,
 }) {
   const [recruitCommentContent, setRecruitCommentContent] =
     useState(commentContent);
@@ -19,9 +20,9 @@ function EditComment({
   };
 
   const editCommentHandler = async submitEvent => {
+    console.log(123123132);
     submitEvent.preventDefault();
-    let textareaValue = submitEvent.target.children[0].value;
-    if (textareaValue === "") {
+    if (recruitCommentContent === "") {
       return;
     }
 
@@ -36,14 +37,14 @@ function EditComment({
     };
     const { success } = await editComment(commentData);
     if (success) {
-      submitEvent.target.children[0].value = "";
       setRecruitCommentContent("");
       queryClient.invalidateQueries("recruitBoardDetail");
+      closeEditComment();
     }
   };
 
   return (
-    <div onSubmit={editCommentHandler} className="w-full overflow-hidden">
+    <form onSubmit={editCommentHandler} className="w-full overflow-hidden">
       <textarea
         type="text"
         placeholder="댓글을 작성하세요"
@@ -51,11 +52,27 @@ function EditComment({
         onChange={commentContentHandler}
         maxLength="150"
         value={recruitCommentContent}
+        onKeyPress={e => {
+          if ((e.key === "Enter") & e.shiftKey) {
+            return;
+          }
+          if (e.key === "Enter") {
+            editCommentHandler(e);
+          }
+        }}
       />
-      <button className="float-right mr-[13px] text-[15px] px-[15px] py-[6px] rounded-[5px] text-white bg-blue3">
-        수정하기
-      </button>
-    </div>
+      <div className="text-right">
+        <button className="text-[15px] mr-[23px] px-[15px] py-[6px] rounded-[5px] text-white bg-blue3">
+          수정하기
+        </button>
+        <button
+          className="text-[15px] px-[15px] py-[6px] rounded-[5px] text-white bg-blue3"
+          onClick={closeEditComment}
+        >
+          취소하기
+        </button>
+      </div>
+    </form>
   );
 }
 

@@ -20,11 +20,9 @@ const AddCommentReplyForm = ({
     setRecruitCommentReplyContent(onChangeEvent.target.value);
   };
 
-  console.log(commentGroup);
   const addCommentReplyHandler = async submitEvent => {
     submitEvent.preventDefault();
-    let textareaValue = submitEvent.target.children[1].value;
-    if (textareaValue === "") {
+    if (recruitCommentReplyContent === "") {
       return;
     }
     const commentData = {
@@ -36,7 +34,6 @@ const AddCommentReplyForm = ({
     };
     const { success } = await addCommentReply(commentData);
     if (success) {
-      submitEvent.target.children[1].value = "";
       setRecruitCommentReplyContent("");
       queryClient.invalidateQueries("recruitBoardDetail");
       closeCommentReply();
@@ -53,7 +50,7 @@ const AddCommentReplyForm = ({
     >
       <div className="flex items-center pb-[20px]">
         <img
-          className="block rounded-full w-[44px] h-[44px] mr-[11px]"
+          className="block rounded-full w-[44px] h-[44px] mr-[11px] overflow-hidden"
           alt="댓글 작성자 프로필 이미지"
           src={`/${user.profileImgUrl}`}
         />
@@ -64,8 +61,17 @@ const AddCommentReplyForm = ({
         type="text"
         placeholder="댓글을 작성하세요"
         className="block w-full h-[135px] p-[11px] resize-none border-[1px] border-gray2 mb-[13px]"
+        value={recruitCommentReplyContent}
         onChange={commentReplyContentHandler}
         maxLength="150"
+        onKeyPress={e => {
+          if ((e.key === "Enter") & e.shiftKey) {
+            return;
+          }
+          if (e.key === "Enter") {
+            addCommentReplyHandler(e);
+          }
+        }}
       />
       <button className="float-right mr-[13px] text-[19px] px-[15px] py-[6px] rounded-[5px] text-white bg-blue3">
         작성하기
