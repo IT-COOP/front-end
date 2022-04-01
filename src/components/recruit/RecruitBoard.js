@@ -23,6 +23,7 @@ function RecruitBoard({
   recruitKeepCount,
   recruitDurationWeeks,
   recruitDurationDays,
+  isKeeps,
 }) {
   const navigate = useNavigate();
 
@@ -55,11 +56,6 @@ function RecruitBoard({
     !updatedAt || createdAt === updatedAt ? createdAt : updatedAt;
 
   const parsedUpsertText = convertDateText(lastUpsertedDate);
-
-  /**
-   * TODO
-   * 1. 유저의 아이디가 recruitKeeps에 있는지 판단 후, 있다면 아이콘 fill 채우고, 그렇지 않으면 transparent으로 두어야 함.
-   */
 
   const goDetailRecruit = () => {
     navigate(`/recruit/${recruitPostId}`);
@@ -128,8 +124,7 @@ function RecruitBoard({
         </div>
         <ul className="flex justify-between text-[14px]">
           <li className="flex line-clamp-1 text-gray4 text-[13px]">
-            {parsedUpsertText} |{" "}
-            {nickname ?? "ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"}
+            {parsedUpsertText} | {nickname}
           </li>
           <li className="flex grow-1">
             <div className="mr-[10px] flex items-center">
@@ -137,8 +132,7 @@ function RecruitBoard({
               {recruitCommentCount ?? "0"}
             </div>
             <div className="flex items-center">
-              {/* 조건부 렌더링 */}
-              {true ? (
+              {isKeeps ? (
                 <KeepItActive className="mr-[2px]" />
               ) : (
                 <KeepIt className="mr-[2px]" />

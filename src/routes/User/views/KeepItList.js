@@ -63,6 +63,7 @@ function KeepItList() {
                   recruitDurationWeeks={board.recruitDurationWeeks}
                   recruitDurationDays={board.recruitDurationDays}
                   recruitTasks={board.recruitTasks}
+                  isKeeps={true}
                 />
               </li>
             );
