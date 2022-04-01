@@ -10,7 +10,6 @@ function Recruit() {
       {/* 배너 컴포넌트로 */}
       <RecruitBanner />
       <RecruitBoardList />
-      <Outlet />
     </section>
   );
 }

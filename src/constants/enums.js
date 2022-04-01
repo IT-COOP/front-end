@@ -56,7 +56,13 @@ const _recruitFilter = {
   1: "keep it 많은 순",
 };
 
+const _recruitStatus = {
+  0: "ALL",
+  1: "CURRENT",
+};
+
 export const Location = makeEnum(Object.entries(_location));
 export const Task = makeEnum(Object.entries(_task));
 export const Stack = makeEnum(Object.entries(_stack));
 export const RecruitFilter = makeEnum(Object.entries(_recruitFilter));
+export const RecruitStatus = makeEnum(Object.entries(_recruitStatus));

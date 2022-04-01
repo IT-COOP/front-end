@@ -1,12 +1,27 @@
 import React from "react";
 import classNames from "classnames";
-import { RecruitFilter } from "../../constants/enums";
+import { RecruitFilter, RecruitStatus } from "../../constants/enums";
 
-function RecruitFilterBar({ onFilterChanged, currentSortNumber }) {
+function RecruitFilterBar({
+  onFilterChanged,
+  currentSortNumber,
+  currentStatusNumber,
+}) {
+  console.log(RecruitStatus);
   const filterList = Object.values(RecruitFilter).filter(v => !isNaN(v));
 
   const handleFilterButtonClick = sortNumber => () => {
     onFilterChanged(prev => ({ ...prev, sort: sortNumber }));
+  };
+
+  const handleStatusButtonClick = () => {
+    onFilterChanged(prev => ({
+      ...prev,
+      over:
+        currentStatusNumber === RecruitStatus.ALL
+          ? RecruitStatus.CURRENT
+          : RecruitStatus.ALL,
+    }));
   };
 
   return (
@@ -27,8 +42,26 @@ function RecruitFilterBar({ onFilterChanged, currentSortNumber }) {
           </button>
         ))}
       </li>
-      <li className="py- font-[500]">
-        <button>모집중인 글만 보기</button>
+      <li className="font-medium">
+        <div
+          role="button"
+          className="flex items-center"
+          onClick={handleStatusButtonClick}
+        >
+          <span
+            className={classNames(
+              "w-[20px] h-[20px] rounded-full inline-block mr-[8px]",
+              {
+                "border-2 border-gray3":
+                  currentStatusNumber === RecruitStatus.CURRENT,
+                "bg-blue3": currentStatusNumber === RecruitStatus.ALL,
+              },
+            )}
+          />
+          <span className="text-[17px] font-medium relative top-px">
+            모집 중인 글만 보기
+          </span>
+        </div>
       </li>
     </ul>
   );
