@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import classNames from "classnames";
 
-import useUploadRecruitBoardImgMutation from "../../hooks/useUploadRecruitBoardImgMutation";
 import useCompleteWriteMutation from "../../hooks/useCompleteWriteMutation";
 import { Completion } from "../../assets/icons";
 import { recruitBoardDefaultUrl } from "../../constants/defaultImages";
@@ -11,6 +9,8 @@ import Title from "./recruitWriteView/Title";
 import DurationWeek from "./recruitWriteView/DurationWeek";
 import LocationSelect from "./recruitWriteView/LocationSelect";
 import TaskAndStack from "./recruitWriteView/TaskAndStack";
+import Content from "./recruitWriteView/Content";
+import ImgUpload from "./recruitWriteView/ImgUpload";
 
 function RecruitWrite() {
   const [recruitData, setRecruitData] = useState({
@@ -24,10 +24,6 @@ function RecruitWrite() {
   });
 
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isImgConfirmMsg, setIsImgConfirmMsg] = useState(false);
-
-  const { mutateAsync: recruitBoardImgUpload } =
-    useUploadRecruitBoardImgMutation();
 
   const { mutateAsync: completeWriteBoard } = useCompleteWriteMutation();
 
@@ -35,8 +31,8 @@ function RecruitWrite() {
     setRecruitData(prev => ({ ...prev, title }));
   };
 
-  const handleContent = inputText => {
-    const recruitContent = inputText.target.value;
+  const handleContent = recruitContent => {
+    console.log(recruitContent);
     setRecruitData(prev => ({ ...prev, recruitContent }));
   };
 
@@ -82,27 +78,11 @@ function RecruitWrite() {
     }));
   };
 
-  const uploadRecruitBoardImg = async e => {
-    const formData = new FormData();
-    let file = e.target.files[0];
-    console.log(file);
-    if (!file) {
-      return;
-    }
-    const regex = new RegExp("png|jpg");
-    if (!regex.test(file.name.slice(-3))) {
-      setIsImgConfirmMsg(prev => !prev);
-      setTimeout(() => {
-        setIsImgConfirmMsg(prev => !prev);
-      }, 2000);
-      return;
-    }
-    formData.append("image", file);
-    const { data: thumbImgUrl } = await recruitBoardImgUpload(formData);
+  const setUploadImg = thumbImgUrl => {
     setRecruitData(prev => ({ ...prev, thumbImgUrl }));
   };
 
-  const deleteRecruitBoardImg = () => {
+  const removeRecruitImg = () => {
     setRecruitData(prev => ({ ...prev, thumbImgUrl: recruitBoardDefaultUrl }));
   };
 
@@ -144,56 +124,12 @@ function RecruitWrite() {
             recruitData={recruitData}
           />
           <hr className="my-[30px] border-[#C4C4C4]"></hr>
-          <li className="flex pb-[60px]">
-            <p className="w-[208px] text-[17px]"> 내용 </p>
-            <input className="flex-1" type="text" onChange={handleContent} />
-          </li>
-          <li className="flex mt-[70px] mb-[50px]">
-            <p className="w-[208px] text-[17px]">모집공고 이미지</p>
-            <div>
-              <div className="flex">
-                <img
-                  className="w-[288px] h-[186px] mr-[16px]"
-                  src={recruitData.thumbImgUrl}
-                  alt="썸네일 이미지"
-                />
-                <div>
-                  <label
-                    htmlFor="thumbnail"
-                    className="block rounded-[5px] px-[15px] py-[6px] mb-[8px] bg-[#C4C4C4] cursor-pointer"
-                  >
-                    이미지 등록
-                  </label>
-                  <input
-                    id="thumbnail"
-                    type="file"
-                    className="hidden"
-                    accept=".jpg, .png"
-                    onChange={uploadRecruitBoardImg}
-                  />
-                  <button
-                    className="block rounded-[5px] px-[15px] py-[6px] bg-[#C4C4C4]"
-                    onClick={deleteRecruitBoardImg}
-                  >
-                    이미지 삭제
-                  </button>
-                </div>
-              </div>
-              <div>
-                썸네일로 들어갈 이미지에요 (권장사이즈 288 * 186px)
-                <p
-                  className={classNames(
-                    "absolute duration-700 transition-all",
-                    {
-                      "text-red text-[20px]": isImgConfirmMsg,
-                    },
-                  )}
-                >
-                  jpg 혹은 png 파일만 업로드 해주세요!
-                </p>
-              </div>
-            </div>
-          </li>
+          <Content handleContent={handleContent} />
+          <ImgUpload
+            recruitData={recruitData}
+            removeRecruitImg={removeRecruitImg}
+            setUploadImg={setUploadImg}
+          />
           <li className="text-right">
             <button
               className="rounded-[5px] mr-[24px] text-[17px] px-[15px] py-[6px] bg-black text-white"

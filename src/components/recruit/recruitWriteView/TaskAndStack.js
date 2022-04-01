@@ -15,7 +15,6 @@ const TaskAndStack = ({
   const [selectedPeopleNumber, setSelectedPeopleNumber] = useState(1);
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [selectedStack, setSelectedStack] = useState(0);
-  const [isSelectedTask, setIsSelectedTask] = useState(false);
   const [isNotSelectModal, setIsNotSelectModal] = useState(false);
 
   const stackDetailsRef = useRef(null);
@@ -123,22 +122,40 @@ const TaskAndStack = ({
         handleAddRecruitTask(recruitTasksAdd);
         handleAddRecruitStack(recruitStacksAdd);
       }
+      setSelectedTasks(prev => [...prev, selectedTask]);
     }
 
-    setSelectedTasks(prev => [...prev, selectedTask]);
     setSelectedStack(0);
     setNeedPeopleNumber(0);
     setSelectedTask(0);
   };
-  console.log(recruitData.recruitTasks);
   const removeRecruit = taskAndStack => () => {
-    const filteredRecruitData = recruitData.recruitTasks.filter(
+    const filteredRecruitTask = recruitData.recruitTasks.filter(
       task => task.recruitTask !== taskAndStack,
     );
-    console.log(filteredRecruitData);
+
+    const filteredRecruitStack = recruitData.recruitTasks.filter(
+      stack => stack.recruitTask !== taskAndStack,
+    );
     if (taskAndStack === 100 || taskAndStack === 200) {
-      handleRemoveRecruitTask(filteredRecruitData);
+      handleRemoveRecruitTask(filteredRecruitTask);
+    } else {
+      if (taskAndStack < 200) {
+        const filteredTask = recruitData.recruitTasks.filter(
+          task => task.recruitTask !== 300,
+        );
+        setSelectedTasks(prev => prev.filter(task => task !== 300));
+        handleRemoveRecruitTask(filteredTask);
+      } else {
+        const filteredTask = recruitData.recruitTasks.filter(
+          task => task.recruitTask !== 400,
+        );
+        setSelectedTasks(prev => prev.filter(task => task !== 400));
+        handleRemoveRecruitTask(filteredTask);
+      }
+      handleRemoveRecruitStack(filteredRecruitStack);
     }
+    setSelectedTasks(prev => prev.filter(task => task !== taskAndStack));
   };
 
   return (
@@ -250,17 +267,6 @@ const TaskAndStack = ({
             )}
           >
             직군 혹은 스택을 선택하지 않으셨습니다!
-          </div>
-          <div
-            className={classNames(
-              "absolute top-[100%] mt-[10px] left-0 pointer-events-none text-red duration-500 transition-opacity",
-              {
-                "opacity-0": !isSelectedTask,
-                "opacity-100": isSelectedTask,
-              },
-            )}
-          >
-            이미 선택된 직군입니다!
           </div>
         </li>
         <ul className="flex mt-[40px]">

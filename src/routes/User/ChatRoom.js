@@ -43,7 +43,6 @@ const ChatRoom = () => {
 
   useEffect(() => {
     socket.on("msgToClient", ({ chat }) => {
-      console.log(chat);
       setUserChatList(prev => [...prev, chat]);
     });
     return () => {
