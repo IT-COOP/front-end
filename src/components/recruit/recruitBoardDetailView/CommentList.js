@@ -2,7 +2,7 @@ import React from "react";
 
 import Comment from "./Comment";
 
-function CommentList({ recruitBoard, recruitId }) {
+function CommentList({ recruitBoard, recruitId, userId }) {
   let sortedComment = recruitBoard?.recruitComments.sort(
     (a, b) => a.commentGroup - b.commentGroup,
   );
@@ -28,6 +28,7 @@ function CommentList({ recruitBoard, recruitId }) {
                   key={comment.recruitCommentId}
                   comment={comment}
                   recruitId={recruitId}
+                  userId={userId}
                 />
               </React.Fragment>
             );
@@ -38,6 +39,7 @@ function CommentList({ recruitBoard, recruitId }) {
               key={comment.recruitCommentId}
               comment={comment}
               recruitId={recruitId}
+              userId={userId}
             />
           );
         })}

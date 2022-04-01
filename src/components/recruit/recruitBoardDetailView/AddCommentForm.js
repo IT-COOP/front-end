@@ -12,9 +12,9 @@ function AddCommentForm({ recruitId }) {
   };
 
   const addCommentHandler = async submitEvent => {
+    console.log(submitEvent);
     submitEvent.preventDefault();
-    let textareaValue = submitEvent.target.children[0].value;
-    if (textareaValue === "") {
+    if (recruitCommentContent === "") {
       return;
     }
     const commentData = {
@@ -26,19 +26,27 @@ function AddCommentForm({ recruitId }) {
     };
     const { success } = await addComment(commentData);
     if (success) {
-      submitEvent.target.children[0].value = "";
       setRecruitCommentContent("");
       queryClient.invalidateQueries("recruitBoardDetail");
     }
   };
   return (
-    <form onSubmit={addCommentHandler} className="w-full overflow-hidden">
+    <form className="w-full overflow-hidden" onSubmit={addCommentHandler}>
       <textarea
         type="text"
         placeholder="댓글을 작성하세요"
         className="block w-full h-[135px] p-[11px] resize-none border-[1px] border-gray2 mb-[13px]"
+        value={recruitCommentContent}
         onChange={commentContentHandler}
         maxLength="150"
+        onKeyPress={e => {
+          if ((e.key === "Enter") & e.shiftKey) {
+            return;
+          }
+          if (e.key === "Enter") {
+            addCommentHandler(e);
+          }
+        }}
       />
       <button className="float-right mr-[13px] text-[19px] px-[15px] py-[6px] rounded-[5px] text-white bg-blue3">
         댓글 작성

@@ -36,8 +36,9 @@ const ChatRoom = () => {
     });
   }, []);
 
-  const handleChatMsg = inputOnChange => {
-    setChatMsg(inputOnChange.target.value);
+  const handleChatMsg = textareaOnChange => {
+    let msgContent = textareaOnChange.currentTarget.value;
+    setChatMsg(msgContent);
   };
 
   useEffect(() => {
@@ -143,18 +144,26 @@ const ChatRoom = () => {
               </ul>
               <div ref={chatEndRef}></div>
             </div>
-            <form
-              className="px-[50px] pb-[46px] relative"
-              onSubmit={sendChatMsg}
-            >
+            <form className="px-[50px] pb-[46px] relative">
               <textarea
                 type="text"
                 className="text-[18px] resize-none px-[13px] py-[13px] w-full h-[135px] border-[1px]"
                 placeholder="메시지를 입력해 주세요."
                 onChange={handleChatMsg}
                 value={chatMsg}
+                onKeyPress={e => {
+                  if ((e.key === "Enter") & e.shiftKey) {
+                    return;
+                  }
+                  if (e.key === "Enter") {
+                    sendChatMsg(e);
+                  }
+                }}
               />
-              <button className="absolute right-[60px] bottom-[55px] px-[15px] py-[6px] text-[22px] text-white bg-gray2 rounded-[5px]">
+              <button
+                className="absolute right-[60px] bottom-[55px] px-[15px] py-[6px] text-[22px] text-white bg-gray2 rounded-[5px]"
+                onClick={sendChatMsg}
+              >
                 전송
               </button>
             </form>

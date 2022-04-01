@@ -14,8 +14,6 @@ export const recruitApis = {
   },
 
   addRecruitComment: async ({ commentData, recruitId }) => {
-    console.log(commentData);
-    console.log(recruitId);
     const { data } = await instance.post(
       `/recruit/${recruitId}/comment`,
       commentData,

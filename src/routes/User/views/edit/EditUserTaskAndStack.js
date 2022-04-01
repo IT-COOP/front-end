@@ -20,7 +20,6 @@ function EditUserTaskAndStack({
     const accordion = accordionRef.current;
     onTaskChange(taskNumber);
     onStackChange([]);
-
     if (accordion) {
       accordion.open = false;
     }
