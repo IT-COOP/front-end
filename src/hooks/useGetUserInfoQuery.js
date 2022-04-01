@@ -6,7 +6,7 @@ function useGetUserInfoQuery(userId = "", config = {}) {
     ["userInfo", userId || "currentUser"],
     userApis.getUserInfo(userId),
     {
-      staleTime: 3000000,
+      staleTime: Infinity,
       cacheTime: Infinity,
       refetchOnMount: false,
       refetchOnWindowFocus: false,

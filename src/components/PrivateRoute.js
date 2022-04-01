@@ -6,21 +6,14 @@ import useGetUserInfoQuery from "../hooks/useGetUserInfoQuery";
 function PrivateRoute({ children }) {
   const { id: targetUserId } = useParams();
 
-  // 유저 정보: 객체 또는 null 또는 undefined
-  const {
-    isLoading: isBaseUserDataLoading,
-    isSuccess: isBaseUserDataFetched,
-    data: currentUserData,
-  } = useGetUserInfoQuery(undefined);
+  const { isFetching: isBaseUserDataLoading, data: currentUserData } =
+    useGetUserInfoQuery(undefined);
 
   const {
-    isIdle,
-    isLoading: isTargetUserDataLoading,
+    isFetching: isTargetUserDataLoading,
     isError,
     data: targetUserData,
-  } = useGetUserInfoQuery(targetUserId, {
-    enabled: isBaseUserDataFetched && currentUserData?.userId !== targetUserId,
-  });
+  } = useGetUserInfoQuery(targetUserId, {});
 
   if (isBaseUserDataLoading || isTargetUserDataLoading) {
     return null;
@@ -29,11 +22,7 @@ function PrivateRoute({ children }) {
   if (currentUserData === null || isError) {
     return <Navigate to="/" replace />;
   }
-
-  console.log(`isBaseUserFetched: ${isBaseUserDataFetched}`);
-  console.log(`isCurrentUserData: ${currentUserData}`);
-  console.log(`isTargetUserDataLoading: ${isTargetUserDataLoading}`);
-  console.log(`isTargetUserIdle: ${isIdle}`);
+  const isCurrentUserPage = targetUserData.userId === currentUserData.userId;
 
   const {
     userId,
@@ -44,7 +33,7 @@ function PrivateRoute({ children }) {
     technologyStack,
     userReputations2,
     projectCount,
-  } = isIdle ? currentUserData : targetUserData;
+  } = isCurrentUserPage ? currentUserData : targetUserData;
 
   const _stackAndTaskList = technologyStack.split(",").map(Number);
   const currentTask = _stackAndTaskList?.find(v => v % 10 === 0);
@@ -61,7 +50,7 @@ function PrivateRoute({ children }) {
       task: currentTask,
       stackList: currentStackList,
       projectCount: projectCount,
-      isCurrentUserPage: isIdle,
+      isCurrentUserPage,
     });
   });
 
