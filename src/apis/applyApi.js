@@ -7,7 +7,7 @@ export const applyApis = {
     );
     return response;
   },
-  getApplyCompletionRecruitUser: async recruitId => {
+  getApplyCompletionRecruitUserCount: async recruitId => {
     const { data } = await instance.get(
       `user/recruiting/accepted/${recruitId}`,
     );

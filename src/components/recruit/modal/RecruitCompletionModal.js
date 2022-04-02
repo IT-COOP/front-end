@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 import { Close, Mascot } from "../../../assets/icons";
 
-import useGetApplyCompletionRecruitUser from "../../../hooks/useGetApplyCompletionRecruitUser";
+import useGetApplyCompletionRecruitUserCount from "../../../hooks/useGetApplyCompletionRecruitUserCount";
 import useCompleteRecruitStartProjectMutation from "../../../hooks/useCompleteRecruitStartProjectMutation";
 
 const RecruitCompletionModal = ({ recruitId, closeModal }) => {
   const navigate = useNavigate();
 
   const { data: applyCompletionUserCount } =
-    useGetApplyCompletionRecruitUser(recruitId);
+    useGetApplyCompletionRecruitUserCount(recruitId);
   const { mutateAsync } = useCompleteRecruitStartProjectMutation();
 
   const completeRecruitStartProject = async () => {

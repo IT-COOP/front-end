@@ -1,7 +1,7 @@
 import React from "react";
 
 const ApplyCompletionUserList = () => {
-  return <div>ㅇㅇㅇ</div>;
+  return <div></div>;
 };
 
 export default ApplyCompletionUserList;
