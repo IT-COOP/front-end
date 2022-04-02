@@ -22,7 +22,6 @@ export const recruitApis = {
   },
 
   editRecruitComment: async ({ commentData, commentId, recruitId }) => {
-    console.log(commentData, commentId, recruitId);
     const { data } = await instance.put(
       `/recruit/${recruitId}/comment/${commentId}`,
       commentData,

@@ -86,7 +86,7 @@ function RunningProjectSummary({ userId }) {
               )}
           </ul>
         ) : (
-          <div className="mt-[9px] h-[137px]">
+          <div className="mt-[9px] ml-[20px] h-[137px]">
             <p className="text-[15px] text-gray3">
               진행 중인 프로젝트가 없습니다
             </p>

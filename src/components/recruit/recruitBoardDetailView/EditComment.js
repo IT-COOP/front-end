@@ -20,7 +20,6 @@ function EditComment({
   };
 
   const editCommentHandler = async submitEvent => {
-    console.log(123123132);
     submitEvent.preventDefault();
     if (recruitCommentContent === "") {
       return;

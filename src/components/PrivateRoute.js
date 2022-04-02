@@ -1,32 +1,28 @@
 import React from "react";
-import { useQueryClient } from "react-query";
+
 import { Navigate, useParams } from "react-router-dom";
 import useGetUserInfoQuery from "../hooks/useGetUserInfoQuery";
 
 function PrivateRoute({ children }) {
-  const client = useQueryClient();
-  const userInfo = client.getQueryData(["userInfo", "currentUser"]);
   const { id: targetUserId } = useParams();
 
-  const { data: currentUserData } = useGetUserInfoQuery(userInfo?.userId);
+  const { isFetching: isBaseUserDataLoading, data: currentUserData } =
+    useGetUserInfoQuery(undefined);
 
   const {
-    isIdle: isCurrentUserPage,
-    isLoading: isTargetUserDataLoading,
+    isFetching: isTargetUserDataLoading,
     isError,
     data: targetUserData,
-  } = useGetUserInfoQuery(targetUserId, {
-    enabled:
-      currentUserData !== null && currentUserData?.userId !== targetUserId,
-  });
+  } = useGetUserInfoQuery(targetUserId, {});
+
+  if (isBaseUserDataLoading || isTargetUserDataLoading) {
+    return null;
+  }
 
   if (currentUserData === null || isError) {
     return <Navigate to="/" replace />;
   }
-
-  if (isTargetUserDataLoading) {
-    return null;
-  }
+  const isCurrentUserPage = targetUserData.userId === currentUserData.userId;
 
   const {
     userId,
