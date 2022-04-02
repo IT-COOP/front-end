@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import { useQueryClient } from "react-query";
-import { Link } from "react-router-dom";
 
 import { Task, Stack } from "../../../constants/enums";
 import { Close, Mascot } from "../../../assets/icons";

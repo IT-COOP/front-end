@@ -9,7 +9,7 @@ import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 import useCancelApplyRecruitMutation from "../../hooks/useCancelApplyRecruitMutation";
-import useDeleteRecruitBoardMutation from "../../hooks/useDeleteRecruitBoardMutation";
+// import useDeleteRecruitBoardMutation from "../../hooks/useDeleteRecruitBoardMutation";
 import KeepItButton from "./recruitBoardDetailView/KeepItButton";
 import AddCommentForm from "./recruitBoardDetailView/AddCommentForm";
 import ApplyModal from "./recruitBoardDetailView/ApplyModal";
@@ -26,14 +26,14 @@ function RecruitBoardDetail() {
   const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
   const { mutateAsync: cancelApply } = useCancelApplyRecruitMutation();
 
-  const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoardMutation();
+  // const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoardMutation();
 
-  const deleteRecruitBoardHandler = async () => {
-    const { success } = await deleteRecruitBoard(recruitId);
-    if (success) {
-      queryClient.invalidateQueries("recruitBoardDetail");
-    }
-  };
+  // const deleteRecruitBoardHandler = async () => {
+  //   const { success } = await deleteRecruitBoard(recruitId);
+  //   if (success) {
+  //     queryClient.invalidateQueries("recruitBoardDetail");
+  //   }
+  // };
 
   const completedRequiredPeople = Boolean(
     (recruitBoard?.recruitStacks.filter(

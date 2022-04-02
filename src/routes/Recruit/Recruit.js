@@ -1,5 +1,4 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
 
 import RecruitBanner from "../../components/recruit/RecruitBanner";
 import RecruitBoardList from "../../components/recruit/RecruitBoardList";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Close, Prev } from "../../assets/icons";
+import { Close } from "../../assets/icons";
 
 import { setCookie } from "../../utils/cookie";
 
