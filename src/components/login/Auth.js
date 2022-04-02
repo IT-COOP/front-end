@@ -6,7 +6,7 @@ import useUserCheckMutation from "../../hooks/useUserCheckMutation";
 import { setCookie } from "../../utils/cookie";
 
 function Auth() {
-  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const { mutateAsync } = useUserCheckMutation();
   const navigate = useNavigate();

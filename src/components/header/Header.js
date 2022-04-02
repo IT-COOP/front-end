@@ -25,7 +25,15 @@ function Header() {
     setIsSignInModalOpen(false);
   };
 
-  const toggleMyPageModal = () => {
+  const toggleMyPageModal = e => {
+    if (e.target !== e.currentTarget) {
+      console.log(e.target);
+      console.log(e.currentTarget);
+      console.log(12123);
+      setIsMyPageModalOpen(prev => !prev);
+      return;
+    }
+    console.log(1111111111);
     setIsMyPageModalOpen(prev => !prev);
   };
 
@@ -107,7 +115,7 @@ function Header() {
                     <DownArrow className="inline-block" />
                   </div>
                   {isMyPageModalOpen && (
-                    <ul className="absolute border-[1px] mt-[8px] -right-[25px] border-gray2 w-[180px] leading-[40px] rounded-[4px] bg-white ">
+                    <ul className="absolute border-[1px] mt-[8px] -right-[25px] border-gray2 w-[180px] leading-[40px] rounded-[4px] bg-white">
                       <div className="absolute border-t-[1px] border-l-[1px] -top-[9px] right-[23.5px] border-gray2  w-[16px] h-[16px] bg-white rotate-45"></div>
                       <li>
                         <NavLink

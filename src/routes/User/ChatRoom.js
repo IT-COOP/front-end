@@ -12,7 +12,6 @@ const socket = io(process.env.REACT_APP_API_URL_SOCKET, {
     authorization: `Bearer ${localStorage.getItem("coopToken")}`,
   },
 });
-
 const ChatRoom = () => {
   const [chatMsg, setChatMsg] = useState("");
 
@@ -20,7 +19,7 @@ const ChatRoom = () => {
 
   const chatEndRef = useRef();
 
-  const { data: userData } = useGetUserInfoQuery();
+  const { data: userData, isSuccess } = useGetUserInfoQuery();
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -30,26 +29,29 @@ const ChatRoom = () => {
     scrollToBottom();
   }, [userChatList]);
 
+  console.log(userData);
+
   useEffect(() => {
-    socket.emit("enterChatRoom", 1, data => {
-      setUserChatList(data.data.chats);
+    if (userData) {
+      socket.emit("enterChatRoom", 1, data => {
+        setUserChatList(data.data.chats);
+      });
+    } else {
+      socket.on("disconnect", () => {});
+    }
+  }, [isSuccess, userData]);
+
+  useEffect(() => {
+    socket.on("msgToClient", ({ chat }) => {
+      setUserChatList(prev => [...prev, chat]);
     });
+    return () => {};
   }, []);
 
   const handleChatMsg = textareaOnChange => {
     let msgContent = textareaOnChange.currentTarget.value;
     setChatMsg(msgContent);
   };
-
-  useEffect(() => {
-    socket.on("msgToClient", ({ chat }) => {
-      console.log(chat);
-      setUserChatList(prev => [...prev, chat]);
-    });
-    return () => {
-      return;
-    };
-  }, []);
 
   const sendChatMsg = submitEvent => {
     submitEvent.preventDefault();
@@ -60,10 +62,12 @@ const ChatRoom = () => {
       chatRoomId: 1,
       chat: chatMsg,
     };
-    socket.emit("msgToServer", data, msg => {
-      const { data = [] } = msg;
-      setUserChatList(prev => [...prev, data?.chat]);
-    });
+    if (userData) {
+      socket?.emit("msgToServer", data, msg => {
+        const { data = [] } = msg;
+        setUserChatList(prev => [...prev, data?.chat]);
+      });
+    }
     setChatMsg("");
   };
 
@@ -98,7 +102,7 @@ const ChatRoom = () => {
                     key={chat.chatId}
                     className={classNames("flex w-full mb-[30px]", {
                       "flex-row-reverse":
-                        chat.speaker2.userId === userData?.userId,
+                        chat?.speaker2.userId === userData?.userId,
                     })}
                   >
                     <div
@@ -106,13 +110,13 @@ const ChatRoom = () => {
                         "w-[60px] h-[60px] overflow-hidden rounded-full mr-[20px]",
                         {
                           "lg:ml-[20px] lg:mr-0":
-                            chat.speaker2.userId === userData?.userId,
+                            chat?.speaker2.userId === userData?.userId,
                         },
                       )}
                     >
                       <img
                         src={chat.speaker2.profileImgUrl}
-                        alt={`${chat.speaker2.nickname}의 프로필사진`}
+                        alt={`${chat?.speaker2.nickname}의 프로필사진`}
                         className="w-full h-full"
                       />
                     </div>
@@ -128,14 +132,14 @@ const ChatRoom = () => {
                       <div
                         className={classNames("flex items-end gap-x-[10px]", {
                           "flex-row-reverse":
-                            chat.speaker2.userId === userData?.userId,
+                            chat?.speaker2.userId === userData?.userId,
                         })}
                       >
                         <p className="bg-white3 p-[10px] text-[18px] rounded-r-[8px] rounded-b-[8px] ">
                           {chat.chat}
                         </p>
                         <span className="text-[16px] leading-[26px] font-light">
-                          {convertTimeText(chat.createdAt)}
+                          {convertTimeText(chat?.createdAt)}
                         </span>
                       </div>
                     </div>

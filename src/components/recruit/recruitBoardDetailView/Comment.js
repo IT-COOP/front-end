@@ -35,6 +35,8 @@ function Comment({ comment, recruitId, userId }) {
     setIsAddCommentReplyOpen(false);
   };
 
+  console.log(comment);
+
   return (
     <li
       className={classNames("pt-[30px] pb-[40px] border-t-[1px] border-gray2", {

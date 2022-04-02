@@ -10,7 +10,7 @@ import useApplyRecruitMutation from "../../../hooks/useApplyRecruitMutation";
 
 function ApplyModal({ stack, task, closeApplyModal, recruitId }) {
   const [applyData, setApplyData] = useState({
-    selectedTask: "",
+    task: "",
     applyMessage: "잘 부탁드립니다!",
   });
 
@@ -31,7 +31,7 @@ function ApplyModal({ stack, task, closeApplyModal, recruitId }) {
   };
 
   const selectTaskHandler = e => {
-    setApplyData(prev => ({ ...prev, selectedTask: e.target.value }));
+    setApplyData(prev => ({ ...prev, task: e.target.value }));
   };
 
   const sendApplyData = async () => {

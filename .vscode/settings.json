@@ -3,5 +3,5 @@
   "tailwindCSS.includeLanguages": {
     "plaintext": "javascript"
   },
-  "cSpell.words": ["Checkduplicate"]
+  "cSpell.words": ["Checkduplicate", "handleremove"]
 }

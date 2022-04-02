@@ -122,22 +122,40 @@ const TaskAndStack = ({
         handleAddRecruitTask(recruitTasksAdd);
         handleAddRecruitStack(recruitStacksAdd);
       }
+      setSelectedTasks(prev => [...prev, selectedTask]);
     }
 
-    setSelectedTasks(prev => [...prev, selectedTask]);
     setSelectedStack(0);
     setNeedPeopleNumber(0);
     setSelectedTask(0);
   };
-  console.log(recruitData.recruitTasks);
   const removeRecruit = taskAndStack => () => {
-    const filteredRecruitData = recruitData.recruitTasks.filter(
+    const filteredRecruitTask = recruitData.recruitTasks.filter(
       task => task.recruitTask !== taskAndStack,
     );
-    console.log(filteredRecruitData);
+
+    const filteredRecruitStack = recruitData.recruitTasks.filter(
+      stack => stack.recruitTask !== taskAndStack,
+    );
     if (taskAndStack === 100 || taskAndStack === 200) {
-      handleRemoveRecruitTask(filteredRecruitData);
+      handleRemoveRecruitTask(filteredRecruitTask);
+    } else {
+      if (taskAndStack < 200) {
+        const filteredTask = recruitData.recruitTasks.filter(
+          task => task.recruitTask !== 300,
+        );
+        setSelectedTasks(prev => prev.filter(task => task !== 300));
+        handleRemoveRecruitTask(filteredTask);
+      } else {
+        const filteredTask = recruitData.recruitTasks.filter(
+          task => task.recruitTask !== 400,
+        );
+        setSelectedTasks(prev => prev.filter(task => task !== 400));
+        handleRemoveRecruitTask(filteredTask);
+      }
+      handleRemoveRecruitStack(filteredRecruitStack);
     }
+    setSelectedTasks(prev => prev.filter(task => task !== taskAndStack));
   };
 
   return (
