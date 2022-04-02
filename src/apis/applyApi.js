@@ -16,7 +16,6 @@ export const applyApis = {
   //임시로 여기다 두겠습니다
   completeRecruitStartProject: async recruitId => {
     const { data } = await instance.post(`user/${recruitId}/create`);
-    console.log(data);
     return data;
   },
 };

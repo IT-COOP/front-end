@@ -66,7 +66,6 @@ const ChatRoom = () => {
     if (userData) {
       socket?.emit("msgToServer", data, msg => {
         const { data = [] } = msg;
-        console.log(msg);
         setUserChatList(prev => [...prev, data?.chat]);
       });
     }

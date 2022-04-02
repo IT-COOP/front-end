@@ -14,9 +14,8 @@ const RecruitCompletionModal = ({ recruitId, closeModal }) => {
   const { mutateAsync } = useCompleteRecruitStartProjectMutation();
 
   const completeRecruitStartProject = async () => {
-    const { data } = await mutateAsync(recruitId);
-    console.log(data);
-    navigate(`/chat/${data.chatRoom.chatRoomId}`);
+    const { chatRoom } = await mutateAsync(recruitId);
+    navigate(`/chat/${chatRoom.chatRoomId}`);
   };
 
   return (
