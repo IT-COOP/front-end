@@ -7,7 +7,6 @@ const AddCommentReplyForm = ({
   commentGroup,
   recruitId,
   user,
-  userId,
   closeCommentReply,
 }) => {
   const [recruitCommentReplyContent, setRecruitCommentReplyContent] =
@@ -52,7 +51,7 @@ const AddCommentReplyForm = ({
         <img
           className="block rounded-full w-[44px] h-[44px] mr-[11px] overflow-hidden"
           alt="댓글 작성자 프로필 이미지"
-          src={`/${user.profileImgUrl}`}
+          src={user.profileImgUrl}
         />
         <p className="text-[18px] mr-[20px]">{user.nickname}</p>
         <p className="text-[18px] text-gray3">{nowDate}</p>
