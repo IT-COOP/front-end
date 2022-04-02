@@ -27,6 +27,8 @@ function RecruitBoardDetail() {
   const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
   const { mutateAsync: cancelApply } = useCancelApplyRecruitMutation();
   const [isBoardDeleteModalOpen, setIsBoardDeleteModalOpen] = useState(false);
+  const [isOpenRecruitCompletionModal, setIsOpenRecruitCompletionModal] =
+    useState(false);
 
   const completedRequiredPeople = Boolean(
     (recruitBoard?.recruitStacks.filter(
@@ -66,6 +68,14 @@ function RecruitBoardDetail() {
     setIsBoardDeleteModalOpen(false);
   };
 
+  const openRecruitCompletionModal = () => {
+    setIsOpenRecruitCompletionModal(true);
+  };
+
+  const closeRecruitCompletionModal = () => {
+    setIsOpenRecruitCompletionModal(false);
+  };
+
   return (
     <>
       {isBoardDeleteModalOpen && (
@@ -75,7 +85,12 @@ function RecruitBoardDetail() {
           recruitId={recruitId}
         />
       )}
-      {<RecruitCompletionModal recruitId={recruitId} />}
+      {isOpenRecruitCompletionModal && (
+        <RecruitCompletionModal
+          recruitId={recruitId}
+          closeModal={closeRecruitCompletionModal}
+        />
+      )}
       <ul className="relative w-[1224px] mx-auto mt-[70px]">
         <li className="flex w-full">
           <img
@@ -100,7 +115,7 @@ function RecruitBoardDetail() {
                       className={classNames(
                         "text-[19px]  px-[15px] py-[6px]  border-blue3 border-[1px] rounded-[5px] text-blue3 bg-white",
                       )}
-                      // onClick={openBoardDeleteModal}
+                      onClick={openRecruitCompletionModal}
                     >
                       모집 마감하기
                     </button>

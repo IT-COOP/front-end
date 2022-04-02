@@ -1,7 +1,7 @@
 import React from "react";
 
 const ApplyUserList = () => {
-  return <div></div>;
+  return <div>ㅇㅇㅇ</div>;
 };
 
 export default ApplyUserList;

@@ -3,12 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import useDeleteRecruitBoardMutation from "../../../hooks/useDeleteRecruitBoardMutation";
 
-const RecruitDeleteModal = ({
-  close,
-  recruitId,
-  boardDelete,
-  commentDelete,
-}) => {
+const RecruitDeleteModal = ({ close, recruitId, boardDelete }) => {
   const navigate = useNavigate();
   const [isCompleteDelete, setIsCompleteDelete] = useState(false);
   const { mutateAsync: deleteRecruitBoard } = useDeleteRecruitBoardMutation();
@@ -21,16 +16,16 @@ const RecruitDeleteModal = ({
         return;
       }
     }
-    if (commentDelete) {
-    }
   };
   return (
     <section className="fixed top-0 left-0 z-[999] flex items-center justify-center w-screen h-screen transition-opacity bg-black/70">
       <div className="w-[400px] h-[200px] bg-white flex flex-col items-center justify-center rounded-[16px]">
         {!isCompleteDelete ? (
           <div>
-            <p class="mb-[30px] text-[18px] text-center">삭제하시겠습니까?</p>
-            <div class="flex gap-[20px]">
+            <p className="mb-[30px] text-[18px] text-center">
+              삭제하시겠습니까?
+            </p>
+            <div className="flex gap-[20px]">
               <button
                 className="block text-[14px] w-[150px] rounded-[10px] bg-black leading-[40px] text-white text-center hover:font-bold"
                 onClick={handleDeleteType}
@@ -47,8 +42,8 @@ const RecruitDeleteModal = ({
           </div>
         ) : (
           <div>
-            <p class="mb-[30px] text-[18px] text-center">삭제되었습니다.</p>
-            <div class="flex gap-[20px]">
+            <p className="mb-[30px] text-[18px] text-center">삭제되었습니다.</p>
+            <div className="flex gap-[20px]">
               <button
                 className="block text-[14px] w-[150px] rounded-[10px] bg-black leading-[40px] text-white text-center hover:font-bold"
                 onClick={() => navigate("/", { replace: true })}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQueryClient } from "react-query";
 import { NavLink } from "react-router-dom";
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 
 import { Bell, DownArrow } from "../../assets/icons";
 import SocialSignIn from "../login/SocialSignIn";
@@ -63,11 +63,11 @@ function Header() {
   //   });
   // };
 
-  useEffect(() => {
-    if (userData) {
-      // socketInitiate();
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   if (userData) {
+  //     socketInitiate();
+  //   }
+  // }, [userData]);
 
   return (
     <>

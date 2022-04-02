@@ -32,7 +32,6 @@ function RecruitWrite() {
   };
 
   const handleContent = recruitContent => {
-    console.log(recruitContent);
     setRecruitData(prev => ({ ...prev, recruitContent }));
   };
 

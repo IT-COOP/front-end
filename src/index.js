@@ -55,7 +55,7 @@ ReactDOM.render(
           </Route>
           <Route path="/apply" element={<Apply />} />
           <Route path="/app" element={<App />} />
-          <Route path="/chat" element={<ChatRoom />} />
+          <Route path="/chat/:roomNumber" element={<ChatRoom />} />
         </Route>
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} />

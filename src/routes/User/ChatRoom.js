@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import classNames from "classnames";
+import { useParams } from "react-router-dom";
 
 import { People, Mascot } from "../../assets/icons";
 
@@ -13,10 +14,12 @@ const socket = io(process.env.REACT_APP_API_URL_SOCKET, {
   },
 });
 const ChatRoom = () => {
+  const { roomNumber } = useParams();
+
   const [chatMsg, setChatMsg] = useState("");
 
   const [userChatList, setUserChatList] = useState([]);
-
+  console.log(roomNumber);
   const chatEndRef = useRef();
 
   const { data: userData, isSuccess } = useGetUserInfoQuery();
@@ -29,17 +32,15 @@ const ChatRoom = () => {
     scrollToBottom();
   }, [userChatList]);
 
-  console.log(userData);
-
   useEffect(() => {
     if (userData) {
-      socket.emit("enterChatRoom", 1, data => {
+      socket.emit("enterChatRoom", roomNumber, data => {
         setUserChatList(data.data.chats);
       });
     } else {
       socket.on("disconnect", () => {});
     }
-  }, [isSuccess, userData]);
+  }, [isSuccess, roomNumber, userData]);
 
   useEffect(() => {
     socket.on("msgToClient", ({ chat }) => {
@@ -59,12 +60,13 @@ const ChatRoom = () => {
       return;
     }
     const data = {
-      chatRoomId: 1,
+      chatRoomId: roomNumber,
       chat: chatMsg,
     };
     if (userData) {
       socket?.emit("msgToServer", data, msg => {
         const { data = [] } = msg;
+        console.log(msg);
         setUserChatList(prev => [...prev, data?.chat]);
       });
     }
@@ -99,7 +101,7 @@ const ChatRoom = () => {
               <ul className="px-[50px]">
                 {userChatList?.map(chat => (
                   <li
-                    key={chat.chatId}
+                    key={chat?.chatId}
                     className={classNames("flex w-full mb-[30px]", {
                       "flex-row-reverse":
                         chat?.speaker2.userId === userData?.userId,
@@ -115,7 +117,7 @@ const ChatRoom = () => {
                       )}
                     >
                       <img
-                        src={chat.speaker2.profileImgUrl}
+                        src={chat?.speaker2.profileImgUrl}
                         alt={`${chat?.speaker2.nickname}의 프로필사진`}
                         className="w-full h-full"
                       />
@@ -124,10 +126,10 @@ const ChatRoom = () => {
                       <p
                         className={classNames("text-[20px] leading-[40px]", {
                           "text-right":
-                            chat.speaker2.userId === userData?.userId,
+                            chat?.speaker2.userId === userData?.userId,
                         })}
                       >
-                        {chat.speaker2.nickname}
+                        {chat?.speaker2.nickname}
                       </p>
                       <div
                         className={classNames("flex items-end gap-x-[10px]", {
@@ -136,7 +138,7 @@ const ChatRoom = () => {
                         })}
                       >
                         <p className="bg-white3 p-[10px] text-[18px] rounded-r-[8px] rounded-b-[8px] ">
-                          {chat.chat}
+                          {chat?.chat}
                         </p>
                         <span className="text-[16px] leading-[26px] font-light">
                           {convertTimeText(chat?.createdAt)}
