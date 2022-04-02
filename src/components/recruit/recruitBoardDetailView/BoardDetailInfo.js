@@ -4,9 +4,8 @@ import classNames from "classnames";
 import { Location, Task, Stack } from "../../../constants/enums";
 
 function BoardDetailInfo({ recruitBoard }) {
-  console.log(recruitBoard);
   return (
-    <li>
+    <li className="w-[50%]">
       <p className="text-[15px] text-gray4 mb-[9px]">
         {Location[recruitBoard?.recruitLocation]}
       </p>

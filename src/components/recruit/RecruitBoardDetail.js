@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import classNames from "classnames";
 import { useQueryClient } from "react-query";
 
@@ -17,9 +17,9 @@ import BoardDetailContent from "./recruitBoardDetailView/BoardDetailContent";
 import CommentList from "./recruitBoardDetailView/CommentList";
 import BoardEditAndDelete from "./recruitBoardDetailView/BoardEditAndDelete";
 import RecruitDeleteModal from "./modal/RecruitDeleteModal";
+import RecruitCompletionModal from "./modal/RecruitCompletionModal";
 
 function RecruitBoardDetail() {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { data: userData } = useGetUserInfoQuery();
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
@@ -27,8 +27,6 @@ function RecruitBoardDetail() {
   const { data: recruitBoard } = useGetRecruitDetailQuery(recruitId);
   const { mutateAsync: cancelApply } = useCancelApplyRecruitMutation();
   const [isBoardDeleteModalOpen, setIsBoardDeleteModalOpen] = useState(false);
-  const [isCommentDeleteModalOpen, setIsCommentDeleteModalOpe] =
-    useState(false);
 
   const completedRequiredPeople = Boolean(
     (recruitBoard?.recruitStacks.filter(
@@ -49,8 +47,6 @@ function RecruitBoardDetail() {
     setIsApplyModalOpen(false);
   };
 
-  const handleEditButtonClick = () => navigate(`/recruit/edit/${recruitId}`);
-
   const cancelRecruitApply = async () => {
     const applyData = {
       recruitId,
@@ -68,23 +64,18 @@ function RecruitBoardDetail() {
 
   const closeDeleteModal = () => {
     setIsBoardDeleteModalOpen(false);
-    setIsCommentDeleteModalOpe(false);
   };
-
-  // const toggleEditAndDeleteModal = () => {
-  //   setIsEditAndDeleteModalOpen(prev => !prev);
-  // };
 
   return (
     <>
-      {(isBoardDeleteModalOpen || isCommentDeleteModalOpen) && (
+      {isBoardDeleteModalOpen && (
         <RecruitDeleteModal
           close={closeDeleteModal}
           boardDelete={isBoardDeleteModalOpen}
-          commentDelete={isCommentDeleteModalOpen}
           recruitId={recruitId}
         />
       )}
+      {/* {<RecruitCompletionModal />} */}
       <ul className="relative w-[1224px] mx-auto mt-[70px]">
         <li className="flex w-full">
           <img
@@ -96,23 +87,22 @@ function RecruitBoardDetail() {
             <h1 className="text-[36px] w-full">{recruitBoard?.title}</h1>
             <ul className="flex items-end justify-between w-full">
               <BoardDetailInfo recruitBoard={recruitBoard} />
-              <li className="flex ">
+              <li className="flex gap-[10px]">
                 {userData?.userId === recruitBoard?.userId ? (
                   <>
-                    {" "}
                     <button
                       className="text-[19px]  px-[15px] py-[6px] border-blue3 border-[1px] rounded-[5px] bg-blue3 text-white mr-[9px]"
                       // onClick={handleEditButtonClick}
                     >
-                      수정하기
+                      신청자 목록
                     </button>
                     <button
                       className={classNames(
-                        "text-[19px]  px-[15px] py-[6px] border-blue3 border-[1px] rounded-[5px] text-blue3 bg-white",
+                        "text-[19px]  px-[15px] py-[6px]  border-blue3 border-[1px] rounded-[5px] text-blue3 bg-white",
                       )}
                       // onClick={openBoardDeleteModal}
                     >
-                      삭제하기
+                      모집 마감하기
                     </button>
                   </>
                 ) : (
@@ -157,10 +147,15 @@ function RecruitBoardDetail() {
         </li>
         <hr className="my-[40px] border-gray4"></hr>
         <BoardDetailContent recruitBoard={recruitBoard} />
-        <BoardEditAndDelete
-          openBoardDeleteModal={openBoardDeleteModal}
-          recruitId={recruitId}
-        />
+        <div>
+          {userData?.userId === recruitBoard?.userId ? (
+            <BoardEditAndDelete
+              openBoardDeleteModal={openBoardDeleteModal}
+              recruitId={recruitId}
+            />
+          ) : null}
+        </div>
+
         <li className="mb-[41px]">
           <div className="flex items-end justify-between mb-[17px]">
             <h3 className="text-[23px] ">댓글 작성하기</h3>
