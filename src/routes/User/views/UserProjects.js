@@ -49,6 +49,8 @@ function UserProjects({ isCurrentUserPage, userId }) {
     userId,
   });
 
+  console.log(projectList);
+
   if (isLoading) {
     return <div className="w-full h-[218px] bg-white2 animate-pulse" />;
   }
@@ -154,7 +156,6 @@ function UserProjects({ isCurrentUserPage, userId }) {
                           <ul>
                             {recruitApplies.map(
                               (information, index, { length }) => {
-                                console.log(information);
                                 const handleNameClick = e => {
                                   e.stopPropagation();
                                   navigate(`/user/${information.applicant}`);

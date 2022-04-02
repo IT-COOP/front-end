@@ -91,3 +91,5 @@ export const recruitApis = {
     return data;
   },
 };
+
+//user/recruiting/accepted/${recruitId}

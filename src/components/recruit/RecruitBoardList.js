@@ -34,7 +34,6 @@ function RecruitBoardList() {
       />
       <ul className="flex overflow-hidden mb-[20px] flex-wrap w-[1224px] mx-auto  gap-x-[2%] gap-y-[24px] rounded-[8px]">
         {data?.map(board => {
-          console.log(board);
           return (
             <li
               key={board.recruitPostId}

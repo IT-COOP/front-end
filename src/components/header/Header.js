@@ -27,13 +27,9 @@ function Header() {
 
   const toggleMyPageModal = e => {
     if (e.target !== e.currentTarget) {
-      console.log(e.target);
-      console.log(e.currentTarget);
-      console.log(12123);
       setIsMyPageModalOpen(prev => !prev);
       return;
     }
-    console.log(1111111111);
     setIsMyPageModalOpen(prev => !prev);
   };
 

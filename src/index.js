@@ -17,6 +17,7 @@ import User from "./routes/User";
 import UserEdit from "./routes/User/edit";
 import Auth from "./components/login/Auth";
 import ChatRoom from "./routes/User/ChatRoom";
+import Apply from "./routes/Apply";
 
 import "./index.css";
 
@@ -52,6 +53,7 @@ ReactDOM.render(
               }
             />
           </Route>
+          <Route path="/apply" element={<Apply />} />
           <Route path="/app" element={<App />} />
           <Route path="/chat" element={<ChatRoom />} />
         </Route>

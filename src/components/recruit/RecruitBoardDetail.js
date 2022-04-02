@@ -75,7 +75,7 @@ function RecruitBoardDetail() {
           recruitId={recruitId}
         />
       )}
-      {/* {<RecruitCompletionModal />} */}
+      {<RecruitCompletionModal recruitId={recruitId} />}
       <ul className="relative w-[1224px] mx-auto mt-[70px]">
         <li className="flex w-full">
           <img
