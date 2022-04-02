@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { Location, Task, Stack } from "../../../constants/enums";
 
 function BoardDetailInfo({ recruitBoard }) {
+  console.log(recruitBoard);
   return (
     <li>
       <p className="text-[15px] text-gray4 mb-[9px]">
@@ -27,7 +28,7 @@ function BoardDetailInfo({ recruitBoard }) {
             >
               {Task[task.recruitTask]}
               <span className="ml-[7px]">
-                {task.numberOfPeopleSet} / {task.numberOfPeopleRequired}명
+                {task.numberOfPeopleRequired} / {task.numberOfPeopleSet}명
               </span>
             </li>
           ) : null,
@@ -44,8 +45,8 @@ function BoardDetailInfo({ recruitBoard }) {
             )}
             key={stack.recruitStack}
           >
-            {Stack[stack.recruitStack]} {stack.numberOfPeopleSet} /{" "}
-            {stack.numberOfPeopleRequired}명
+            {Stack[stack.recruitStack]} {stack.numberOfPeopleRequired} /{" "}
+            {stack.numberOfPeopleSet}명
           </li>
         ))}
       </ul>
