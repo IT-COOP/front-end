@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import classNames from "classnames";
 import { useQueryClient } from "react-query";
 
+import { Dot } from "../../../assets/icons";
 import convertDateText from "../../../lib/convertDateText";
 
 import useDeleteCommentMutation from "../../../hooks/useDeleteCommentMutation";
@@ -11,6 +12,8 @@ import EditComment from "./EditComment";
 function Comment({ comment, recruitId, userId }) {
   const [isAddCommentReplyOpen, setIsAddCommentReplyOpen] = useState(false);
   const [isEditCommentOpen, setIsEditCommentOpen] = useState(false);
+  const [isEditAndDeleteModalOpen, setIsEditAndDeleteModalOpen] =
+    useState(false);
   const { mutateAsync: deleteComment } = useDeleteCommentMutation();
   const queryClient = useQueryClient();
   const deleteCommentHandler = recruitCommentId => async () => {
@@ -22,6 +25,7 @@ function Comment({ comment, recruitId, userId }) {
 
   const openEditComment = () => {
     setIsEditCommentOpen(true);
+    setIsEditAndDeleteModalOpen(prev => !prev);
   };
   const closeEditComment = () => {
     setIsEditCommentOpen(false);
@@ -35,15 +39,20 @@ function Comment({ comment, recruitId, userId }) {
     setIsAddCommentReplyOpen(false);
   };
 
-  console.log(comment);
+  const toggleEditAndDeleteModal = () => {
+    setIsEditAndDeleteModalOpen(prev => !prev);
+  };
 
   return (
     <li
-      className={classNames("pt-[30px] pb-[40px] border-t-[1px] border-gray2", {
-        "pl-[80px]": comment.commentDepth === 1,
-      })}
+      className={classNames(
+        "pt-[30px] pb-[40px] border-t-[1px] border-gray2 relative",
+        {
+          "pl-[80px]": comment.commentDepth === 1,
+        },
+      )}
     >
-      <div className="flex items-center mb-[21px]">
+      <div className="flex items-center mb-[21px] justify-between">
         <div className="flex items-center mr-[23px] ">
           <img
             src={comment.user.profileImgUrl}
@@ -52,8 +61,30 @@ function Comment({ comment, recruitId, userId }) {
           />
           <p>{comment.user.nickname}</p>
         </div>
-        <div className="text-[17px] text-gray4">
-          {convertDateText(comment.createdAt)}
+        <div className="">
+          {comment.userId === userId ? (
+            <>
+              <button className="mr-[20px]" onClick={toggleEditAndDeleteModal}>
+                <Dot />
+              </button>
+              {isEditAndDeleteModalOpen && (
+                <div className="absolute border rounded-[5px] border-gray5 right-[20px] bg-white">
+                  <button
+                    className="block text-[14px] w-[85px] leading-[40px] text-gray4 text-center hover:font-bold"
+                    onClick={openEditComment}
+                  >
+                    수정
+                  </button>
+                  <button
+                    className="block text-[14px] w-[85px] leading-[40px] text-gray4 text-center hover:font-bold"
+                    onClick={deleteCommentHandler(comment.recruitCommentId)}
+                  >
+                    삭제
+                  </button>
+                </div>
+              )}
+            </>
+          ) : null}
         </div>
       </div>
       {isEditCommentOpen ? (
@@ -68,47 +99,32 @@ function Comment({ comment, recruitId, userId }) {
       ) : (
         <>
           <p className="mb-[33px]">{comment.recruitCommentContent}</p>
-          <div className="flex items-end justify-between mb-[20px]">
-            <div>
-              {comment.userId === userId ? (
-                <>
-                  <button
-                    className="text-[15px] text-gray4 mr-[12px]"
-                    onClick={openEditComment}
-                  >
-                    수정하기
-                  </button>
-                  <button
-                    className="text-[15px] text-gray4"
-                    onClick={deleteCommentHandler(comment.recruitCommentId)}
-                  >
-                    삭제하기
-                  </button>
-                </>
-              ) : null}
+          <div className="flex items-end mb-[20px]">
+            <div className="text-[17px] text-gray4 mr-[20px]">
+              {convertDateText(comment.createdAt)}
             </div>
-            {comment.commentDepth === 0 ? (
-              <button
-                className="border-[1px] border-blue3 text-[19px] text-blue3 px-[15px] py-[6px] rounded-[5px]"
-                onClick={toggleCommentReply}
-              >
-                대댓글작성
-              </button>
-            ) : null}
+            {true && (
+              <>
+                <button
+                  className="text-[17px] text-gray4"
+                  onClick={toggleCommentReply}
+                >
+                  답글 달기
+                </button>
+              </>
+            )}
           </div>
         </>
       )}
-      {comment.commentDepth === 0
-        ? isAddCommentReplyOpen && (
-            <AddCommentReplyForm
-              commentGroup={comment.commentGroup}
-              recruitId={comment.recruitPostId}
-              user={comment.user}
-              userId={comment.userId}
-              closeCommentReply={closeCommentReply}
-            />
-          )
-        : null}
+      {isAddCommentReplyOpen && (
+        <AddCommentReplyForm
+          commentGroup={comment.commentGroup}
+          recruitId={comment.recruitPostId}
+          user={comment.user}
+          userId={comment.userId}
+          closeCommentReply={closeCommentReply}
+        />
+      )}
     </li>
   );
 }
