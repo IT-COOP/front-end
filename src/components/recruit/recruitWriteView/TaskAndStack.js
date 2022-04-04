@@ -172,7 +172,7 @@ const TaskAndStack = ({
               key={task}
               value={task}
               className={classNames(
-                "px-[16px] py-[6px] text-[18px] rounded-[20px] mr-[15px] bg-gray1",
+                "px-[16px] py-[6px] text-[18px] rounded-[20px] mr-[15px] bg-gray1 text-gray4",
                 {
                   "lg:bg-pink lg:text-white":
                     (selectedTask === task) & (selectedTask === 100),

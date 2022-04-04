@@ -76,6 +76,8 @@ const SignUpTaskAndStack = ({
     handleremoveStacks(stack);
   };
 
+  console.log(selectedTask);
+
   return (
     <li className="flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white opacity-0  px-[158px] rounded-[16px] ">
       <button
@@ -98,19 +100,19 @@ const SignUpTaskAndStack = ({
               className={classNames(
                 "bg-gray1 text-gray4 mr-[16px] text-[16px] px-[16px] py-[6px] rounded-[20px]",
                 {
-                  "bg-pink text-white":
+                  "lg:bg-pink lg:text-white":
                     (selectedTask === task) & (selectedTask === 100),
                 },
                 {
-                  "bg-yellow text-white":
+                  "lg:bg-yellow lg:text-white":
                     (selectedTask === task) & (selectedTask === 200),
                 },
                 {
-                  "bg-coral text-white":
+                  "lg:bg-coral lg:text-white":
                     (selectedTask === task) & (selectedTask === 300),
                 },
                 {
-                  "lg:bg-blue text-white":
+                  "lg:bg-blue lg:text-white":
                     (selectedTask === task) & (selectedTask === 400),
                 },
               )}
@@ -136,7 +138,7 @@ const SignUpTaskAndStack = ({
             })}
           >
             <summary className="leading-[40px] text-[18px] text-gray4 border border-black pl-[20px] cursor-pointer">
-              최소 1개부터 최대 3개까지 선택 해주세요!
+              최소 1개의 직군을 선택해주세요!
             </summary>
             <ul className="absolute z-10 w-full bg-white border border-black ">
               {filteredStackList?.map(stack => (

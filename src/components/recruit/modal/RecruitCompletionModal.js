@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Close, Mascot } from "../../../assets/icons";
+import { Close, Duo } from "../../../assets/icons";
 
 import useGetApplyCompletionRecruitUserCount from "../../../hooks/useGetApplyCompletionRecruitUserCount";
 import useCompleteRecruitStartProjectMutation from "../../../hooks/useCompleteRecruitStartProjectMutation";
@@ -56,7 +56,7 @@ const RecruitCompletionModal = ({ recruitId, closeModal }) => {
             <>
               {" "}
               <p className="text-center mb-[17px]">우리 팀원들이 맞나요?</p>
-              <Mascot className="mb-[30px]" />
+              <Duo className="mb-[30px]" />
               <div className="flex gap-[20px]">
                 <button
                   className="w-[200px] rounded-[10px] h-[70px] border border-blue3 text-blue3 text-[20px] font-bold mb-[15px]"

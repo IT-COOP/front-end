@@ -28,6 +28,7 @@ import { ReactComponent as RunningProject } from "./runningProject.svg";
 import { ReactComponent as RecruitingProject } from "./recruitingProject.svg";
 import { ReactComponent as OverProject } from "./overProject.svg";
 import { ReactComponent as Dot } from "./threeDot.svg";
+import { ReactComponent as Duo } from "./duo.svg";
 
 export {
   Close,
@@ -60,4 +61,5 @@ export {
   RecruitingProject,
   OverProject,
   Dot,
+  Duo,
 };

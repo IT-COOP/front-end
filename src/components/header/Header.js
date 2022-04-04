@@ -52,22 +52,22 @@ function Header() {
   //   9: "chatRoomCreation",
   // };
 
-  // const socketInitiate = () => {
-  //   const socket = io(process.env.REACT_APP_API_URL_SOCKET, {
-  //     extraHeaders: {
-  //       authorization: `Bearer ${localStorage.getItem("coopToken")}`,
-  //     },
-  //   });
-  //   socket.on("notificationToClient", data => {
-  //     console.log(data);
-  //   });
-  // };
+  const socketInitiate = () => {
+    const socket = io(process.env.REACT_APP_API_URL_SOCKET, {
+      extraHeaders: {
+        authorization: `Bearer ${localStorage.getItem("coopToken")}`,
+      },
+    });
+    socket.on("notificationToClient", data => {
+      console.log(data);
+    });
+  };
 
-  // useEffect(() => {
-  //   if (userData) {
-  //     socketInitiate();
-  //   }
-  // }, [userData]);
+  useEffect(() => {
+    if (userData) {
+      socketInitiate();
+    }
+  }, [userData]);
 
   return (
     <>
