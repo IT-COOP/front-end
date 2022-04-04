@@ -127,9 +127,9 @@ function UserProjects({ isCurrentUserPage, userId }) {
                           {recruitApplies?.map(information => (
                             <img
                               className="w-[25px] h-[25px] rounded-full inline-block mr-[3px]"
-                              src={information.applicant2.profileImgUrl}
-                              alt={`${information.applicant2.nickname}'s profile`}
-                              key={information.applicant}
+                              src={information?.applicant2.profileImgUrl}
+                              alt={`${information?.applicant2.nickname}'s profile`}
+                              key={information?.applicant}
                             />
                           ))}
                         </div>

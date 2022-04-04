@@ -53,7 +53,7 @@ ReactDOM.render(
               }
             />
           </Route>
-          <Route path="/apply" element={<Apply />} />
+          <Route path="/apply/:recruitId" element={<Apply />} />
           <Route path="/app" element={<App />} />
           <Route path="/chat/:roomNumber" element={<ChatRoom />} />
         </Route>

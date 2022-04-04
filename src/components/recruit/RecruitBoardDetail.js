@@ -88,6 +88,7 @@ function RecruitBoardDetail() {
       {isOpenRecruitCompletionModal && (
         <RecruitCompletionModal
           recruitId={recruitId}
+          userId={userData?.userId}
           closeModal={closeRecruitCompletionModal}
         />
       )}

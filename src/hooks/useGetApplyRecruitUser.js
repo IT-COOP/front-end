@@ -1,10 +1,12 @@
 import { useQuery } from "react-query";
 import { applyApis } from "../apis/applyApi";
 
-function useGetApplyRecruitUser(recruitId) {
-  return useQuery(["applyUser", recruitId], () =>
-    applyApis.getApplyRecruitUser(recruitId),
-  );
+function useGetApplyRecruitUser({ recruitId, isAccepted }) {
+  return useQuery(["applyUser", recruitId, isAccepted], () => {
+    if (recruitId) {
+      return applyApis.getApplyRecruitUser(recruitId, isAccepted);
+    }
+  });
 }
 
 export default useGetApplyRecruitUser;

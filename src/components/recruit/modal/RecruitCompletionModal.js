@@ -18,6 +18,10 @@ const RecruitCompletionModal = ({ recruitId, closeModal }) => {
     navigate(`/chat/${chatRoom.chatRoomId}`);
   };
 
+  const routeAppliedUserList = () => {
+    navigate(`/apply/${recruitId}`);
+  };
+
   return (
     <section className="fixed top-0 left-0 z-[999] flex items-center justify-center w-screen h-screen transition-opacity bg-black/70">
       <div className="relative w-[800px] h-[500px] bg-white flex flex-col items-center justify-center rounded-[16px]">
@@ -41,7 +45,10 @@ const RecruitCompletionModal = ({ recruitId, closeModal }) => {
           </p>
           {applyCompletionUserCount?.acceptedAppliesCount === 0 ? (
             <>
-              <button className="w-[200px] rounded-[10px] h-[70px] border border-blue3 text-blue3 text-[20px] font-bold mb-[15px]">
+              <button
+                className="w-[200px] rounded-[10px] h-[70px] border border-blue3 text-blue3 text-[20px] font-bold mb-[15px]"
+                onClick={routeAppliedUserList}
+              >
                 신청자 목록 보기
               </button>
             </>
@@ -51,7 +58,10 @@ const RecruitCompletionModal = ({ recruitId, closeModal }) => {
               <p className="text-center mb-[17px]">우리 팀원들이 맞나요?</p>
               <Mascot className="mb-[30px]" />
               <div className="flex gap-[20px]">
-                <button className="w-[200px] rounded-[10px] h-[70px] border border-blue3 text-blue3 text-[20px] font-bold mb-[15px]">
+                <button
+                  className="w-[200px] rounded-[10px] h-[70px] border border-blue3 text-blue3 text-[20px] font-bold mb-[15px]"
+                  onClick={routeAppliedUserList}
+                >
                   신청자 목록 보기
                 </button>
                 <button
