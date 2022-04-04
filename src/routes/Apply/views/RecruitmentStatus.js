@@ -44,6 +44,18 @@ function RecruitmentStatus({ recruitBoard }) {
           </li>
         ))}
       </ul>
+      <hr className="w-full my-[40px]" />
+      <div>
+        <p className="text-[15px] text-center mb-[20px]">
+          현재 팀원은 <span className="text-blue3">{}</span>명 이에요.
+        </p>
+        <p className="text-center text-[15px]">
+          모집을 마감하고 <br /> 프로젝트 진행을 시작할까요?
+        </p>
+        <button className="text-[14px] rounded-[5px] w-full text-center mt-[45px] bg-black text-white py-[10px]">
+          모집 마감하기
+        </button>
+      </div>
     </>
   );
 }
