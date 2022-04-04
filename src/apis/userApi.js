@@ -74,8 +74,22 @@ export const userApis = {
       return data;
     },
 
+  getRecruitingProjects: userId => async () => {
+    const { data } = await instance.get(`/user/recruiting/${userId}`);
+    return data;
+  },
+
+  getRunningProjects: userId => async () => {
+    const { data } = await instance.get(`/user/running/${userId}`);
+    return data;
+  },
+
   getAppliedProjects: async () => {
     const { data } = await instance.get("/user/applied");
+    return data;
+  },
+  getOveredProjects: async userId => {
+    const { data } = await instance.get(`/user/over/${userId}`);
     return data;
   },
 
