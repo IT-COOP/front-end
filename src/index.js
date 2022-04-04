@@ -11,7 +11,7 @@ import RecruitBoardDetail from "./components/recruit/RecruitBoardDetail";
 
 import RecruitWrite from "./components/recruit/RecruitWrite";
 import RecruitEdit from "./components/recruit/RecruitEdit";
-import Recruit from "./routes/Recruit/Recruit";
+import Recruit from "./routes/Recruit";
 
 import User from "./routes/User";
 import UserEdit from "./routes/User/edit";

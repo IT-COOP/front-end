@@ -6,7 +6,6 @@ import RecruitBoardList from "../../components/recruit/RecruitBoardList";
 function Recruit() {
   return (
     <section className="w-full">
-      {/* 배너 컴포넌트로 */}
       <RecruitBanner />
       <RecruitBoardList />
     </section>

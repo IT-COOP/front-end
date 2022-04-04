@@ -6,8 +6,8 @@ import useGetApplyRecruitUser from "../../hooks/useGetApplyRecruitUser";
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 
-import UserCard from "./views/UserCard";
-import RecruitmentStatus from "./views/RecruitmentStatus";
+import UserCard from "../../components/apply/views/UserCard";
+import RecruitmentStatus from "../../components/apply/views/RecruitmentStatus";
 
 function ApplyPage() {
   const navigate = useNavigate();
