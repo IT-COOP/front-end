@@ -20,7 +20,7 @@ function PrivateRoute({ children }) {
   }
 
   if (currentUserData === null || isError) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/recruit" replace />;
   }
   const isCurrentUserPage = targetUserData.userId === currentUserData.userId;
 

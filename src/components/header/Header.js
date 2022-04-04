@@ -40,18 +40,6 @@ function Header() {
     window.location.replace("/");
   };
 
-  // const eventList = {
-  //   1: "recruitComment",
-  //   2: "recruitCommentReply",
-  //   3: "recruitApply",
-  //   4: "recruitApplyAccepted",
-  //   5: "informationComment",
-  //   6: "informationCommentReply",
-  //   7: "recruitFulfilled",
-  //   8: "chat",
-  //   9: "chatRoomCreation",
-  // };
-
   const socketInitiate = () => {
     const socket = io(process.env.REACT_APP_API_URL_SOCKET, {
       extraHeaders: {
@@ -75,7 +63,7 @@ function Header() {
       <header className="w-full sticky top-0 mx-auto py-[12px] z-10 bg-white shadow-[0_4px_4px_-4px_rgba(0,0,0,0.3)]">
         <div className="w-[1224px] mx-auto flex items-center justify-between">
           <div>
-            <NavLink to="/">
+            <NavLink to="/recruit">
               <img
                 src="https://s3.ap-northeast-2.amazonaws.com/it-coop.co.kr/images/Logo.png"
                 alt="itcoop banner"
@@ -85,9 +73,11 @@ function Header() {
           </div>
           <nav>
             <ul className="flex gap-[44px] items-center text-[17px]">
-              <li className="cursor-pointer">About</li>
               <li className="cursor-pointer">
-                <NavLink to="/">협업 페이지</NavLink>
+                <NavLink to="/">About</NavLink>
+              </li>
+              <li className="cursor-pointer">
+                <NavLink to="/recruit">협업 페이지</NavLink>
               </li>
               <li className="cursor-pointer">
                 <Bell />

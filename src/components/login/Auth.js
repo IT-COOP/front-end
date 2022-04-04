@@ -6,7 +6,7 @@ import useUserCheckMutation from "../../hooks/useUserCheckMutation";
 import { setCookie } from "../../utils/cookie";
 
 function Auth() {
-  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(true);
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const { mutateAsync } = useUserCheckMutation();
   const navigate = useNavigate();
@@ -36,12 +36,12 @@ function Auth() {
 
         setCookie("coopCookie", refreshToken);
         setSearchParams("");
-        navigate("/", { replace: true });
+        navigate("/recruit", { replace: true });
       } catch (error) {
         console.error(error);
         alert("알 수 없는 오류로 로그인에 실패하였습니다.");
         localStorage.removeItem("coopToken");
-        navigate("/", { replace: true });
+        navigate("/recruit", { replace: true });
       }
     }
 

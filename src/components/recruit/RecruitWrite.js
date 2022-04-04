@@ -157,7 +157,7 @@ function RecruitWrite() {
                 글 작성이 완료되었습니다.
               </h3>
               <Completion className="mx-auto mb-[50px]" />
-              <Link to="/">
+              <Link to="/recruit">
                 <button className="mx-auto font-bold text-[20px] rounded-[5px] text-white bg-[#000000] w-[484px] h-[70px] ">
                   메인 화면으로 가기
                 </button>

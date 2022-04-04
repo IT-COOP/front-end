@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 
-import { Task, Stack } from "../../../constants/enums";
+import { Task, Stack } from "../../constants/enums";
 
 function RecruitmentStatus({ recruitBoard }) {
   return (

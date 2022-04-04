@@ -2,8 +2,8 @@ import React from "react";
 import classNames from "classnames";
 import { useQueryClient } from "react-query";
 
-import { Task, Stack } from "../../../constants/enums";
-import useAcceptOrRefuseUserMutation from "../../../hooks/useAcceptOrRefuseUserMutation";
+import { Task, Stack } from "../../constants/enums";
+import useAcceptOrRefuseUserMutation from "../../hooks/useAcceptOrRefuseUserMutation";
 
 function UserCard({
   userTask,

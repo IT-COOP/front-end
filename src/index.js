@@ -18,6 +18,7 @@ import UserEdit from "./routes/User/edit";
 import Auth from "./components/login/Auth";
 import ChatRoom from "./routes/User/ChatRoom";
 import Apply from "./routes/Apply";
+import LandingPage from "./routes/Lading";
 
 import "./index.css";
 
@@ -29,8 +30,9 @@ ReactDOM.render(
       <Routes>
         <Route path="auth" element={<Auth />} />
         <Route path="/" element={<Layout />}>
-          <Route index element={<Recruit />} />
+          <Route index element={<LandingPage />} />
           <Route path="recruit">
+            <Route index element={<Recruit />} />
             <Route path="write" element={<RecruitWrite />} />
             <Route path="edit/:recruitId" element={<RecruitEdit />} />
             <Route path=":recruitId" element={<RecruitBoardDetail />} />

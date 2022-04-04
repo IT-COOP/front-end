@@ -116,7 +116,7 @@ function SocialSignIn() {
     if (createSuccess) {
       localStorage.setItem("coopToken", createdUserData?.accessToken);
       setCookie("coopCookie", createdUserData?.refreshToken);
-      navigate("/", { replace: true });
+      navigate("/recruit", { replace: true });
     }
   }, [
     createSuccess,
