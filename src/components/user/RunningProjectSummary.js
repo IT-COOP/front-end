@@ -1,8 +1,9 @@
 import React from "react";
 import classNames from "classnames";
-import useGetRunningProjectListQuery from "../../../hooks/useGetRunningProjectListQuery";
-import { More } from "../../../assets/icons";
 import { useNavigate } from "react-router-dom";
+
+import useGetRunningProjectListQuery from "../../hooks/useGetRunningProjectListQuery";
+import { More } from "../../assets/icons";
 
 function RunningProjectSummary({ userId }) {
   const navigate = useNavigate();

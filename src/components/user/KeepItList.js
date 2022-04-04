@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 
-import RecruitBoard from "../../../components/recruit/RecruitBoard";
-import useGetKeepItList from "../../../hooks/useGetKeepItList";
+import RecruitBoard from "../../components/recruit/RecruitBoard";
+import useGetKeepItList from "../../hooks/useGetKeepItList";
 
 function KeepItList() {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =

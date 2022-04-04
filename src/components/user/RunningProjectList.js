@@ -1,15 +1,14 @@
 import React from "react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
+import useGetRunningProjectListQuery from "../../hooks/useGetRunningProjectListQuery";
 
-import useGetOveredProjectListQuery from "../../../hooks/useGetOveredProjectListQuery";
+import { More } from "../../assets/icons";
 
-import { More } from "../../../assets/icons";
+import convertDateText from "../../lib/convertDateText";
 
-import convertDateText from "../../../lib/convertDateText";
-
-function OveredProjectList({ isCurrentUserPage, userId }) {
-  const { isLoading, data: list } = useGetOveredProjectListQuery(
+function RunningProjectList({ userId, isCurrentUserPage }) {
+  const { isLoading, data: list } = useGetRunningProjectListQuery(
     userId,
     isCurrentUserPage,
   );
@@ -24,7 +23,7 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
   return (
     <ul className="mt-[45px] mb-[42px]">
       {list.length > 0 ? (
-        list.map(post => {
+        list?.slice(0, 1)?.map(post => {
           const { createdAt, updatedAt } = post;
           const lastUpsertedDate =
             !updatedAt || createdAt === updatedAt ? createdAt : updatedAt;
@@ -55,7 +54,7 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
       ) : (
         <div className="h-[109px] mb-[42px] flex items-center justify-center border-b border-b-gray2">
           <p className="text-[15px] text-gray3">
-            아직 진행완료된 프로젝트가 없습니다.
+            아직 진행중인 프로젝트가 없습니다.
           </p>
         </div>
       )}
@@ -63,4 +62,4 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
   );
 }
 
-export default OveredProjectList;
+export default RunningProjectList;

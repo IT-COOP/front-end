@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useQueryClient } from "react-query";
-import useCancelApplyRecruitMutation from "../../../hooks/useCancelApplyRecruitMutation";
-
 import classNames from "classnames";
-import { Dot } from "../../../assets/icons";
+import { useQueryClient } from "react-query";
+
+import useCancelApplyRecruitMutation from "../../hooks/useCancelApplyRecruitMutation";
+
+import { Dot } from "../../assets/icons";
 
 function CancelApplyTooltip({ info }) {
   const client = useQueryClient();

@@ -3,9 +3,9 @@ import {
   getExperienceAmount,
   getCrown,
   getRemainingCount,
-} from "../../../lib/crown";
+} from "../../lib/crown";
 
-import { BronzeCrown, SilverCrown, GoldCrown } from "../../../assets/icons";
+import { BronzeCrown, SilverCrown, GoldCrown } from "../../assets/icons";
 
 const crownComponentByName = {
   none: null,

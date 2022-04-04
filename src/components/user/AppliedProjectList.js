@@ -1,17 +1,16 @@
 import React from "react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
-import useGetRunningProjectListQuery from "../../../hooks/useGetRunningProjectListQuery";
 
-import { More } from "../../../assets/icons";
+import useGetAppliedProjectListQuery from "../../hooks/useGetAppliedProjectListQuery";
 
-import convertDateText from "../../../lib/convertDateText";
+import { More } from "../../assets/icons";
+import CancelApplyTooltip from "./CancelApplyTooltip";
 
-function RunningProjectList({ userId, isCurrentUserPage }) {
-  const { isLoading, data: list } = useGetRunningProjectListQuery(
-    userId,
-    isCurrentUserPage,
-  );
+import convertDateText from "../../lib/convertDateText";
+
+function AppliedProjectList() {
+  const { isLoading, data: list } = useGetAppliedProjectListQuery();
 
   const navigate = useNavigate();
   const moveToRecruitDetailPage = id => () => navigate(`/recruit/${id}`);
@@ -23,8 +22,8 @@ function RunningProjectList({ userId, isCurrentUserPage }) {
   return (
     <ul className="mt-[45px] mb-[42px]">
       {list.length > 0 ? (
-        list?.slice(0, 1)?.map(post => {
-          const { createdAt, updatedAt } = post;
+        list.map(post => {
+          const { createdAt, updatedAt, recruitApplies = [] } = post;
           const lastUpsertedDate =
             !updatedAt || createdAt === updatedAt ? createdAt : updatedAt;
           const parsedUpsertText = convertDateText(lastUpsertedDate);
@@ -48,13 +47,14 @@ function RunningProjectList({ userId, isCurrentUserPage }) {
                   {parsedUpsertText} | {post.author2.nickname}
                 </span>
               </div>
+              <CancelApplyTooltip info={recruitApplies[0]} />
             </li>
           );
         })
       ) : (
         <div className="h-[109px] mb-[42px] flex items-center justify-center border-b border-b-gray2">
           <p className="text-[15px] text-gray3">
-            아직 진행중인 프로젝트가 없습니다.
+            아직 신청중인 프로젝트가 없습니다.
           </p>
         </div>
       )}
@@ -62,4 +62,4 @@ function RunningProjectList({ userId, isCurrentUserPage }) {
   );
 }
 
-export default RunningProjectList;
+export default AppliedProjectList;

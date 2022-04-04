@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 
-import { More } from "../../../assets/icons";
+import { More } from "../../assets/icons";
 
-import useGetRecruitingProjectListQuery from "../../../hooks/useGetRecruitingProjectListQuery";
+import useGetRecruitingProjectListQuery from "../../hooks/useGetRecruitingProjectListQuery";
 
-import convertDateText from "../../../lib/convertDateText";
+import convertDateText from "../../lib/convertDateText";
 
 function RecruitingProjectList({ isCurrentUserPage, userId }) {
   const [isTooltipHovered, setIsTooltipHovered] = useState(false);

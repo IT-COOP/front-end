@@ -2,15 +2,17 @@ import React from "react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 
-import useGetAppliedProjectListQuery from "../../../hooks/useGetAppliedProjectListQuery";
+import useGetOveredProjectListQuery from "../../hooks/useGetOveredProjectListQuery";
 
-import { More } from "../../../assets/icons";
-import CancelApplyTooltip from "./CancelApplyTooltip";
+import { More } from "../../assets/icons";
 
-import convertDateText from "../../../lib/convertDateText";
+import convertDateText from "../../lib/convertDateText";
 
-function AppliedProjectList() {
-  const { isLoading, data: list } = useGetAppliedProjectListQuery();
+function OveredProjectList({ isCurrentUserPage, userId }) {
+  const { isLoading, data: list } = useGetOveredProjectListQuery(
+    userId,
+    isCurrentUserPage,
+  );
 
   const navigate = useNavigate();
   const moveToRecruitDetailPage = id => () => navigate(`/recruit/${id}`);
@@ -23,7 +25,7 @@ function AppliedProjectList() {
     <ul className="mt-[45px] mb-[42px]">
       {list.length > 0 ? (
         list.map(post => {
-          const { createdAt, updatedAt, recruitApplies = [] } = post;
+          const { createdAt, updatedAt } = post;
           const lastUpsertedDate =
             !updatedAt || createdAt === updatedAt ? createdAt : updatedAt;
           const parsedUpsertText = convertDateText(lastUpsertedDate);
@@ -47,14 +49,13 @@ function AppliedProjectList() {
                   {parsedUpsertText} | {post.author2.nickname}
                 </span>
               </div>
-              <CancelApplyTooltip info={recruitApplies[0]} />
             </li>
           );
         })
       ) : (
         <div className="h-[109px] mb-[42px] flex items-center justify-center border-b border-b-gray2">
           <p className="text-[15px] text-gray3">
-            아직 신청중인 프로젝트가 없습니다.
+            아직 진행완료된 프로젝트가 없습니다.
           </p>
         </div>
       )}
@@ -62,4 +63,4 @@ function AppliedProjectList() {
   );
 }
 
-export default AppliedProjectList;
+export default OveredProjectList;
