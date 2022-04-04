@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import { useQueryClient } from "react-query";
 
 import { Task, Stack } from "../../../constants/enums";
 import useAcceptOrRefuseUserMutation from "../../../hooks/useAcceptOrRefuseUserMutation";
@@ -15,6 +16,8 @@ function UserCard({
   userId,
   recruitId,
 }) {
+  const queryClient = useQueryClient();
+
   const userCollaborationRate = Math.trunc(
     (collaborationRate.filter(
       collaborationPoint => collaborationPoint.userReputationPoint !== 0,
@@ -25,24 +28,31 @@ function UserCard({
 
   const { mutateAsync: acceptOrRefuseUser } = useAcceptOrRefuseUserMutation();
 
-  const acceptUserHandler = () => {
-    acceptOrRefuseUser({
+  const acceptUserHandler = async () => {
+    const { success } = await acceptOrRefuseUser({
       applicant: userId,
-      recruitPostId: recruitId,
-      isAccepted: true,
+      recruitPostId: Number(recruitId),
+      isAccepted: Boolean(true),
     });
+    if (success) {
+      queryClient.invalidateQueries("applyUser");
+    }
   };
-  const refuseUserHandler = () => {
-    acceptOrRefuseUser({
+  const refuseUserHandler = async () => {
+    const { success } = await acceptOrRefuseUser({
       applicant: userId,
-      recruitPostId: recruitId,
-      isAccepted: false,
+      recruitPostId: Number(recruitId),
+      isAccepted: Boolean(false),
     });
+
+    if (success) {
+      queryClient.invalidateQueries("applyUser");
+    }
   };
 
   return (
     <>
-      <li className="w-[23.5%] p-[20px] border rounded-[8px] h-[329px] bg-white shadow-md">
+      <li className="w-[23.5%] p-[20px] border rounded-[8px] bg-white shadow-md">
         <div className="flex gap-[20px] mb-[15px]">
           <img
             src={userProfileImgUrl}
@@ -74,23 +84,33 @@ function UserCard({
         >
           {userTask % 100 === 0 ? Task[userTask] : Stack[userTask]}
         </p>
-        <p className="text-[14px] p-[12px] bg-gray1 rounded-[5px] leading-[20px] h-[70px] mb-[40px]">
+        <p
+          className={classNames(
+            "text-[14px] p-[12px] bg-gray1 rounded-[5px] leading-[20px] h-[70px] ",
+            {
+              "mb-[40px]": !Boolean(isAccepted),
+              "mb-[10px]": Boolean(isAccepted),
+            },
+          )}
+        >
           {applyMessage}
         </p>
-        <div className="flex justify-between">
-          <button
-            className="w-[110px] leading-[30px] text-[14px] rounded-[5px] bg-blue3 text-white"
-            onClick={acceptUserHandler}
-          >
-            수락
-          </button>
-          <button
-            className="w-[110px] leading-[30px] text-[14px] rounded-[5px] bg-white border border-blue3 text-blue3"
-            onClick={refuseUserHandler}
-          >
-            거절
-          </button>
-        </div>
+        {Boolean(isAccepted) ? null : (
+          <div className="flex justify-between">
+            <button
+              className="w-[110px] leading-[30px] text-[14px] rounded-[5px] bg-blue3 text-white"
+              onClick={acceptUserHandler}
+            >
+              수락
+            </button>
+            <button
+              className="w-[110px] leading-[30px] text-[14px] rounded-[5px] bg-white border border-blue3 text-blue3"
+              onClick={refuseUserHandler}
+            >
+              거절
+            </button>
+          </div>
+        )}
       </li>
     </>
   );

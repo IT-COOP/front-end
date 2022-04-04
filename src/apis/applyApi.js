@@ -2,10 +2,10 @@ import { instance } from "./axiosInstance";
 
 export const applyApis = {
   getApplyRecruitUser: async (recruitId, isAccepted) => {
-    const response = await instance.get(
+    const { data } = await instance.get(
       `/user/recruiting/applies/${recruitId}?isAccepted=${isAccepted}`,
     );
-    return response;
+    return data;
   },
   getApplyCompletionRecruitUserCount: async recruitId => {
     const { data } = await instance.get(

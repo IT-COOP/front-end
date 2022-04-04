@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 
-import AppliedUserList from "./views/AppliedUserList";
-
 import useGetApplyRecruitUser from "../../hooks/useGetApplyRecruitUser";
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
+
+import UserCard from "./views/UserCard";
 
 function ApplyPage() {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ function ApplyPage() {
     useGetRecruitDetailQuery(recruitId);
   const { data: userData, isSuccess: isSuccessUserData } =
     useGetUserInfoQuery();
-  const { data: getUserData } = useGetApplyRecruitUser({
+  const { data: getAppliedUserData } = useGetApplyRecruitUser({
     recruitId,
     isAccepted,
   });
@@ -43,6 +43,8 @@ function ApplyPage() {
   const handleAcceptedUser = () => {
     setIsAccepted(1);
   };
+
+  const projectCount = getAppliedUserData?.projectCount;
 
   return (
     <section className="w-full py-[80px]">
@@ -72,14 +74,25 @@ function ApplyPage() {
             팀원 목록
           </button>
         </div>
-        <p></p>
-        <ul className="w-full flex gap-[2%] gap-y-[20px] flex-wrap rounded-[11px] mt-[50px]  applyUserUl">
-          <AppliedUserList
-            user={getUserData?.data.recruitApplies}
-            isAccepted={isAccepted}
-            recruitId={recruitId}
-          />
-        </ul>
+        <div>
+          <div>ㅇㅇ</div>
+          <ul className="w-full flex gap-[2%] gap-y-[20px] flex-wrap rounded-[11px] mt-[50px]  applyUserUl">
+            {getAppliedUserData?.recruitApplies.map((user, idx) => (
+              <UserCard
+                key={user.recruitApplyId}
+                userTask={user.task}
+                userProfileImgUrl={user.applicant2.profileImgUrl}
+                userNickname={user.applicant2.nickname}
+                applyMessage={user.applyMessage}
+                collaborationCount={projectCount[idx]}
+                collaborationRate={user.applicant2.userReputations2}
+                isAccepted={isAccepted}
+                userId={user.applicant2.userId}
+                recruitId={recruitId}
+              />
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

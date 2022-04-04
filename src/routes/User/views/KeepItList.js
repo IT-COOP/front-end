@@ -12,7 +12,6 @@ function KeepItList() {
       if (!node) {
         return;
       }
-
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
@@ -22,8 +21,8 @@ function KeepItList() {
         },
         { root: null, threshold: 0 },
       );
-
       observer.observe(node);
+      console.log(node);
     },
     [hasNextPage, fetchNextPage, isFetchingNextPage],
   );
