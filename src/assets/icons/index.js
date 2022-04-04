@@ -23,10 +23,7 @@ import { ReactComponent as Mascot } from "./mascot.svg";
 import { ReactComponent as BronzeCrown } from "./bronzeCrown.svg";
 import { ReactComponent as SilverCrown } from "./silverCrown.svg";
 import { ReactComponent as GoldCrown } from "./goldCrown.svg";
-import { ReactComponent as AppliedProject } from "./appliedProject.svg";
-import { ReactComponent as RunningProject } from "./runningProject.svg";
-import { ReactComponent as RecruitingProject } from "./recruitingProject.svg";
-import { ReactComponent as OverProject } from "./overProject.svg";
+
 import { ReactComponent as Dot } from "./threeDot.svg";
 
 export {
@@ -55,9 +52,5 @@ export {
   BronzeCrown,
   SilverCrown,
   GoldCrown,
-  AppliedProject,
-  RunningProject,
-  RecruitingProject,
-  OverProject,
   Dot,
 };

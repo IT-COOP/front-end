@@ -4,13 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import CancelApplyTooltop from "./CancelApplyTooltip";
 
-import {
-  More,
-  OverProject,
-  RecruitingProject,
-  RunningProject,
-  AppliedProject,
-} from "../../../assets/icons";
+import { More } from "../../../assets/icons";
 
 import useGetProjectsByEndpoint from "../../../hooks/useGetProjectsByEndpoint";
 
@@ -22,13 +16,6 @@ const DEFAULT_TAB_LIST = [
   { slug: "recruiting", name: "모집중", max: 1 },
   { slug: "over", name: "진행완료", max: 220 },
 ];
-
-const IconCollectionByName = {
-  진행중: RunningProject,
-  신청중: AppliedProject,
-  모집중: RecruitingProject,
-  진행완료: OverProject,
-};
 
 function UserProjects({ isCurrentUserPage, userId }) {
   const [isTooltipHovered, setIsTooltipHovered] = useState(false);
@@ -58,7 +45,6 @@ function UserProjects({ isCurrentUserPage, userId }) {
       <p className="text-[17px] mb-[29px] font-medium">{headingText}</p>
       <ul className="flex w-full">
         {tabList.map(({ name }, index) => {
-          const Icon = IconCollectionByName[name];
           return (
             <li
               key={name}
@@ -71,7 +57,6 @@ function UserProjects({ isCurrentUserPage, userId }) {
               )}
             >
               <span>{name}</span>
-              <Icon className={"ml-[5px] relative top-[1px]"} />
             </li>
           );
         })}
