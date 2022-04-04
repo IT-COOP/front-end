@@ -110,7 +110,6 @@ function SocialSignIn() {
       technologyStack: taskAndStack,
     };
     createUser(userData);
-    console.log(userData);
   };
 
   useEffect(() => {

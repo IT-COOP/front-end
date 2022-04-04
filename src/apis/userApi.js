@@ -57,23 +57,6 @@ export const userApis = {
     return data;
   },
 
-  getProjectsByEndpoint:
-    (slug, userId = "") =>
-    async () => {
-      if (!Boolean(slug)) {
-        throw new Error("The slug must be string and the endpoint of slug");
-      }
-
-      if (!Boolean(userId)) {
-        throw new Error("UserId doesn't exist");
-      }
-
-      const endpoint = `user/${slug}/${userId}`;
-
-      const { data } = await instance.get(endpoint);
-      return data;
-    },
-
   getRecruitingProjects: userId => async () => {
     const { data } = await instance.get(`/user/recruiting/${userId}`);
     return data;
