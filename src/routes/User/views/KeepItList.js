@@ -22,7 +22,6 @@ function KeepItList() {
         { root: null, threshold: 0 },
       );
       observer.observe(node);
-      console.log(node);
     },
     [hasNextPage, fetchNextPage, isFetchingNextPage],
   );

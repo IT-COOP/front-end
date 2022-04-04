@@ -58,9 +58,7 @@ function Header() {
         authorization: `Bearer ${localStorage.getItem("coopToken")}`,
       },
     });
-    socket.on("notificationToClient", data => {
-      console.log(data);
-    });
+    socket.on("notificationToClient", data => {});
   };
 
   useEffect(() => {

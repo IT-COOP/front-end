@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import useCompleteWriteMutation from "../../hooks/useCompleteWriteMutation";
 import { Completion } from "../../assets/icons";
@@ -87,18 +89,23 @@ function RecruitWrite() {
 
   const handleCompleteWriteBoard = async () => {
     if (recruitData.title === "") {
-      return;
-    }
-    if (recruitData.recruitContent === "") {
+      toast("제목을 입력하지 않았습니다!");
       return;
     }
     if (recruitData.recruitDurationWeek === 0) {
+      toast("예상 소요 기간을 선택해주세요!");
       return;
     }
     if (recruitData.recruitLocation === 0) {
+      toast("지역을 선택해 주세요!");
       return;
     }
     if (recruitData.recruitTasks.length === 0) {
+      toast("직군을 추가해 주세요!");
+      return;
+    }
+    if (recruitData.recruitContent === "") {
+      toast("내용을 입력해주세요!");
       return;
     }
     const data = await completeWriteBoard(recruitData);
@@ -159,6 +166,19 @@ function RecruitWrite() {
           </div>
         </div>
       )}
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2000}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        progressClassName="bar"
+      />
     </section>
   );
 }
