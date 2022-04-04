@@ -7,6 +7,7 @@ import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 
 import UserCard from "./views/UserCard";
+import RecruitmentStatus from "./views/RecruitmentStatus";
 
 function ApplyPage() {
   const navigate = useNavigate();
@@ -74,23 +75,38 @@ function ApplyPage() {
             팀원 목록
           </button>
         </div>
-        <div>
-          <div>ㅇㅇ</div>
-          <ul className="w-full flex gap-[2%] gap-y-[20px] flex-wrap rounded-[11px] mt-[50px]  applyUserUl">
-            {getAppliedUserData?.recruitApplies.map((user, idx) => (
-              <UserCard
-                key={user.recruitApplyId}
-                userTask={user.task}
-                userProfileImgUrl={user.applicant2.profileImgUrl}
-                userNickname={user.applicant2.nickname}
-                applyMessage={user.applyMessage}
-                collaborationCount={projectCount[idx]}
-                collaborationRate={user.applicant2.userReputations2}
-                isAccepted={isAccepted}
-                userId={user.applicant2.userId}
-                recruitId={recruitId}
-              />
-            ))}
+        <div className="flex pb-[50px] gap-[1.8%] items-start">
+          <div className="w-[23.8%] p-[20px] border rounded-[8px] bg-white shadow-md ">
+            <RecruitmentStatus recruitBoard={recruitBoard} />
+          </div>
+          <ul className="w-full flex gap-[2%] gap-y-[20px] flex-wrap rounded-[11px]  applyUserUl flex-1 ">
+            {getAppliedUserData?.recruitApplies.length === 0 ? (
+              <li className="w-[100%] p-[20px] border rounded-[8px] bg-white shadow-md h-[280px] text-center text-gray3 flex items-center justify-center">
+                {Boolean(isAccepted)
+                  ? "모집된 팀원이 없습니다."
+                  : "신청 인원이 없습니다."}
+              </li>
+            ) : (
+              getAppliedUserData?.recruitApplies.map((user, idx) => (
+                <li
+                  className="w-[32%] p-[20px] border rounded-[8px] bg-white shadow-md"
+                  key={idx}
+                >
+                  <UserCard
+                    key={user.recruitApplyId}
+                    userTask={user.task}
+                    userProfileImgUrl={user.applicant2.profileImgUrl}
+                    userNickname={user.applicant2.nickname}
+                    applyMessage={user.applyMessage}
+                    collaborationCount={projectCount[idx]}
+                    collaborationRate={user.applicant2.userReputations2}
+                    isAccepted={isAccepted}
+                    userId={user.applicant2.userId}
+                    recruitId={recruitId}
+                  />
+                </li>
+              ))
+            )}
           </ul>
         </div>
       </div>

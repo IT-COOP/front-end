@@ -1,23 +1,18 @@
 import React from "react";
 import classNames from "classnames";
 
-import { Location, Task, Stack } from "../../../constants/enums";
+import { Task, Stack } from "../../../constants/enums";
 
-function BoardDetailInfo({ recruitBoard }) {
+function RecruitmentStatus({ recruitBoard }) {
   return (
-    <li className="w-[50%]">
-      <p className="text-[15px] text-gray4 mb-[9px]">
-        {Location[recruitBoard?.recruitLocation]}
-      </p>
-      <p className="text-[15px] text-gray4 mb-[17px]">
-        소요기간 : {recruitBoard?.recruitDurationWeeks}주 예상
-      </p>
+    <>
+      <h3 className="text-19px mb-[20px]">모집 현황</h3>
       <ul className="flex flex-wrap gap-[10px]">
         {recruitBoard?.recruitTasks.map(task =>
           task.recruitTask < 300 ? (
             <li
               className={classNames(
-                "  px-[14px] py-[2px] rounded-[11px] text-white text-[15px]",
+                "  px-[8px] py-[4px] rounded-[11px] text-white text-[15px]",
                 {
                   "bg-pink border-pink": task.recruitTask === 100,
                   "bg-yellow border-yellow": task.recruitTask === 200,
@@ -35,7 +30,7 @@ function BoardDetailInfo({ recruitBoard }) {
         {recruitBoard?.recruitStacks.map(stack => (
           <li
             className={classNames(
-              " px-[14px] py-[2px] rounded-[11px] text-white text-[15px]",
+              " px-[8px] py-[4px] rounded-[11px] text-white text-[15px]",
               {
                 "bg-coral border-coral":
                   100 < stack.recruitStack && stack.recruitStack < 200,
@@ -49,8 +44,8 @@ function BoardDetailInfo({ recruitBoard }) {
           </li>
         ))}
       </ul>
-    </li>
+    </>
   );
 }
 
-export default BoardDetailInfo;
+export default RecruitmentStatus;
