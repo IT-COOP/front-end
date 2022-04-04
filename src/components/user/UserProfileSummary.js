@@ -1,9 +1,9 @@
 import React from "react";
 import classNames from "classnames";
 
-import { Heart } from "../../../assets/icons";
+import { Heart } from "../../assets/icons";
 
-import { Stack, Task } from "../../../constants/enums";
+import { Stack, Task } from "../../constants/enums";
 
 function UserProfileSummary({
   profileImgUrl,

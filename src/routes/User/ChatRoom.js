@@ -19,7 +19,7 @@ const ChatRoom = () => {
   const [chatMsg, setChatMsg] = useState("");
 
   const [userChatList, setUserChatList] = useState([]);
-  console.log(roomNumber);
+
   const chatEndRef = useRef();
 
   const { data: userData, isSuccess } = useGetUserInfoQuery();

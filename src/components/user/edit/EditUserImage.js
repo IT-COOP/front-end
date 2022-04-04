@@ -1,9 +1,9 @@
 import React from "react";
 import { useQueryClient } from "react-query";
 
-import useUploadUserProfileImgMutation from "../../../../hooks/useUploadUserProfileImgMutation";
+import useUploadUserProfileImgMutation from "../../../hooks/useUploadUserProfileImgMutation";
 
-import { Camera } from "../../../../assets/icons";
+import { Camera } from "../../../assets/icons";
 
 function EditUserImage({ onChange, profileImgUrl, nickname }) {
   const client = useQueryClient();

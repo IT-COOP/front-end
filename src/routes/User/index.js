@@ -2,15 +2,15 @@ import React from "react";
 
 import { Navigate, useParams } from "react-router-dom";
 
-import Title from "./views/Title";
-import KeepItList from "./views/KeepItList";
-import UserDetails from "./views/UserDetails";
-import UserProjects from "./views/UserProjects";
-import ProjectCount from "./views/ProjectCount";
-import UserDashBoard from "./views/UserDashBoard";
-import UserProfileSummary from "./views/UserProfileSummary";
-import ScrollTopButton from "./views/ScrollTopButton";
-import RunningProjectSummary from "./views/RunningProjectSummary";
+import Title from "../../components/user/Title";
+import KeepItList from "../../components/user/KeepItList";
+import UserDetails from "../../components/user/UserDetails";
+import UserProjects from "../../components/user/UserProjects";
+import ProjectCount from "../../components/user/ProjectCount";
+import UserDashBoard from "../../components/user/UserDashBoard";
+import UserProfileSummary from "../../components/user/UserProfileSummary";
+import ScrollTopButton from "../../components/user/ScrollTopButton";
+import RunningProjectSummary from "../../components/user/RunningProjectSummary";
 
 function UserPage({
   currentUserId,

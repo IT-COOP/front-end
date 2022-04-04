@@ -1,15 +1,16 @@
 import React from "react";
 import classNames from "classnames";
-import useGetProjectsByEndpoint from "../../../hooks/useGetProjectsByEndpoint";
-import { More } from "../../../assets/icons";
 import { useNavigate } from "react-router-dom";
+
+import useGetRunningProjectListQuery from "../../hooks/useGetRunningProjectListQuery";
+import { More } from "../../assets/icons";
 
 function RunningProjectSummary({ userId }) {
   const navigate = useNavigate();
-  const { data: projectList, isLoading } = useGetProjectsByEndpoint({
-    slug: "running",
+  const { data: projectList, isLoading } = useGetRunningProjectListQuery(
     userId,
-  });
+    true,
+  );
 
   if (isLoading) {
     return (

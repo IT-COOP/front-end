@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import useModifyUserMutation from "../../hooks/useModifyUserMutation";
 
-import EditUserImage from "./views/edit/EditUserImage";
-import EditUserInformationWrapper from "./views/edit/EditUserInformationWrapper";
-import UserNickname from "./views/edit/UserNickname";
-import EditUserTaskAndStack from "./views/edit/EditUserTaskAndStack";
-import EditUserPortfolioURL from "./views/edit/EditUserPortfolioURL";
-import EditUserSelfIntroduction from "./views/edit/EditUserSelfIntroduction";
+import EditUserImage from "../../components/user/edit/EditUserImage";
+import EditUserInformationWrapper from "../../components/user/edit/EditUserInformationWrapper";
+import UserNickname from "../../components/user/edit/UserNickname";
+import EditUserTaskAndStack from "../../components/user/edit/EditUserTaskAndStack";
+import EditUserPortfolioURL from "../../components/user/edit/EditUserPortfolioURL";
+import EditUserSelfIntroduction from "../../components/user/edit/EditUserSelfIntroduction";
 
 function Edit({
   currentUserId,

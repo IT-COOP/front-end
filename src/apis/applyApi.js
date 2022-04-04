@@ -24,7 +24,6 @@ export const applyApis = {
     recruitPostId,
     isAccepted,
   }) => {
-    console.log(applicant, recruitPostId, isAccepted);
     const { data } = await instance.post("user/recruiting/response", {
       applicant,
       recruitPostId,

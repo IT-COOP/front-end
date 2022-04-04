@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import classNames from "classnames";
 
-import { Close, Reset } from "../../../../assets/icons";
-import { Task, Stack } from "../../../../constants/enums";
+import { Close, Reset } from "../../../assets/icons";
+import { Task, Stack } from "../../../constants/enums";
 
 const ALL_TASK = Object.values(Task).filter(Number);
 const ALL_STACK = Object.values(Stack).filter(Number);

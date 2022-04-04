@@ -57,25 +57,22 @@ export const userApis = {
     return data;
   },
 
-  getProjectsByEndpoint:
-    (slug, userId = "") =>
-    async () => {
-      if (!Boolean(slug)) {
-        throw new Error("The slug must be string and the endpoint of slug");
-      }
+  getRecruitingProjects: userId => async () => {
+    const { data } = await instance.get(`/user/recruiting/${userId}`);
+    return data;
+  },
 
-      if (!Boolean(userId)) {
-        throw new Error("UserId doesn't exist");
-      }
-
-      const endpoint = `user/${slug}/${userId}`;
-
-      const { data } = await instance.get(endpoint);
-      return data;
-    },
+  getRunningProjects: userId => async () => {
+    const { data } = await instance.get(`/user/running/${userId}`);
+    return data;
+  },
 
   getAppliedProjects: async () => {
     const { data } = await instance.get("/user/applied");
+    return data;
+  },
+  getOveredProjects: async userId => {
+    const { data } = await instance.get(`/user/over/${userId}`);
     return data;
   },
 

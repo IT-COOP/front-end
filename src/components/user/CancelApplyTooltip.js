@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useQueryClient } from "react-query";
-import useCancelApplyRecruitMutation from "../../../hooks/useCancelApplyRecruitMutation";
-
 import classNames from "classnames";
-import { Dot } from "../../../assets/icons";
+import { useQueryClient } from "react-query";
 
-function CancelApplyTooltop({ info }) {
+import useCancelApplyRecruitMutation from "../../hooks/useCancelApplyRecruitMutation";
+
+import { Dot } from "../../assets/icons";
+
+function CancelApplyTooltip({ info }) {
   const client = useQueryClient();
   const [isActive, setIsActive] = useState(false);
   const { mutateAsync } = useCancelApplyRecruitMutation();
@@ -22,18 +23,14 @@ function CancelApplyTooltop({ info }) {
 
   const handleTooltipClick = async e => {
     e.stopPropagation();
-    const {
-      recruitApplyId: applyId,
-      recruitPostId: recruitId,
-      applicant,
-    } = info;
+    const { recruitApplyId: applyId, recruitPostId: recruitId } = info;
 
     try {
       const { success } = await mutateAsync({ applyId, recruitId });
 
       if (success) {
         await client.invalidateQueries(["userInfo", "currentUser"]);
-        await client.invalidateQueries(["projects", applicant, "applied"]);
+        await client.invalidateQueries(["appliedProjectList", "currentUser"]);
       }
     } catch (error) {
       alert("알 수 없는 오류가 발생하였습니다.");
@@ -79,4 +76,4 @@ function CancelApplyTooltop({ info }) {
   );
 }
 
-export default CancelApplyTooltop;
+export default CancelApplyTooltip;
