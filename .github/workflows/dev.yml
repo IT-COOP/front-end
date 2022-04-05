@@ -27,6 +27,7 @@ jobs:
           echo "REACT_APP_AUTH_GOOGLE_URL=${{ secrets.AUTH_GOOGLE_URL }}" >> .env
           echo "REACT_APP_AUTH_KAKAO_URL=${{ secrets.AUTH_KAKAO_URL }}" >> .env
           echo "REACT_APP_API_URL=${{ secrets.API_URL }}" >> .env
+          echo "REACT_APP_API_URL_SOCKET=${{ secrets.API_URL_SOCKET }}" >> .env
           cat .env
       - name: Build
         run: yarn build
