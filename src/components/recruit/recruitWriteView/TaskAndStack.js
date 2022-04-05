@@ -43,8 +43,6 @@ const TaskAndStack = ({
     }
   };
 
-  console.log(recruitData);
-
   const setPeopleNumber = number => () => {
     setSelectedPeopleNumber(number);
     const details = peopleDetailsRef.current;

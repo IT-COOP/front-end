@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useQueryClient } from "react-query";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { io } from "socket.io-client";
+import classNames from "classnames";
 
 import { Bell, DownArrow } from "../../assets/icons";
 import SocialSignIn from "../login/SocialSignIn";
@@ -17,6 +18,8 @@ function Header() {
   const client = useQueryClient();
   const isUserLogin = Boolean(userData);
 
+  const { pathname } = useLocation();
+
   const openSignInModal = () => {
     setIsSignInModalOpen(true);
   };
@@ -24,6 +27,10 @@ function Header() {
   const closeSignInModal = () => {
     setIsSignInModalOpen(false);
   };
+
+  useEffect(() => {
+    setIsMyPageModalOpen(false);
+  }, [pathname]);
 
   const toggleMyPageModal = e => {
     if (e.target !== e.currentTarget) {
@@ -74,10 +81,24 @@ function Header() {
           <nav>
             <ul className="flex gap-[44px] items-center text-[17px]">
               <li className="cursor-pointer">
-                <NavLink to="/">About</NavLink>
+                <NavLink
+                  to="/"
+                  className={classNames({
+                    "border-b-[2px] border-black": pathname === "/",
+                  })}
+                >
+                  About
+                </NavLink>
               </li>
               <li className="cursor-pointer">
-                <NavLink to="/recruit">협업 페이지</NavLink>
+                <NavLink
+                  to="/recruit"
+                  className={classNames({
+                    "border-b-[2px] border-black": pathname === "/recruit",
+                  })}
+                >
+                  협업 페이지
+                </NavLink>
               </li>
               <li className="cursor-pointer">
                 <Bell />
@@ -105,6 +126,9 @@ function Header() {
                         <NavLink
                           className=" pl-[10px] block leading-[40px]"
                           to={`/user/${userData.userId}`}
+                          onClick={() => {
+                            setIsMyPageModalOpen(false);
+                          }}
                         >
                           마이페이지
                         </NavLink>
