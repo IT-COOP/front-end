@@ -76,8 +76,6 @@ const SignUpTaskAndStack = ({
     handleremoveStacks(stack);
   };
 
-  console.log(selectedTask);
-
   return (
     <li className="flex flex-col absolute w-[800px] h-[500px] duration-700  bg-white opacity-0  px-[158px] rounded-[16px] ">
       <button
@@ -138,7 +136,9 @@ const SignUpTaskAndStack = ({
             })}
           >
             <summary className="leading-[40px] text-[18px] text-gray4 border border-black pl-[20px] cursor-pointer">
-              최소 1개의 직군을 선택해주세요!
+              {selectedTask === 100 || selectedTask === 200
+                ? "최소 1개의 직군을 선택해주세요!"
+                : "FE와 BE는 최대 3가지 스택을 선택 가능합니다."}
             </summary>
             <ul className="absolute z-10 w-full bg-white border border-black ">
               {filteredStackList?.map(stack => (
