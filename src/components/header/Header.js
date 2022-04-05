@@ -72,7 +72,7 @@ function Header() {
           <div>
             <NavLink to="/recruit">
               <img
-                src="https://s3.ap-northeast-2.amazonaws.com/it-coop.co.kr/images/Logo.png"
+                src="images/Logo.png"
                 alt="itcoop banner"
                 className="w-[84px] h-[28px]"
               />
