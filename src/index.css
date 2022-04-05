@@ -23,6 +23,27 @@
   src: url("assets/fonts/SpoqaHanSansNeo-Bold.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "It Coop Landing";
+  font-style: normal;
+  font-weight: 400;
+  src: url("assets/fonts/GmarketSansLight.otf") format("otf");
+}
+
+@font-face {
+  font-family: "It Coop Landing";
+  font-style: normal;
+  font-weight: 500;
+  src: url("assets/fonts/GmarketSansMedium.otf") format("otf");
+}
+
+@font-face {
+  font-family: "It Coop Landing";
+  font-style: normal;
+  font-weight: 700;
+  src: url("assets/fonts/GmarketSansBold.otf") format("otf");
+}
+
 *,
 *::before,
 *::after {
@@ -41,18 +62,9 @@
   width: 0 !important;
 }
 
-/* select {
-  position: relative;
-  -webkit-appearance: none;
-  -moz-appearance: none; 
-  appearance: none;
+.landing {
+  font-family: "It Coop Landing", "Sans-serif";
 }
-select::-ms-expand {
-  display: none; 
-}
-
-select > option {
-} */
 
 summary {
   display: block;
