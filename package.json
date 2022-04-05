@@ -6,9 +6,16 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "axios": "^0.26.1",
+    "classnames": "^2.3.1",
+    "luxon": "^2.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-query": "^3.34.16",
+    "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "react-toastify": "^8.2.0",
+    "socket.io-client": "^4.4.1",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
@@ -34,5 +41,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@tailwindcss/line-clamp": "^0.3.1",
+    "autoprefixer": "^10.4.2",
+    "postcss": "^8.4.8",
+    "prettier": "^2.6.0",
+    "tailwindcss": "^3.0.23"
   }
 }
