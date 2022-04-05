@@ -24,14 +24,14 @@ function UserDetails({ portfolioUrl, selfIntroduction }) {
       </div>
       <div className="">
         <p className="mb-[22px] text-[17px] font-medium">소개글</p>
-        <p className="pl-[14px] text-[15px] h-[70px] overflow-y-auto applyUserUl">
+        <div className="pl-[14px] text-[15px] h-[70px] overflow-y-auto applyUserUl">
           {selfIntroduction.split("\n").map((text, idx) => {
             if (text !== "") {
               return <p key={idx}>{text}</p>;
             }
             return false;
           }) || "작성한 소개글이 없습니다."}
-        </p>
+        </div>
       </div>
     </div>
   );
