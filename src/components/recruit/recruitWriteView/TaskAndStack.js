@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+
 import classNames from "classnames";
 
 import { Stack, Task } from "../../../constants/enums";
@@ -41,6 +42,8 @@ const TaskAndStack = ({
       setNeedPeopleNumber(4);
     }
   };
+
+  console.log(recruitData);
 
   const setPeopleNumber = number => () => {
     setSelectedPeopleNumber(number);
@@ -134,9 +137,10 @@ const TaskAndStack = ({
       task => task.recruitTask !== taskAndStack,
     );
 
-    const filteredRecruitStack = recruitData.recruitTasks.filter(
-      stack => stack.recruitTask !== taskAndStack,
+    const filteredRecruitStack = recruitData.recruitStacks.filter(
+      stack => stack.recruitStack !== taskAndStack,
     );
+
     if (taskAndStack === 100 || taskAndStack === 200) {
       handleRemoveRecruitTask(filteredRecruitTask);
     } else {

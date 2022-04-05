@@ -143,9 +143,11 @@ function RecruitWrite() {
             >
               글 등록하기
             </button>
-            <button className="rounded-[5px] bg-[#C4C4C4] text-[17px] px-[15px] py-[6px]">
-              취소
-            </button>
+            <Link to="/recruit">
+              <button className="rounded-[5px] bg-[#C4C4C4] text-[17px] px-[15px] py-[6px]">
+                취소
+              </button>
+            </Link>
           </li>
         </ul>
       </div>

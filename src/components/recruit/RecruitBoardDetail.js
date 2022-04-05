@@ -183,7 +183,7 @@ function RecruitBoardDetail() {
           recruitId={recruitId}
           userId={userData?.userId}
         />
-        <Link to="/" className="block">
+        <Link to="/recruit" className="block">
           <button className="flex items-center mt-[34px] mb-[136px] py-[6px] rounded-[20px] border-[1px] border-blue2 text-blue2 px-[17px] text-[23px]">
             <LeftArrow className="inline-block mr-[9px]" />
             목록으로
