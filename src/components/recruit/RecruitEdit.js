@@ -171,8 +171,8 @@ function RecruitEdit() {
           <hr className="my-[30px] border-[#C4C4C4]"></hr>
           <li className="flex pb-[60px]">
             <p className="w-[208px] text-[17px]"> 내용 </p>
-            <input
-              className="flex-1"
+            <textarea
+              className="flex-1 h-[315px] border border-gray3 resize-none p-[4px] applyUserUl"
               type="text"
               value={recruitData.recruitContent}
               onChange={handleContent}

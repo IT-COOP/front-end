@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import classNames from "classnames";
 import { useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 import { LeftArrow } from "../../assets/icons";
-import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
-// import { io } from "socket.io-client";
 
+import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 import useCancelApplyRecruitMutation from "../../hooks/useCancelApplyRecruitMutation";
 import KeepItButton from "./recruitBoardDetailView/KeepItButton";
@@ -29,6 +29,8 @@ function RecruitBoardDetail() {
   const [isBoardDeleteModalOpen, setIsBoardDeleteModalOpen] = useState(false);
   const [isOpenRecruitCompletionModal, setIsOpenRecruitCompletionModal] =
     useState(false);
+
+  const navigate = useNavigate();
 
   const completedRequiredPeople = Boolean(
     (recruitBoard?.recruitStacks.filter(
@@ -76,6 +78,10 @@ function RecruitBoardDetail() {
     setIsOpenRecruitCompletionModal(false);
   };
 
+  const routeAppliedUserList = () => {
+    navigate(`/apply/${recruitId}`);
+  };
+
   return (
     <>
       {isBoardDeleteModalOpen && (
@@ -108,7 +114,7 @@ function RecruitBoardDetail() {
                   <>
                     <button
                       className="text-[19px]  px-[15px] py-[6px] border-blue3 border-[1px] rounded-[5px] bg-blue3 text-white mr-[9px]"
-                      // onClick={handleEditButtonClick}
+                      onClick={routeAppliedUserList}
                     >
                       신청자 목록
                     </button>

@@ -5,6 +5,7 @@ import { Close, Duo } from "../../../assets/icons";
 
 import useGetApplyCompletionRecruitUserCount from "../../../hooks/useGetApplyCompletionRecruitUserCount";
 import useCompleteRecruitStartProjectMutation from "../../../hooks/useCompleteRecruitStartProjectMutation";
+import classNames from "classnames";
 
 const RecruitCompletionModal = ({ recruitId, closeModal }) => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ const RecruitCompletionModal = ({ recruitId, closeModal }) => {
   const routeAppliedUserList = () => {
     navigate(`/apply/${recruitId}`);
   };
+
+  console.log(applyCompletionUserCount?.acceptedAppliesCount);
 
   return (
     <section className="fixed top-0 left-0 z-[999] flex items-center justify-center w-screen h-screen transition-opacity bg-black/70">
@@ -43,36 +46,28 @@ const RecruitCompletionModal = ({ recruitId, closeModal }) => {
             </span>
             명입니다.
           </p>
-          {applyCompletionUserCount?.acceptedAppliesCount === 0 ? (
-            <>
-              <button
-                className="w-[200px] rounded-[10px] h-[70px] border border-blue3 text-blue3 text-[20px] font-bold mb-[15px]"
-                onClick={routeAppliedUserList}
-              >
-                신청자 목록 보기
-              </button>
-            </>
-          ) : (
-            <>
-              {" "}
-              <p className="text-center mb-[17px]">우리 팀원들이 맞나요?</p>
-              <Duo className="mb-[30px]" />
-              <div className="flex gap-[20px]">
-                <button
-                  className="w-[200px] rounded-[10px] h-[70px] border border-blue3 text-blue3 text-[20px] font-bold mb-[15px]"
-                  onClick={routeAppliedUserList}
-                >
-                  신청자 목록 보기
-                </button>
-                <button
-                  className="w-[200px] rounded-[10px] h-[70px] bg-blue3 text-white text-[20px] font-bold"
-                  onClick={completeRecruitStartProject}
-                >
-                  모집 마감하기
-                </button>
-              </div>
-            </>
-          )}
+          <p className="text-center mb-[17px]">우리 팀원들이 맞나요?</p>
+          <Duo className="mb-[30px]" />
+          <div className="flex gap-[20px]">
+            <button
+              className="w-[200px] rounded-[10px] h-[70px] border border-blue3 text-blue3 text-[20px] font-bold mb-[15px]"
+              onClick={routeAppliedUserList}
+            >
+              신청자 목록 보기
+            </button>
+            <button
+              className={classNames(
+                "w-[200px] rounded-[10px] h-[70px] bg-blue3 text-white text-[20px] font-bold",
+                {
+                  "pointer-events-none lg:bg-gray3":
+                    applyCompletionUserCount?.acceptedAppliesCount === 0,
+                },
+              )}
+              onClick={completeRecruitStartProject}
+            >
+              모집 마감하기
+            </button>
+          </div>
         </div>
       </div>
     </section>

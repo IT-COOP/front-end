@@ -61,7 +61,7 @@ function Comment({ comment, recruitId, userId }) {
           />
           <p>{comment.user.nickname}</p>
         </div>
-        <div className="">
+        <div>
           {comment.userId === userId ? (
             <>
               <button className="mr-[20px]" onClick={toggleEditAndDeleteModal}>
@@ -98,7 +98,14 @@ function Comment({ comment, recruitId, userId }) {
         />
       ) : (
         <>
-          <p className="mb-[33px]">{comment.recruitCommentContent}</p>
+          <p className="mb-[33px]">
+            {comment.recruitCommentContent.split("\n").map((text, idx) => {
+              if (text !== "") {
+                return <p key={idx}>{text}</p>;
+              }
+              return false;
+            })}
+          </p>
           <div className="flex items-end mb-[20px]">
             <div className="text-[17px] text-gray4 mr-[20px]">
               {convertDateText(comment.createdAt)}

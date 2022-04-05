@@ -19,7 +19,14 @@ function BoardDetailContent({ recruitBoard }) {
           </span>
         </div>
       </li>
-      <li className="px-[104px] mb-[80px]">{recruitBoard?.recruitContent}</li>
+      <li className="px-[104px] mb-[80px]">
+        {recruitBoard?.recruitContent.split("\n").map((text, idx) => {
+          if (text !== "") {
+            return <p key={idx}>{text}</p>;
+          }
+          return false;
+        })}
+      </li>
       <li className="text-right mb-[34px]">
         <p className="text-[23px]">
           {!Boolean(recruitBoard?.keepId) ? (
