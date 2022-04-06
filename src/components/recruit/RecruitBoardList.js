@@ -41,6 +41,8 @@ function RecruitBoardList() {
     [hasNextPage, fetchNextPage, isFetchingNextPage],
   );
 
+  console.log(data);
+
   return (
     <div className="w-full">
       <RecruitCategoryBar
@@ -60,7 +62,7 @@ function RecruitBoardList() {
             return (
               <li
                 key={board.recruitPostId}
-                className="flex flex-col overflow-hidden w-[23.5%] h-[396px] rounded-[11px] bg-white border-[1px] cursor-pointer shadow-md"
+                className="relative flex flex-col overflow-hidden w-[23.5%] h-[396px] rounded-[11px] bg-white border-[1px] cursor-pointer shadow-md"
                 ref={isTarget ? targetRef : null}
               >
                 <RecruitBoard
@@ -77,6 +79,7 @@ function RecruitBoardList() {
                   recruitDurationWeeks={board.recruitDurationWeeks}
                   recruitTasks={board.recruitTasks}
                   isKeeps={board.isKeeps}
+                  status={board.status}
                 />
               </li>
             );

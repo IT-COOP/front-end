@@ -2,9 +2,8 @@ import React from "react";
 // import useGetUserDetailsQuery from "../../../hooks/useGetUserDetailsQuery";
 
 function UserDetails({ portfolioUrl, selfIntroduction }) {
-  console.log(selfIntroduction);
   return (
-    <div className="w-full bg-white p-[30px] border border-solid border-gray2 rounded-[8px] mb-[42px]">
+    <div className="w-full bg-white p-[30px] border border-solid border-gray2 rounded-[8px] mb-[42px] flex-1">
       <div className="mb-[36px]">
         <p className="font-medium text-[17px] mb-[22px]">포트폴리오</p>
         {Boolean(portfolioUrl) ? (
@@ -25,7 +24,7 @@ function UserDetails({ portfolioUrl, selfIntroduction }) {
       <div className="">
         <p className="mb-[22px] text-[17px] font-medium">소개글</p>
         <div className="pl-[14px] text-[15px] h-[70px] overflow-y-auto applyUserUl">
-          {selfIntroduction.split("\n").map((text, idx) => {
+          {selfIntroduction?.split("\n").map((text, idx) => {
             if (text !== "") {
               return <p key={idx}>{text}</p>;
             }

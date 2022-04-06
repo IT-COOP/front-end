@@ -98,14 +98,14 @@ function Comment({ comment, recruitId, userId }) {
         />
       ) : (
         <>
-          <p className="mb-[33px]">
+          <div className="mb-[33px]">
             {comment.recruitCommentContent.split("\n").map((text, idx) => {
               if (text !== "") {
                 return <p key={idx}>{text}</p>;
               }
               return false;
             })}
-          </p>
+          </div>
           <div className="flex items-end mb-[20px]">
             <div className="text-[17px] text-gray4 mr-[20px]">
               {convertDateText(comment.createdAt)}

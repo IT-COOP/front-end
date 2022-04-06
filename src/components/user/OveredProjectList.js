@@ -14,6 +14,8 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
     isCurrentUserPage,
   );
 
+  console.log(list);
+
   const navigate = useNavigate();
   const moveToRecruitDetailPage = id => () => navigate(`/recruit/${id}`);
 
@@ -34,13 +36,13 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
             <li
               key={post.recruitPostId}
               className={classNames(
-                "text-[15px] mb-[45px] last:mb-0  border-b border-b-gray2 flex justify-between",
+                "text-[15px] mb-[45px] last:mb-0  border-b border-b-gray2 flex justify-between items-end",
               )}
             >
-              <div className="mb-[38px]">
+              <div className="mb-[38px] flex-1 ">
                 <div
                   onClick={moveToRecruitDetailPage(post.recruitPostId)}
-                  className="flex items-center"
+                  className="flex items-center cursor-pointer"
                 >
                   <span className="inline-block mr-[3px]">{post.title}</span>
                   <More />
@@ -49,6 +51,9 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
                   {parsedUpsertText} | {post.author2.nickname}
                 </span>
               </div>
+              <button className="text-white bg-blue px-[10px] py-[6px]">
+                팀원 리뷰
+              </button>
             </li>
           );
         })

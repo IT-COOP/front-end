@@ -18,10 +18,12 @@ function RecruitFilterBar({
       ...prev,
       over:
         currentStatusNumber === RecruitStatus.ALL
-          ? RecruitStatus.CURRENT
-          : RecruitStatus.ALL,
+          ? RecruitStatus.ALL
+          : RecruitStatus.CURRENT,
     }));
   };
+  console.log("RecruitStatus.ALL", RecruitStatus.ALL);
+  console.log("RecruitStatus.CURRENT", RecruitStatus.CURRENT);
 
   return (
     <ul className="w-[1224px] mx-auto flex items-center mt-[28px] mb-[34px] justify-between leading-[30.05px] text-[24px] bg-white">

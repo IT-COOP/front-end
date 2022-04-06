@@ -9,7 +9,6 @@ import useGetRecruitingProjectListQuery from "../../hooks/useGetRecruitingProjec
 import convertDateText from "../../lib/convertDateText";
 
 function RecruitingProjectList({ isCurrentUserPage, userId }) {
-  const [isTooltipHovered, setIsTooltipHovered] = useState(false);
   const { isLoading, data: list } = useGetRecruitingProjectListQuery(
     userId,
     isCurrentUserPage,
@@ -64,78 +63,31 @@ function RecruitingProjectList({ isCurrentUserPage, userId }) {
                 </span>
               </div>
               {!isCurrentUserPage || recruitApplies.length === 0 ? null : (
-                <div
-                  onMouseEnter={() => setIsTooltipHovered(true)}
-                  className="pl-[4px] mt-[8px] mb-[31px] flex gap-x-[6px] items-center w-max relative cursor-pointer"
-                >
-                  <div>
-                    {recruitApplies?.map(information => (
-                      <img
-                        className="w-[25px] h-[25px] rounded-full inline-block mr-[3px]"
-                        src={information?.applicant2?.profileImgUrl}
-                        alt={`${information?.applicant2?.nickname}'s profile`}
-                        key={information?.applicant}
-                      />
-                    ))}
+                <div className="pb-[20px] flex justify-between">
+                  <div className="pl-[4px] mt-[8px] mb-[6px] flex gap-x-[6px] items-center w-max ">
+                    <div>
+                      {recruitApplies?.map(information => (
+                        <img
+                          className="w-[25px] h-[25px] rounded-full inline-block mr-[3px]"
+                          src={information?.applicant2?.profileImgUrl}
+                          alt={`${information?.applicant2?.nickname}'s profile`}
+                          key={information?.applicant}
+                        />
+                      ))}
+                    </div>
+                    <div className="text-[15px]">
+                      <span className="text-blue3">
+                        {recruitApplies?.length}명
+                      </span>
+                      <span>의 신청자가 있어요!</span>
+                    </div>
                   </div>
-                  <div className="text-[15px]">
-                    <span className="text-blue3">
-                      {recruitApplies?.length}명
-                    </span>
-                    <span>의 신청자가 있어요!</span>
-                  </div>
-                  <div
-                    onMouseLeave={() => setIsTooltipHovered(false)}
-                    className={classNames(
-                      "absolute h-auto top-[125%] left-1/4 w-max bg-white flex justify-center items-center border border-gray5 rounded-[9px] z-50",
-                      {
-                        hidden: !isTooltipHovered,
-                        block: isTooltipHovered,
-                      },
-                    )}
+                  <button
+                    onClick={handleMoreButtonClick(recruitPostId)}
+                    className="text-white bg-blue px-[10px] py-[6px] rounded-[10px]"
                   >
-                    <div className="absolute bottom-full border-[5px] border-b-[10px] border-t-transparent border-r-transparent border-b-white border-l-transparent z-10"></div>
-                    <div className="absolute bottom-[100%] border-[6px] border-b-[12px] border-t-transparent border-r-transparent border-b-gray5 border-l-transparent"></div>
-                    <ul>
-                      {recruitApplies.map((information, index, { length }) => {
-                        const handleNameClick = e => {
-                          e.stopPropagation();
-                          navigate(`/user/${information.applicant}`);
-                        };
-
-                        return (
-                          <React.Fragment key={information.applicant}>
-                            <li className="px-[20px] py-[13px] my-[9px] min-h-[66px]">
-                              <div>
-                                <div
-                                  onClick={handleNameClick}
-                                  className="text-[15px] mb-[5px] cursor-pointer"
-                                >
-                                  <span className="underline text-blue3">
-                                    {information.applicant2.nickname}
-                                  </span>
-                                  <span> 님이 신청했어요</span>
-                                </div>
-                                <span className="text-[13px] text-gray4">
-                                  {convertDateText(information.createdAt)}
-                                </span>
-                              </div>
-                            </li>
-                            {index + 1 === length ? null : (
-                              <div className="w-auto mx-[7px] h-px bg-gray3" />
-                            )}
-                          </React.Fragment>
-                        );
-                      })}
-                      <li
-                        role="button"
-                        onClick={handleMoreButtonClick(recruitPostId)}
-                        className="h-[67px] w-[101%] relative -left-[0.5%] -bottom-[0.5%] flex justify-center items-center bg-blue3 text-white text-[17px] font-bold rounded-b-[8px]"
-                      >
-                        신청자 명단 보러가기
-                      </li>
-                    </ul>
-                  </div>
+                    신청자 명단 보러가기
+                  </button>
                 </div>
               )}
             </li>

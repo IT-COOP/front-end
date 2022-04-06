@@ -24,6 +24,7 @@ function RecruitBoard({
   recruitDurationWeeks,
   recruitDurationDays,
   isKeeps,
+  status,
 }) {
   const navigate = useNavigate();
 
@@ -60,6 +61,8 @@ function RecruitBoard({
   const goDetailRecruit = () => {
     navigate(`/recruit/${recruitPostId}`);
   };
+
+  console.log(status);
 
   return (
     <>

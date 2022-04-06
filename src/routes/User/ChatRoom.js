@@ -49,6 +49,13 @@ const ChatRoom = () => {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    document.querySelector("body").classList.add("bg-white3");
+    return () => {
+      document.querySelector("body").classList.remove("bg-white3");
+    };
+  });
+
   const handleChatMsg = textareaOnChange => {
     let msgContent = textareaOnChange.currentTarget.value;
     setChatMsg(msgContent);
@@ -73,7 +80,7 @@ const ChatRoom = () => {
   };
 
   return (
-    <section className="w-full bg-white3 pt-[40px]">
+    <section className=" w-full pt-[40px]">
       <div className="w-[1224px]  mx-[auto]  ">
         <div className="flex justify-between w-full mb-[37px]">
           <h1 className="text-[21px] font-bold">
@@ -85,7 +92,7 @@ const ChatRoom = () => {
         </div>
         <div className="bg-white border-[1px] rounded-[8px] flex flex-col">
           <div className="flex flex-col justify-between flex-1 w-full">
-            <div className="w-full h-[500px] mb-[20px] overflow-y-auto">
+            <div className="w-full h-[500px] mb-[20px] overflow-y-auto applyUserUl">
               <p className="w-full mt-[34px] bg-white4 text-center leading-[40px] text-gray4 text-[18px] mb-[30px]">
                 채팅방이 시작되었습니다.
               </p>
