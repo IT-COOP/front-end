@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import classNames from "classnames";
+import Swal from "sweetalert2";
 
 import { Location } from "../../constants/enums";
 import useUploadRecruitBoardImgMutation from "../../hooks/useUploadRecruitBoardImgMutation";
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 import useEditRecruitBoardMutation from "../../hooks/useEditRecruitBoardMutation";
+import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 import { Completion } from "../../assets/icons";
 
 function RecruitEdit() {
   const { recruitId } = useParams();
   const [isSuccess, setIsSuccess] = useState(false);
   const [isImgConfirmMsg, setIsImgConfirmMsg] = useState(false);
-
+  const { data: userData } = useGetUserInfoQuery();
   const config = {
     refetchOnWindowFocus: false,
   };
-
-  const { data: recruitBoard, isSuccess: recruitBoardIsSuccess } =
-    useGetRecruitDetailQuery(recruitId, config);
+  const navigate = useNavigate();
+  const {
+    data: recruitBoard,
+    isSuccess: recruitBoardIsSuccess,
+    isLoading,
+  } = useGetRecruitDetailQuery(recruitId, config);
 
   const [recruitData, setRecruitData] = useState({
     title: "",
@@ -27,6 +32,22 @@ function RecruitEdit() {
     recruitDurationWeek: 1,
     thumbImgUrl: "",
   });
+
+  useEffect(() => {
+    if (recruitBoard?.userId !== userData?.userId) {
+      Swal.fire({
+        title: "잘못 된 접근 입니다!",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      }).then(() => {
+        navigate("/recruit");
+      });
+    }
+  }, [navigate, recruitBoard?.userId, userData?.userId]);
 
   useEffect(() => {
     if (recruitBoardIsSuccess) {

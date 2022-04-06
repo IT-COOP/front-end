@@ -23,7 +23,7 @@ function UserDetails({ portfolioUrl, selfIntroduction }) {
       </div>
       <div className="">
         <p className="mb-[22px] text-[17px] font-medium">소개글</p>
-        <div className="pl-[14px] text-[15px] h-[70px] overflow-y-auto applyUserUl">
+        <div className="pl-[14px] text-[15px] h-[70px] overflow-y-auto self">
           {selfIntroduction?.split("\n").map((text, idx) => {
             if (text !== "") {
               return <p key={idx}>{text}</p>;

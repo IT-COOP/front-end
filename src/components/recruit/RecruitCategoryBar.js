@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import classNames from "classnames";
+import Swal from "sweetalert2";
 
 import { Filter } from "../../assets/icons";
 
@@ -7,15 +9,15 @@ import checkAll from "../../lib/checkAll";
 import getPerfectFields from "../../lib/getPerfectFields";
 
 import { Location, Task, Stack } from "../../constants/enums";
-import classNames from "classnames";
 
 function RecruitCategoryBar({
   config: { stack, task, loc },
   onCategorySelected,
+  isLogin,
 }) {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const toggleCategoryList = () => setIsCategoryOpen(prev => !prev);
-
+  const navigate = useNavigate();
   const locationList = getPerfectFields(Location);
   const taskList = getPerfectFields(Task);
   const stackList = getPerfectFields(Stack);
@@ -48,6 +50,22 @@ function RecruitCategoryBar({
     const stack = checkAll(name, Stack);
     onCategorySelected(prev => ({ ...prev, stack }));
   };
+  const handleRouteWriteRecruit = () => {
+    if (!isLogin) {
+      Swal.fire({
+        title: "로그인후 이용해주세요!",
+        confirmButtonText: "닫기",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
+      return;
+    }
+    navigate("/recruit/write");
+  };
 
   return (
     <div className="z-[100] w-full bg-white border-b border-solid border-b-gray2">
@@ -62,11 +80,12 @@ function RecruitCategoryBar({
             </button>
           </li>
           <li>
-            <Link to="/recruit/write">
-              <button className="w-[180px] text-[17px] h-[40px] bg-blue3 text-white rounded-[5px]">
-                모집글 작성하기
-              </button>
-            </Link>
+            <button
+              className="w-[180px] text-[17px] h-[40px] bg-blue3 text-white rounded-[5px]"
+              onClick={handleRouteWriteRecruit}
+            >
+              모집글 작성하기
+            </button>
           </li>
         </ul>
         {isCategoryOpen && (

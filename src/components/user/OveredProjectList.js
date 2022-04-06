@@ -24,7 +24,7 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
   }
 
   return (
-    <ul className="mt-[45px] mb-[42px]">
+    <ul className="mt-[45px] mb-[42px] applyUserUl h-[391px] overflow-y-auto pr-[20px]">
       {list.length > 0 ? (
         list.map(post => {
           const { createdAt, updatedAt } = post;

@@ -23,7 +23,7 @@ import { ReactComponent as Mascot } from "./mascot.svg";
 import { ReactComponent as BronzeCrown } from "./bronzeCrown.svg";
 import { ReactComponent as SilverCrown } from "./silverCrown.svg";
 import { ReactComponent as GoldCrown } from "./goldCrown.svg";
-
+import { ReactComponent as Running } from "./running.svg";
 import { ReactComponent as Dot } from "./threeDot.svg";
 import { ReactComponent as Duo } from "./duo.svg";
 
@@ -55,4 +55,5 @@ export {
   GoldCrown,
   Dot,
   Duo,
+  Running,
 };

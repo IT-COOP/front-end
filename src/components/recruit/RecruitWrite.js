@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import useCompleteWriteMutation from "../../hooks/useCompleteWriteMutation";
+import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
+
 import { Completion } from "../../assets/icons";
 import { recruitBoardDefaultUrl } from "../../constants/defaultImages";
 
@@ -24,6 +27,10 @@ function RecruitWrite() {
     recruitStacks: [],
     thumbImgUrl: recruitBoardDefaultUrl,
   });
+
+  const { data: userData, isLoading } = useGetUserInfoQuery();
+
+  const navigate = useNavigate();
 
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -113,6 +120,26 @@ function RecruitWrite() {
       setIsSuccess(data.success);
     }
   };
+  console.log(isLoading);
+  console.log(userData);
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (!userData) {
+        Swal.fire({
+          title: "잘못 된 접근 입니다!",
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        }).then(() => {
+          navigate("/recruit");
+        });
+      }
+    }
+  }, [isLoading, navigate, userData]);
 
   return (
     <section className="w-full py-[68px] bg-white3">

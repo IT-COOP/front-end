@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 import classNames from "classnames";
+import Swal from "sweetalert2";
 
 import { KeepItDetail, KeepItDetailActive } from "../../../assets/icons";
 
 import useDeleteRecruitBoardKeepItMutation from "../../../hooks/useDeleteRecruitBoardKeepItMutation";
 import useRecruitBoardKeepItMutation from "../../../hooks/useRecruitBoardKeepItMutation";
 
-function KeepItButton({ recruitId, keepId }) {
+function KeepItButton({ recruitId, keepId, isLogin }) {
   const [isKeepItModal, setIsKeepItModal] = useState(false);
   const { mutateAsync: keepItRecruitBoard } = useRecruitBoardKeepItMutation();
   const { mutateAsync: deleteKeepItRecruitBoard } =
@@ -15,6 +16,18 @@ function KeepItButton({ recruitId, keepId }) {
   const queryClient = useQueryClient();
 
   const addRecruitBoardKeepIt = async () => {
+    if (!isLogin) {
+      Swal.fire({
+        title: "로그인 후 이용해 주세요!",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
+      return;
+    }
     const { success } = await keepItRecruitBoard(recruitId);
     if (success) {
       queryClient.invalidateQueries("recruitBoardDetail");
@@ -26,6 +39,18 @@ function KeepItButton({ recruitId, keepId }) {
   };
 
   const deleteRecruitBoardKeepIt = async () => {
+    if (!isLogin) {
+      Swal.fire({
+        title: "로그인 후 이용해 주세요!",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
+      return;
+    }
     const { success } = await deleteKeepItRecruitBoard({ recruitId, keepId });
     if (success) {
       queryClient.invalidateQueries("recruitBoardDetail");
