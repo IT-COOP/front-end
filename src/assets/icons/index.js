@@ -26,6 +26,8 @@ import { ReactComponent as GoldCrown } from "./goldCrown.svg";
 import { ReactComponent as Running } from "./running.svg";
 import { ReactComponent as Dot } from "./threeDot.svg";
 import { ReactComponent as Duo } from "./duo.svg";
+import { ReactComponent as Smile } from "./smile.svg";
+import { ReactComponent as SadSmile } from "./sadSmile.svg";
 
 export {
   Close,
@@ -56,4 +58,6 @@ export {
   Dot,
   Duo,
   Running,
+  SadSmile,
+  Smile,
 };

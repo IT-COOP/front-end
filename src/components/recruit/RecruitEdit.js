@@ -19,11 +19,8 @@ function RecruitEdit() {
     refetchOnWindowFocus: false,
   };
   const navigate = useNavigate();
-  const {
-    data: recruitBoard,
-    isSuccess: recruitBoardIsSuccess,
-    isLoading,
-  } = useGetRecruitDetailQuery(recruitId, config);
+  const { data: recruitBoard, isSuccess: recruitBoardIsSuccess } =
+    useGetRecruitDetailQuery(recruitId, config);
 
   const [recruitData, setRecruitData] = useState({
     title: "",

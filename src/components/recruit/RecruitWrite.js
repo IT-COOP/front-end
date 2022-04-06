@@ -120,8 +120,6 @@ function RecruitWrite() {
       setIsSuccess(data.success);
     }
   };
-  console.log(isLoading);
-  console.log(userData);
 
   useEffect(() => {
     if (!isLoading) {

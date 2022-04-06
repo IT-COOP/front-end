@@ -13,7 +13,7 @@ function RecruitBoardList() {
     stack: "",
     sort: 0,
     items: 12,
-    over: 0,
+    over: 1,
   });
 
   const { data: userData } = useGetUserInfoQuery();

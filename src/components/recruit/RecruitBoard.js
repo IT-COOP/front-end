@@ -152,7 +152,7 @@ function RecruitBoard({
           </li>
           <li className="flex grow-1">
             <div className="mr-[10px] flex items-center">
-              <Comment className="mr-[2px]" isLogin={isLogin} />
+              <Comment className="mr-[2px]" />
               {recruitCommentCount ?? "0"}
             </div>
             <div className="flex items-center">

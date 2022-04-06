@@ -96,6 +96,8 @@ function RecruitBoardDetail() {
     navigate(`/apply/${recruitId}`);
   };
 
+  console.log(recruitBoard);
+
   return (
     <>
       {isBoardDeleteModalOpen && (
@@ -124,7 +126,13 @@ function RecruitBoardDetail() {
             <ul className="flex items-end justify-between w-full">
               <BoardDetailInfo recruitBoard={recruitBoard} />
               <li className="flex gap-[10px]">
-                {userData?.userId === recruitBoard?.userId ? (
+                {recruitBoard?.status === 1 || recruitBoard?.status === 2 ? (
+                  <button className="text-[19px]  px-[15px] py-[6px] border-blue3 border-[1px] rounded-[5px] bg-blue3 text-white mr-[9px]">
+                    {recruitBoard?.status === 1
+                      ? "진행중입니다."
+                      : "종료되었습니다."}
+                  </button>
+                ) : userData?.userId === recruitBoard?.userId ? (
                   <>
                     <button
                       className="text-[19px]  px-[15px] py-[6px] border-blue3 border-[1px] rounded-[5px] bg-blue3 text-white mr-[9px]"
