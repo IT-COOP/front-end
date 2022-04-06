@@ -17,7 +17,6 @@ function UserCard({
   recruitId,
 }) {
   const queryClient = useQueryClient();
-
   const userCollaborationRate = Math.trunc(
     (collaborationRate.filter(
       collaborationPoint => collaborationPoint.userReputationPoint !== 0,
