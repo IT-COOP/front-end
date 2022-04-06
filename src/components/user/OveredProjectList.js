@@ -34,7 +34,6 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
     setIsReputationModalOpen(false);
     setSelectedRecruitBoard(0);
   };
-
   return (
     <>
       {isReputationModalOpen && (
