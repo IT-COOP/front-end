@@ -4,6 +4,7 @@ import RecruitBoard from "./RecruitBoard";
 import RecruitCategoryBar from "./RecruitCategoryBar";
 import RecruitFilterBar from "./RecruitFilterBar";
 import useRecruitQuery from "../../hooks/useRecruitQuery";
+import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 
 function RecruitBoardList() {
   const [filter, setFilter] = useState({
@@ -12,8 +13,10 @@ function RecruitBoardList() {
     stack: "",
     sort: 0,
     items: 12,
-    over: 0,
+    over: 1,
   });
+
+  const { data: userData } = useGetUserInfoQuery();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useRecruitQuery(filter);
@@ -44,6 +47,7 @@ function RecruitBoardList() {
   return (
     <div className="w-full">
       <RecruitCategoryBar
+        isLogin={Boolean(userData)}
         config={filter}
         onCategorySelected={handleFilterChange}
       />
@@ -60,10 +64,11 @@ function RecruitBoardList() {
             return (
               <li
                 key={board.recruitPostId}
-                className="flex flex-col overflow-hidden w-[23.5%] h-[396px] rounded-[11px] bg-white border-[1px] cursor-pointer shadow-md"
+                className="relative flex flex-col overflow-hidden w-[23.5%] h-[396px] rounded-[11px] bg-white border-[1px] cursor-pointer shadow-md"
                 ref={isTarget ? targetRef : null}
               >
                 <RecruitBoard
+                  isLogin={Boolean(userData)}
                   recruitPostId={board.recruitPostId}
                   title={board.title}
                   nickname={board.nickname}
@@ -77,6 +82,7 @@ function RecruitBoardList() {
                   recruitDurationWeeks={board.recruitDurationWeeks}
                   recruitTasks={board.recruitTasks}
                   isKeeps={board.isKeeps}
+                  status={board.status}
                 />
               </li>
             );

@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 
-import { KeepItActive, KeepIt, Comment } from "../../assets/icons";
+import { KeepItActive, KeepIt, Comment, Running } from "../../assets/icons";
 
 import convertDateText from "../../lib/convertDateText";
 
@@ -24,6 +24,8 @@ function RecruitBoard({
   recruitDurationWeeks,
   recruitDurationDays,
   isKeeps,
+  status,
+  isLogin,
 }) {
   const navigate = useNavigate();
 
@@ -63,6 +65,28 @@ function RecruitBoard({
 
   return (
     <>
+      {(status === 1 || status === 2) && (
+        <div className="absolute top-0 left-0 w-full h-[50%] bg-[rgba(0,0,0,.5)] pointer-events-none">
+          <div
+            className={classNames(
+              "text-white mt-[10px] ml-[10px] inline-block py-[6px]  px-[15px] text-[18px] rounded-[10px]",
+              {
+                "bg-blue3": status === 1,
+                "bg-gray3": status === 2,
+              },
+            )}
+          >
+            {status === 1 ? (
+              <>
+                <Running className="inline-block mr-[5px]" />
+                진행중
+              </>
+            ) : (
+              "종료"
+            )}
+          </div>
+        </div>
+      )}
       <div className="mb-[18px]" onClick={goDetailRecruit}>
         <img
           className="object-cover w-full h-[198px]"

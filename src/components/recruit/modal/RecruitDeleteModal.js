@@ -46,7 +46,7 @@ const RecruitDeleteModal = ({ close, recruitId, boardDelete }) => {
             <div className="flex gap-[20px]">
               <button
                 className="block text-[14px] w-[150px] rounded-[10px] bg-black leading-[40px] text-white text-center hover:font-bold"
-                onClick={() => navigate("/", { replace: true })}
+                onClick={() => navigate("/recruit", { replace: true })}
               >
                 메인화면으로
               </button>

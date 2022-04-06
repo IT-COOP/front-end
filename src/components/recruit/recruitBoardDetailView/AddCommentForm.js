@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useQueryClient } from "react-query";
+import Swal from "sweetalert2";
 
 import useAddCommentMutation from "../../../hooks/useAddCommentMutation";
-function AddCommentForm({ recruitId }) {
+function AddCommentForm({ recruitId, isLogin }) {
   const [recruitCommentContent, setRecruitCommentContent] = useState("");
   const queryClient = useQueryClient();
   const { mutateAsync: addComment } = useAddCommentMutation();
@@ -14,6 +15,18 @@ function AddCommentForm({ recruitId }) {
   const addCommentHandler = async submitEvent => {
     submitEvent.preventDefault();
     if (recruitCommentContent === "") {
+      return;
+    }
+    if (!isLogin) {
+      Swal.fire({
+        title: "로그인 후 이용해 주세요!",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
       return;
     }
     const commentData = {

@@ -51,9 +51,9 @@ function RecruitFilterBar({
             className={classNames(
               "w-[20px] h-[20px] rounded-full inline-block mr-[8px]",
               {
+                "bg-blue3": currentStatusNumber === RecruitStatus.CURRENT,
                 "border-2 border-gray3":
-                  currentStatusNumber === RecruitStatus.CURRENT,
-                "bg-blue3": currentStatusNumber === RecruitStatus.ALL,
+                  currentStatusNumber === RecruitStatus.ALL,
               },
             )}
           />

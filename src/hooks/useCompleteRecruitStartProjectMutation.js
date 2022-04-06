@@ -1,9 +1,9 @@
 import { useMutation } from "react-query";
-import { applyApis } from "../apis/applyApi";
+import { projectApis } from "../apis/projectApi";
 
 function useCompleteRecruitStartProjectMutation() {
   return useMutation(recruitId =>
-    applyApis.completeRecruitStartProject(recruitId),
+    projectApis.completeRecruitStartProject(recruitId),
   );
 }
 

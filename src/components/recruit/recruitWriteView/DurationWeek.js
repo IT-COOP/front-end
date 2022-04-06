@@ -17,7 +17,16 @@ const DurationWeek = ({ handleDurationWeek }) => {
 
   return (
     <li className="flex items-center mb-[62px]">
-      <p className="w-[208px] text-[17px]"> 예상 소요 기간 </p>
+      <p className="w-[208px] text-[17px]">
+        {" "}
+        예상 소요 기간
+        <span className="block">현재 테스트를위해</span>
+        <span className="block">
+          1/5/10/20분
+          <br />
+          으로 적용됩니다.
+        </span>
+      </p>
       <details
         className="relative  w-[392px] text-[17px] h-[40px]"
         ref={detailsRef}

@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import classNames from "classnames";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 import { LeftArrow } from "../../assets/icons";
 
@@ -44,6 +45,19 @@ function RecruitBoardDetail() {
   );
 
   const openApplyModal = () => {
+    if (!Boolean(userData)) {
+      Swal.fire({
+        title: "로그인후 이용해주세요!",
+        confirmButtonText: "닫기",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
+      return;
+    }
     setIsApplyModalOpen(true);
   };
 
@@ -82,6 +96,8 @@ function RecruitBoardDetail() {
     navigate(`/apply/${recruitId}`);
   };
 
+  console.log(recruitBoard);
+
   return (
     <>
       {isBoardDeleteModalOpen && (
@@ -110,7 +126,13 @@ function RecruitBoardDetail() {
             <ul className="flex items-end justify-between w-full">
               <BoardDetailInfo recruitBoard={recruitBoard} />
               <li className="flex gap-[10px]">
-                {userData?.userId === recruitBoard?.userId ? (
+                {recruitBoard?.status === 1 || recruitBoard?.status === 2 ? (
+                  <button className="text-[19px]  px-[15px] py-[6px] border-blue3 border-[1px] rounded-[5px] bg-blue3 text-white mr-[9px]">
+                    {recruitBoard?.status === 1
+                      ? "진행중입니다."
+                      : "종료되었습니다."}
+                  </button>
+                ) : userData?.userId === recruitBoard?.userId ? (
                   <>
                     <button
                       className="text-[19px]  px-[15px] py-[6px] border-blue3 border-[1px] rounded-[5px] bg-blue3 text-white mr-[9px]"
@@ -133,6 +155,7 @@ function RecruitBoardDetail() {
                       recruitId={recruitId}
                       keepId={recruitBoard?.keepId}
                       userId={userData?.userId}
+                      isLogin={Boolean(userData)}
                     />
                     {Boolean(recruitBoard?.applyId) ? (
                       <button
@@ -182,7 +205,7 @@ function RecruitBoardDetail() {
           <div className="flex items-end justify-between mb-[17px]">
             <h3 className="text-[23px] ">댓글 작성하기</h3>
           </div>
-          <AddCommentForm recruitId={recruitId} />
+          <AddCommentForm recruitId={recruitId} isLogin={Boolean(userData)} />
         </li>
         <CommentList
           recruitBoard={recruitBoard}

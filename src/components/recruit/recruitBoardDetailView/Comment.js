@@ -9,7 +9,7 @@ import useDeleteCommentMutation from "../../../hooks/useDeleteCommentMutation";
 import AddCommentReplyForm from "./AddCommentReplyForm";
 import EditComment from "./EditComment";
 
-function Comment({ comment, recruitId, userId }) {
+function Comment({ comment, recruitId, userId, isLogin }) {
   const [isAddCommentReplyOpen, setIsAddCommentReplyOpen] = useState(false);
   const [isEditCommentOpen, setIsEditCommentOpen] = useState(false);
   const [isEditAndDeleteModalOpen, setIsEditAndDeleteModalOpen] =
@@ -98,19 +98,19 @@ function Comment({ comment, recruitId, userId }) {
         />
       ) : (
         <>
-          <p className="mb-[33px]">
+          <div className="mb-[33px]">
             {comment.recruitCommentContent.split("\n").map((text, idx) => {
               if (text !== "") {
                 return <p key={idx}>{text}</p>;
               }
               return false;
             })}
-          </p>
+          </div>
           <div className="flex items-end mb-[20px]">
             <div className="text-[17px] text-gray4 mr-[20px]">
               {convertDateText(comment.createdAt)}
             </div>
-            {true && (
+            {isLogin && (
               <>
                 <button
                   className="text-[17px] text-gray4"
