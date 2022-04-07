@@ -5,7 +5,7 @@ const LandingPage = () => {
   return (
     <section>
       <img
-        src="https://dvmsryszvotxl.cloudfront.net/images/LandingTop.png"
+        src="https://d2irbws74rpvev.cloudfront.net/images/LandingTop.png"
         alt="랜딩 이미지"
         className="w-screen min-w-[1224px]"
       />
@@ -24,7 +24,7 @@ const LandingPage = () => {
         </Link>
       </div>
       <img
-        src="https://dvmsryszvotxl.cloudfront.net/images/LandingBottom.png"
+        src="https://d2irbws74rpvev.cloudfront.net/images/LandingBottom.png"
         alt="랜딩 이미지"
         className="w-screen min-w-[1224px]"
       />

@@ -56,7 +56,7 @@ function Header() {
           <div>
             <NavLink to="/recruit">
               <img
-                src="https://dvmsryszvotxl.cloudfront.net/images/Logo.png"
+                src="https://d2irbws74rpvev.cloudfront.net/images/Logo.png"
                 alt="itcoop banner"
                 className="w-[84px] h-[28px]"
               />

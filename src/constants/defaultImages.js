@@ -1,14 +1,14 @@
 export const recruitBoardDefaultUrl =
-  "https://dvmsryszvotxl.cloudfront.net/images/boardDefaultImg.png";
+  "https://d2irbws74rpvev.cloudfront.net/images/boardDefaultImg.png";
 
 export const feDefaultImgUrl =
-  "https://dvmsryszvotxl.cloudfront.net/images/fe.png";
+  "https://d2irbws74rpvev.cloudfront.net/images/fe.png";
 
 export const beDefaultImgUrl =
-  "https://dvmsryszvotxl.cloudfront.net/images/be.png";
+  "https://d2irbws74rpvev.cloudfront.net/images/be.png";
 
 export const deDefaultImgUrl =
-  "https://dvmsryszvotxl.cloudfront.net/images/de.png";
+  "https://d2irbws74rpvev.cloudfront.net/images/de.png";
 
 export const plDefaultImgUrl =
-  "https://dvmsryszvotxl.cloudfront.net/images/pl.png";
+  "https://d2irbws74rpvev.cloudfront.net/images/pl.png";
