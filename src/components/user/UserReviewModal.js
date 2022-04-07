@@ -64,7 +64,7 @@ function UserReviewModal({ closeModal, recruitPostId }) {
                   alt={`${user.nickname}의 프로필 사진`}
                   className="rounded-full w-[50px] h-[50px] mr-[15px]"
                 />
-                <p>{user.nickname}여섯글자</p>
+                <p>{user.nickname}</p>
               </div>
               <div>
                 <button
