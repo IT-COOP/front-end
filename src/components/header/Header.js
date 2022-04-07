@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQueryClient } from "react-query";
 import { NavLink, useLocation } from "react-router-dom";
-import { io } from "socket.io-client";
 import classNames from "classnames";
 
 import { Bell, DownArrow } from "../../assets/icons";
@@ -47,21 +46,6 @@ function Header() {
     window.location.replace("/");
   };
 
-  const socketInitiate = () => {
-    const socket = io(process.env.REACT_APP_API_URL_SOCKET, {
-      extraHeaders: {
-        authorization: `Bearer ${localStorage.getItem("coopToken")}`,
-      },
-    });
-    socket.on("notificationToClient", data => {});
-  };
-
-  useEffect(() => {
-    if (userData) {
-      socketInitiate();
-    }
-  }, [userData]);
-
   return (
     <>
       {isSignInModalOpen && (
@@ -100,10 +84,6 @@ function Header() {
                   협업 페이지
                 </NavLink>
               </li>
-              <li className="cursor-pointer">
-                <Bell />
-              </li>
-
               {isLoading ? (
                 <div className="w-[82px] h-[21px] animate-pulse bg-white2" />
               ) : isUserLogin ? (
