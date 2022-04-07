@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 
 import { People, Mascot } from "../../assets/icons";
 
+import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 import convertTimeText from "../../lib/convertTimeText";
 
@@ -27,6 +28,8 @@ const ChatRoom = () => {
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const { data: recruitBoardDetail } = useGetRecruitDetailQuery(roomNumber);
 
   useEffect(() => {
     scrollToBottom();
@@ -83,9 +86,7 @@ const ChatRoom = () => {
     <section className=" w-full pt-[40px]">
       <div className="w-[1224px]  mx-[auto]  ">
         <div className="flex justify-between w-full mb-[37px]">
-          <h1 className="text-[21px] font-bold">
-            팀프로젝트 타이틀 들어가는곳
-          </h1>
+          <h1 className="text-[21px] font-bold">{recruitBoardDetail?.title}</h1>
           <div className="px-[12px] py-[6px] bg-white rounded-[20px]">
             <People className="inline-block mr-[10px]" /> 8
           </div>

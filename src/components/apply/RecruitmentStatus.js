@@ -1,9 +1,25 @@
 import React from "react";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 
 import { Task, Stack } from "../../constants/enums";
+import useGetApplyRecruitUser from "../../hooks/useGetApplyRecruitUser";
+import useCompleteRecruitStartProjectMutation from "../../hooks/useCompleteRecruitStartProjectMutation";
 
-function RecruitmentStatus({ recruitBoard }) {
+function RecruitmentStatus({ recruitBoard, recruitId }) {
+  const navigate = useNavigate();
+  const { data: getAppliedUserData } = useGetApplyRecruitUser({
+    recruitId,
+    isAccepted: 1,
+  });
+
+  const { mutateAsync } = useCompleteRecruitStartProjectMutation();
+
+  const completeRecruitStartProject = async () => {
+    const { chatRoom } = await mutateAsync(recruitId);
+    navigate(`/chat/${chatRoom.chatRoomId}`);
+  };
+
   return (
     <>
       <h3 className="text-19px mb-[20px]">모집 현황</h3>
@@ -47,12 +63,19 @@ function RecruitmentStatus({ recruitBoard }) {
       <hr className="w-full my-[40px]" />
       <div>
         <p className="text-[15px] text-center mb-[20px]">
-          현재 팀원은 <span className="text-blue3">{}</span>명 이에요.
+          현재 팀원은{" "}
+          <span className="text-blue3">
+            {getAppliedUserData?.recruitApplies.length}
+          </span>
+          명 이에요.
         </p>
         <p className="text-center text-[15px]">
           모집을 마감하고 <br /> 프로젝트 진행을 시작할까요?
         </p>
-        <button className="text-[14px] rounded-[5px] w-full text-center mt-[45px] bg-black text-white py-[10px]">
+        <button
+          className="text-[14px] rounded-[5px] w-full text-center mt-[45px] bg-black text-white py-[10px]"
+          onClick={completeRecruitStartProject}
+        >
           모집 마감하기
         </button>
       </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 
 import { Task, Stack } from "../../constants/enums";
@@ -16,6 +17,7 @@ function UserCard({
   userId,
   recruitId,
 }) {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const userCollaborationRate = Math.trunc(
     (collaborationRate.filter(
@@ -35,6 +37,7 @@ function UserCard({
     });
     if (success) {
       queryClient.invalidateQueries("applyUser");
+      queryClient.invalidateQueries("recruitBoardDetail");
     }
   };
   const refuseUserHandler = async () => {
@@ -46,12 +49,20 @@ function UserCard({
 
     if (success) {
       queryClient.invalidateQueries("applyUser");
+      queryClient.invalidateQueries("recruitBoardDetail");
     }
+  };
+
+  const goUserProfile = () => {
+    navigate(`/user/${userId}`);
   };
 
   return (
     <>
-      <div className="flex gap-[20px] mb-[15px]">
+      <div
+        className="flex gap-[20px] mb-[15px] cursor-pointer"
+        onClick={goUserProfile}
+      >
         <img
           src={userProfileImgUrl}
           alt={`${userNickname}의 프로필이미지`}

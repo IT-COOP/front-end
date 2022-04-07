@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import useGetOveredProjectListQuery from "../../hooks/useGetOveredProjectListQuery";
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
+// import useUserReputationMutation from "../../hooks/useUserReputationMutation";
 
 import { More } from "../../assets/icons";
 
@@ -15,6 +16,8 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
     userId,
     isCurrentUserPage,
   );
+
+  // const { mutateAsync: getUserReputation } = useUserReputationMutation();
 
   const { data: userData } = useGetUserInfoQuery();
 
@@ -53,7 +56,6 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
             const lastUpsertedDate =
               !updatedAt || createdAt === updatedAt ? createdAt : updatedAt;
             const parsedUpsertText = convertDateText(lastUpsertedDate);
-
             return (
               <li
                 key={post.recruitPostId}
