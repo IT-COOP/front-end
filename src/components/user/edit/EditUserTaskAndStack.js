@@ -74,6 +74,7 @@ function EditUserTaskAndStack({
     if (task === Task["백엔드"]) {
       return 300 < stackNumber && stackNumber < 400;
     }
+    return false;
   });
 
   return (
