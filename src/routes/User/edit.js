@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
+import Swal from "sweetalert2";
+
 import useModifyUserMutation from "../../hooks/useModifyUserMutation";
+import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 
 import EditUserImage from "../../components/user/edit/EditUserImage";
 import EditUserInformationWrapper from "../../components/user/edit/EditUserInformationWrapper";
@@ -21,7 +24,7 @@ function Edit({
 }) {
   const client = useQueryClient();
   const navigate = useNavigate();
-
+  const { data: userData, isLoading } = useGetUserInfoQuery();
   const { mutateAsync } = useModifyUserMutation();
   const [changedProfile, setChangedProfile] = useState({
     stackList,
@@ -30,6 +33,28 @@ function Edit({
     selfIntroduction: selfIntroduction ?? "",
     portfolioUrl,
   });
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (currentUserId !== userData.userId) {
+        document.querySelector("main").classList.add("hidden");
+        Swal.fire({
+          title: "잘못 된 접근 입니다!",
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        }).then(() => {
+          navigate("/recruit");
+        });
+      }
+    }
+    return () => {
+      document.querySelector("main").classList.remove("hidden");
+    };
+  }, [currentUserId, isLoading, navigate, userData.userId]);
 
   const handleProfileChangeByKeyName = keyName => newArg => {
     setChangedProfile(previous => {

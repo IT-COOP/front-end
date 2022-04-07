@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 
 import useGetOveredProjectListQuery from "../../hooks/useGetOveredProjectListQuery";
+import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 
 import { More } from "../../assets/icons";
 
@@ -14,6 +15,8 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
     userId,
     isCurrentUserPage,
   );
+
+  const { data: userData } = useGetUserInfoQuery();
 
   const [isReputationModalOpen, setIsReputationModalOpen] = useState(false);
 
@@ -34,6 +37,7 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
     setIsReputationModalOpen(false);
     setSelectedRecruitBoard(0);
   };
+
   return (
     <>
       {isReputationModalOpen && (
@@ -69,12 +73,14 @@ function OveredProjectList({ isCurrentUserPage, userId }) {
                     {parsedUpsertText} | {post.author2.nickname}
                   </span>
                 </div>
-                <button
-                  className="text-white bg-blue px-[10px] py-[6px] mb-[10px] rounded-[10px]"
-                  onClick={handleReputationModalOpen(post.recruitPostId)}
-                >
-                  팀원 리뷰
-                </button>
+                {userData?.userId === userId && (
+                  <button
+                    className="text-white bg-blue px-[10px] py-[6px] mb-[10px] rounded-[10px]"
+                    onClick={handleReputationModalOpen(post.recruitPostId)}
+                  >
+                    팀원 리뷰
+                  </button>
+                )}
               </li>
             );
           })
