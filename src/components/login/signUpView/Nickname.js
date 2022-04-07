@@ -8,6 +8,7 @@ function Nickname({ handleNextChapter, handleUserNickname }) {
   const [confirmNickname, setConfirmNickname] = useState(false);
   const [checkDuplicateUserNickname, setCheckDuplicate] = useState(false);
   const [isDuplicate, setIsDuplicate] = useState(false);
+
   const { mutateAsync: duplicateUserNickname } = useConfirmNicknameMutation();
 
   const handleCheckUserNickname = async () => {
