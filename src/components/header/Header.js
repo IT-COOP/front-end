@@ -3,7 +3,7 @@ import { useQueryClient } from "react-query";
 import { NavLink, useLocation } from "react-router-dom";
 import classNames from "classnames";
 
-import { Bell, DownArrow } from "../../assets/icons";
+import { DownArrow } from "../../assets/icons";
 import SocialSignIn from "../login/SocialSignIn";
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 import { deleteCookie } from "../../utils/cookie";
@@ -56,7 +56,7 @@ function Header() {
           <div>
             <NavLink to="/recruit">
               <img
-                src="https://d1s2lg1ngj5ops.cloudfront.net/images/Logo.png"
+                src="https://d2g3jmj866i7dj.cloudfront.net/images/Logo.png"
                 alt="itcoop banner"
                 className="w-[84px] h-[28px]"
               />
