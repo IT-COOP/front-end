@@ -62,7 +62,7 @@ function RecruitingProjectList({ isCurrentUserPage, userId }) {
                   {parsedUpsertText} | {post.author2.nickname}
                 </span>
               </div>
-              {!isCurrentUserPage || recruitApplies.length === 0 ? null : (
+              {!isCurrentUserPage ? null : (
                 <div className="pb-[20px] flex justify-between">
                   <div className="pl-[4px] mt-[8px] mb-[6px] flex gap-x-[6px] items-center w-max ">
                     <div>

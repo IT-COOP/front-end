@@ -96,8 +96,6 @@ function RecruitBoardDetail() {
     navigate(`/apply/${recruitId}`);
   };
 
-  console.log(recruitBoard);
-
   return (
     <>
       {isBoardDeleteModalOpen && (

@@ -77,7 +77,10 @@ function ApplyPage() {
         </div>
         <div className="flex pb-[50px] gap-[1.8%] items-start">
           <div className="w-[23.8%] p-[20px] border rounded-[8px] bg-white shadow-md ">
-            <RecruitmentStatus recruitBoard={recruitBoard} />
+            <RecruitmentStatus
+              recruitBoard={recruitBoard}
+              recruitId={recruitId}
+            />
           </div>
           <ul className="w-full flex gap-[2%] gap-y-[20px] flex-wrap rounded-[11px]  applyUserUl flex-1 ">
             {getAppliedUserData?.recruitApplies.length === 0 ? (

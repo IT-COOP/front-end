@@ -63,7 +63,7 @@ function EditUserTaskAndStack({
   };
 
   const availableStackList = ALL_STACK.filter(stackNumber => {
-    if (task === Task["기획자"] || task === Task["디자이너"]) {
+    if (task === Task["기획"] || task === Task["디자인"]) {
       return null;
     }
 
@@ -74,8 +74,6 @@ function EditUserTaskAndStack({
     if (task === Task["백엔드"]) {
       return 300 < stackNumber && stackNumber < 400;
     }
-
-    throw new Error("invalid stackNumber");
   });
 
   return (
