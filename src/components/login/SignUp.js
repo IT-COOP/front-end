@@ -24,7 +24,7 @@ function SocialSignIn() {
     portfolioUrl: "",
   });
 
-  const [defaultImageUrl, setDefaultImageUrl] = useState("");
+  const [defaultImageUrl, setDefaultImageUrl] = useState(plDefaultImgUrl);
 
   const navigate = useNavigate();
 
