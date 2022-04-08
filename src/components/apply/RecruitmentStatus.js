@@ -73,7 +73,14 @@ function RecruitmentStatus({ recruitBoard, recruitId }) {
           모집을 마감하고 <br /> 프로젝트 진행을 시작할까요?
         </p>
         <button
-          className="text-[14px] rounded-[5px] w-full text-center mt-[45px] bg-black text-white py-[10px]"
+          className={classNames(
+            "text-[14px] rounded-[5px] w-full text-center mt-[45px]  text-white py-[10px]",
+            {
+              "pointer-events-none bg-gray3":
+                getAppliedUserData?.recruitApplies.length === 0,
+              "bg-black": getAppliedUserData?.recruitApplies.length !== 0,
+            },
+          )}
           onClick={completeRecruitStartProject}
         >
           모집 마감하기
