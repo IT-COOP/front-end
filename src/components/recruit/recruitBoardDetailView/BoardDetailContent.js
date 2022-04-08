@@ -12,7 +12,7 @@ function BoardDetailContent({ recruitBoard }) {
 
   return (
     <>
-      <li className="mb-[70px]">
+      <li className="mb-[70px] w-full overflow-hidden">
         <div className="flex items-center">
           <div
             className="flex items-center cursor-pointer"
@@ -34,7 +34,11 @@ function BoardDetailContent({ recruitBoard }) {
       <li className="px-[104px] mb-[80px]">
         {recruitBoard?.recruitContent.split("\n").map((text, idx) => {
           if (text !== "") {
-            return <p key={idx}>{text}</p>;
+            return (
+              <p key={idx} className="w-full break-all">
+                {text}
+              </p>
+            );
           }
           return false;
         })}
