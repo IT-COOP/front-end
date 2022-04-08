@@ -9,7 +9,7 @@ import { Close } from "../../assets/icons";
 
 const GITHUB_URL = process.env.REACT_APP_AUTH_GITHUB_URL;
 const GOOGLE_URL = process.env.REACT_APP_AUTH_GOOGLE_URL;
-const KAKAO_URL = process.env.REACT_APP_AUTH_KAKAO_URL;
+// const KAKAO_URL = process.env.REACT_APP_AUTH_KAKAO_URL;
 
 function SocialSignIn({ closeSignInModal }) {
   const moveToSocialLoginPage = url => () => window.location.replace(url);
@@ -22,6 +22,11 @@ function SocialSignIn({ closeSignInModal }) {
       closeSignInModal(false);
     }
   };
+
+  const moveToSocialKakao = () =>
+    window.location.replace(
+      "https://kauth.kakao.com/oauth/authorize?client_id=f06308e77ffc6f2e63ffcc82a20673f1&redirect_uri=https://it-coop.site/login/kakao&response_type=code",
+    );
 
   return (
     <section
@@ -44,7 +49,7 @@ function SocialSignIn({ closeSignInModal }) {
           <li className="flex flex-col">
             <button
               className={`${socialBtnCss} bg-[#FEE500]`}
-              onClick={moveToSocialLoginPage(KAKAO_URL)}
+              onClick={moveToSocialKakao}
             >
               <KakaoIcon className={btnIconCss} />
               카카오로 시작하기
