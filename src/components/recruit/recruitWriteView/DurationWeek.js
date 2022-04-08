@@ -16,17 +16,8 @@ const DurationWeek = ({ handleDurationWeek }) => {
   };
 
   return (
-    <li className="flex items-center mb-[62px]">
-      <p className="w-[208px] text-[17px]">
-        {" "}
-        예상 소요 기간
-        {/* <span className="block">현재 테스트를위해</span>
-        <span className="block">
-          1/5/10/20분
-          <br />
-          으로 적용됩니다.
-        </span> */}
-      </p>
+    <li className="flex items-center mb-[62px] relative">
+      <p className="w-[208px] text-[17px]"> 예상 소요 기간</p>
       <details
         className="relative  w-[392px] text-[17px] h-[40px]"
         ref={detailsRef}
@@ -41,6 +32,7 @@ const DurationWeek = ({ handleDurationWeek }) => {
               : "예상 소요 기간을 선택해주세요!"}
           </span>
         </summary>
+
         <ul className="absolute w-[392px] border border-black bg-white z-10">
           {weekList.map(week => (
             <li
@@ -51,6 +43,9 @@ const DurationWeek = ({ handleDurationWeek }) => {
           ))}
         </ul>
       </details>
+      <p className="absolute left-[208px] top-[50px]">
+        현재 시연을 위해 15/30/45/60초로 적용됩니다.
+      </p>
     </li>
   );
 };
