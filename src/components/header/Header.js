@@ -31,8 +31,8 @@ function Header() {
     setIsMyPageModalOpen(false);
   }, [pathname]);
 
-  const toggleMyPageModal = e => {
-    if (e.target !== e.currentTarget) {
+  const toggleMyPageModal = ({ target, currentTarget }) => {
+    if (target !== currentTarget) {
       setIsMyPageModalOpen(prev => !prev);
       return;
     }

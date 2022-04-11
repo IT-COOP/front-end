@@ -19,6 +19,7 @@ import Auth from "./components/login/Auth";
 import ChatRoom from "./routes/User/ChatRoom";
 import Apply from "./routes/Apply";
 import LandingPage from "./routes/Lading";
+import LocationScrollTop from "./hooks/LocationScrollTop";
 
 import "./index.css";
 
@@ -27,6 +28,7 @@ const queryClient = new QueryClient();
 ReactDOM.render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
+      <LocationScrollTop />
       <Routes>
         <Route path="auth" element={<Auth />} />
         <Route path="/" element={<Layout />}>

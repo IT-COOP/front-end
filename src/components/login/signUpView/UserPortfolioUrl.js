@@ -9,9 +9,9 @@ function UserPortfolioUrl({
 }) {
   const [userPortfolioUrl, setUserPortfolioUrl] = useState("");
 
-  const handleUserPortfolioUrl = inputEvent => {
-    handlePortfolioUrl(inputEvent.target.value);
-    setUserPortfolioUrl(inputEvent.target.value);
+  const handleUserPortfolioUrl = ({ target }) => {
+    handlePortfolioUrl(target.value);
+    setUserPortfolioUrl(target.value);
   };
 
   return (

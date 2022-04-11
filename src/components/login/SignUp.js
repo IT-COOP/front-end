@@ -16,7 +16,7 @@ import UserSelfIntroduction from "./signUpView/UserSelfIntroduction";
 
 import useCreateUserMutation from "../../hooks/useCreateUserMutation";
 
-function SocialSignIn() {
+function SignUp() {
   const [userInfo, setUserInfo] = useState({
     nickname: "",
     profileImgUrl: plDefaultImgUrl,
@@ -168,4 +168,4 @@ function SocialSignIn() {
   );
 }
 
-export default SocialSignIn;
+export default SignUp;
