@@ -10,6 +10,7 @@ import { LeftArrow } from "../../assets/icons";
 import useGetRecruitDetailQuery from "../../hooks/useGetRecruitDetailQuery";
 import useGetUserInfoQuery from "../../hooks/useGetUserInfoQuery";
 import useCancelApplyRecruitMutation from "../../hooks/useCancelApplyRecruitMutation";
+
 import KeepItButton from "./recruitBoardDetailView/KeepItButton";
 import AddCommentForm from "./recruitBoardDetailView/AddCommentForm";
 import ApplyModal from "./recruitBoardDetailView/ApplyModal";

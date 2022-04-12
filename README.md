@@ -1,8 +1,8 @@
 ![image](https://user-images.githubusercontent.com/82748285/162229805-ae28866d-0da7-4e36-9f53-b3d81d83443d.png)
 
-# 🤔[ItCoop][itcooplink]
+# 🤔[IT-COOP][itcooplink]
 
-[itcooplink]: https://it-coop.co.kr 'go itCoop'
+[itcooplink]: https://it-coop.co.kr "go itCoop"
 
 #### 사이드 프로젝트와 창업을 위한 사람들의 커뮤니티
 
@@ -19,20 +19,12 @@
 - 반복되던 삶이 아닌 새로운 자극, 기대감
 
 <hr/>
-
-## 프로젝트 소개
-
-### Architecture
-
-![image](https://user-images.githubusercontent.com/48893036/162189441-14f99bf8-740a-497d-986d-136c32d5d371.png)
-
-<hr/>
-
 ### 프로젝트 기간
 
 - 3월 3일 ~ 4월 9일 (38일)
 
 <hr/>
+## 프로젝트 소개
 
 ### 기능
 
@@ -65,6 +57,12 @@
 #### 🤠 ”다음에 또 협업 하고 싶어요!” 함께한 팀원 평가하기
 
 - 프로젝트 종료 후 팀원들에 대한 평가를 할 수 있어요!
+<hr/>
+
+### Architecture
+
+![image](https://user-images.githubusercontent.com/48893036/162189441-14f99bf8-740a-497d-986d-136c32d5d371.png)
+
 <hr/>
 
 ## 🛠 Tools
@@ -141,15 +139,13 @@
 
 ## 🔥이슈 및 트러블슈팅
 
+1.  **대댓글 구현 문제**
 
-## more info
-
-<details>
-<summary> DB ERD </summary>
-<div markdown="1">
-
-![image](https://user-images.githubusercontent.com/48893036/162195875-c367e352-da7b-4195-bd3b-33298abf7b43.png)
+- 대댓글을 구현함에 있어 DB에 댓글의 group과 depth를 저장하는 방식으로 구현
+- 이를 프론트에서 그리기 위해서는 일차원 배열을 Tree 구조로 바꾸어야 하는 문제 발생
+- 이중 for 문을 사용하여 구현하였는데, 시간 복잡도가 O(n²)
+- Tree 구조로 ORM을 작성하여 구현하는 경우 매핑이 오래 걸릴 것으로 판단
+- 현재 로직은 시간 순서대로 저장된 댓글과 대 댓글을 한번에 받아서 O(n)시간 안에 뷰를 그리는 로직으로 변경
 
 </div>
 </details>
-
