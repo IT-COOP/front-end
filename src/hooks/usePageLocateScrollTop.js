@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-export default function useLocationScrollTop() {
+export default function usePageLocateScrollTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -9,5 +9,5 @@ export default function useLocationScrollTop() {
     return null;
   }, [pathname]);
 
-  return <></>;
+  return;
 }
