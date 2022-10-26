@@ -7,9 +7,9 @@ function UserSelfIntroduction({
   submitUserData,
 }) {
   const [userSelfIntroduction, setUserSelfIntroduction] = useState("");
-  const handleUserPortfolioUrl = textareaEvent => {
-    setUserSelfIntroduction(textareaEvent.target.value);
-    handleSelfIntroduction(textareaEvent.target.value);
+  const handleUserPortfolioUrl = ({ target: { value } }) => {
+    setUserSelfIntroduction(value);
+    handleSelfIntroduction(value);
   };
 
   return (

@@ -48,7 +48,7 @@ function Auth() {
     userCheck();
   }, [temporaryToken, mutateAsync, navigate, setSearchParams]);
 
-  return <>{isSignUpModalOpen && <SignUp />}</>;
+  return <>{!isSignUpModalOpen && <SignUp />}</>;
 }
 
 export default Auth;

@@ -27,7 +27,6 @@ function AppliedProjectList() {
           const lastUpsertedDate =
             !updatedAt || createdAt === updatedAt ? createdAt : updatedAt;
           const parsedUpsertText = convertDateText(lastUpsertedDate);
-
           return (
             <li
               key={post.recruitPostId}

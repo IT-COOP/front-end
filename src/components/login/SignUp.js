@@ -34,8 +34,8 @@ function SignUp() {
     data: createdUserData,
   } = useCreateUserMutation();
 
-  const handleNextChapter = e => {
-    const currentLi = e.currentTarget.parentNode;
+  const handleNextChapter = ({ currentTarget: { parentNode } }) => {
+    const currentLi = parentNode;
     const nextLi = currentLi.nextElementSibling;
     currentLi.classList.remove("z-10");
     currentLi.style.opacity = 0;
@@ -43,8 +43,8 @@ function SignUp() {
     nextLi.style.opacity = 1;
   };
 
-  const handlePrevChapter = e => {
-    const currentLi = e.currentTarget.parentNode;
+  const handlePrevChapter = ({ currentTarget: { parentNode } }) => {
+    const currentLi = parentNode;
     const prevLi = currentLi.previousElementSibling;
     currentLi.classList.remove("z-10");
     currentLi.style.opacity = 0;

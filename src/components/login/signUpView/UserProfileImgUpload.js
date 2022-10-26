@@ -27,7 +27,6 @@ function UserProfileImgUpload({
     const { data: imgUrl } = await uploadImg(formData);
     handleProfileImg(imgUrl);
   };
-  console.log(defaultImageUrl);
   const setDefaultImg = () => {
     handleProfileImg(defaultImageUrl);
   };

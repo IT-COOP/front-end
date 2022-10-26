@@ -25,9 +25,9 @@ function Nickname({ handleNextChapter, handleUserNickname }) {
     }
   };
 
-  const confirmUserNickname = e => {
+  const confirmUserNickname = ({ target: { value } }) => {
     const regex = /^[가-힣|a-z|A-Z|0-9|]+$/;
-    const nickname = e.target.value;
+    const nickname = value;
     setUserNickname(nickname);
     if (regex.test(nickname) & (nickname.length > 1) & (nickname.length <= 6)) {
       setConfirmNickname(true);
@@ -55,6 +55,7 @@ function Nickname({ handleNextChapter, handleUserNickname }) {
           maxLength={6}
           name="nickname"
           onChange={confirmUserNickname}
+          onBlur={handleUserNickname}
           value={userNickname}
         />
         <button
