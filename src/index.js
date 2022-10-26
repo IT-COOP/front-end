@@ -1,26 +1,26 @@
-import React from "react";
+import React, { lazy } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-
-import App from "./App";
-import Layout from "./components/Layout";
-import PrivateRoute from "./components/PrivateRoute";
-import RecruitBoardDetail from "./components/recruit/RecruitBoardDetail";
-
-import RecruitWrite from "./components/recruit/RecruitWrite";
-import RecruitEdit from "./components/recruit/RecruitEdit";
-import Recruit from "./routes/Recruit";
-
-import User from "./routes/User";
-import UserEdit from "./routes/User/edit";
-import Auth from "./components/login/Auth";
-import ChatRoom from "./routes/User/ChatRoom";
-import Apply from "./routes/Apply";
-import LandingPage from "./routes/Lading";
-
 import "./index.css";
+
+const Layout = lazy(() => import("./components/Layout"));
+const PrivateRoute = lazy(() => import("./components/PrivateRoute"));
+const RecruitBoardDetail = lazy(() =>
+  import("./components/recruit/RecruitBoardDetail"),
+);
+
+const RecruitWrite = lazy(() => import("./components/recruit/RecruitWrite"));
+const RecruitEdit = lazy(() => import("./components/recruit/RecruitEdit"));
+const Recruit = lazy(() => import("./routes/Recruit"));
+
+const User = lazy(() => import("./routes/User"));
+const UserEdit = lazy(() => import("./routes/User/edit"));
+const Auth = lazy(() => import("./components/login/Auth"));
+const ChatRoom = lazy(() => import("./routes/User/ChatRoom"));
+const Apply = lazy(() => import("./routes/Apply"));
+const LandingPage = lazy(() => import("./routes/Lading"));
 
 const queryClient = new QueryClient();
 
@@ -56,7 +56,6 @@ ReactDOM.render(
             />
           </Route>
           <Route path="/apply/:recruitId" element={<Apply />} />
-          <Route path="/app" element={<App />} />
           <Route path="/chat/:roomNumber" element={<ChatRoom />} />
         </Route>
       </Routes>
