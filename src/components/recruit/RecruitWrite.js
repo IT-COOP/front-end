@@ -121,23 +121,23 @@ function RecruitWrite() {
     }
   };
 
-  useEffect(() => {
-    if (!isLoading) {
-      if (!userData) {
-        Swal.fire({
-          title: "잘못 된 접근 입니다!",
-          showClass: {
-            popup: "animate__animated animate__fadeInDown",
-          },
-          hideClass: {
-            popup: "animate__animated animate__fadeOutUp",
-          },
-        }).then(() => {
-          navigate("/recruit");
-        });
-      }
-    }
-  }, [isLoading, navigate, userData]);
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     if (!userData) {
+  //       Swal.fire({
+  //         title: "잘못 된 접근 입니다!",
+  //         showClass: {
+  //           popup: "animate__animated animate__fadeInDown",
+  //         },
+  //         hideClass: {
+  //           popup: "animate__animated animate__fadeOutUp",
+  //         },
+  //       }).then(() => {
+  //         navigate("/recruit");
+  //       });
+  //     }
+  //   }
+  // }, [isLoading, navigate, userData]);
 
   return (
     <section className="w-full py-[68px] bg-white3">

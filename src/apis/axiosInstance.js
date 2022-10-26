@@ -15,7 +15,7 @@ instance.interceptors.request.use(
     return config;
   },
   error => {
-    return;
+    return error;
   },
 );
 
