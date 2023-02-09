@@ -69,7 +69,7 @@
 
 ## 🛠 Tools
 
-#### 디자인
+#### Design
 
 <p>
   <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white"/>
@@ -80,7 +80,7 @@
 <br>
 </p>
 
-####백엔드
+#### Back-End
 
 <p>
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
@@ -99,7 +99,7 @@
 <br>
 </p>
 
-####frontEnd
+#### Front-End
 
 <p>
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
@@ -119,7 +119,7 @@
   <img src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white">
 </p>
 
-####Dev tools
+#### Dev tools
 
 <p> 
   <img src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white">
