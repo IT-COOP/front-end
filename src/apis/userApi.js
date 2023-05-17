@@ -20,6 +20,7 @@ export const userApis = {
 
       return { profile: { ...data.profile, ...copy } };
     },
+
   modifyUserInfo: async variables => {
     const { data } = await instance.patch("/user/profile", variables);
     return data;
